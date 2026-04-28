@@ -9,6 +9,6 @@ package Kinopedia.minigames;
  *
  * @author William
  */
-public class QuizTrivia {
+public class Dinosaur {
     
 }

@@ -9,6 +9,6 @@ package Kinopedia.minigames;
  *
  * @author William
  */
-public class FlappyBird {
+public class FlappyWild {
     
 }
