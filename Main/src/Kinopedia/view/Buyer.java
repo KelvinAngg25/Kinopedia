@@ -10,5 +10,7 @@ package Kinopedia.view;
  * @author William
  */
 public class Buyer {
-    
+    public static void main(String[] args) {
+        System.out.println("INI HANYA TES AWAL2");
+    }
 }
