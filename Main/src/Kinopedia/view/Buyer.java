@@ -11,6 +11,6 @@ package Kinopedia.view;
  */
 public class Buyer {
     public static void main(String[] args) {
-        System.out.println("INI HANYA TES AWAL2");
+        System.out.println("OKE CAK INI WS TAK RUBAH");
     }
 }
