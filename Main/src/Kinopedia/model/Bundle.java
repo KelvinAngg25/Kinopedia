@@ -10,5 +10,5 @@ package Kinopedia.model;
  * @author William
  */
 public class Bundle {
-    
+    int tes = 1;
 }
