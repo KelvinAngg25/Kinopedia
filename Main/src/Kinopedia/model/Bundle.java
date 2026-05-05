@@ -12,5 +12,5 @@ package Kinopedia.model;
 public class Bundle {
     int tes = 1;
     
-    int tes = 3;
+    int tes1 = 3;
 }
