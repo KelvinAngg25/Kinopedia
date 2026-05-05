@@ -10,5 +10,5 @@ package Kinopedia.minigames.Sudoku;
  * @author William
  */
 public class Logic {
-    
+    String nama = "kelvin goblok";
 }
