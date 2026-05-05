@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Kinopedia.minigames;
+package Kinopedia.minigames.FllapyWild;
 
 /**
  *
  * @author William
  */
-public class FlappyWild {
+public class View {
     
 }

@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Kinopedia.minigames;
+package Kinopedia.minigames.Sudoku;
 
 /**
  *
  * @author William
  */
-public class Dinosaur {
+public class Logic {
     
 }
