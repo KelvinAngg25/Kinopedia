@@ -11,5 +11,5 @@ package Kinopedia.minigames.Sudoku;
  */
 public class Logic {
     String nama = "kelvin wiliammmmmmmmmmmmmmm";
-    int angka =1;
+    int angka =12;
 }
