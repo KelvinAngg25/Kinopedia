@@ -10,5 +10,5 @@ package Kinopedia.minigames.FllapyWild;
  * @author William
  */
 public class Logic {
-    
+    int score;
 }
