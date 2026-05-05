@@ -10,5 +10,6 @@ package Kinopedia.minigames.Sudoku;
  * @author William
  */
 public class Logic {
-    String nama = "kelvin goblok";
+    String nama = "kelvin wiliammmmmmmmmmmmmmm";
+    int angka =1;
 }
