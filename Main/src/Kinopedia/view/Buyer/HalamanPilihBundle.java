@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Kinopedia.view;
+package Kinopedia.view.Buyer;
 
 /**
  *
  * @author William
  */
-public class History {
+public class HalamanPilihBundle {
     
 }
