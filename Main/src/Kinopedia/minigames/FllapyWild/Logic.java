@@ -11,4 +11,5 @@ package Kinopedia.minigames.FllapyWild;
  */
 public class Logic {
     int score;
+    String nama;
 }
