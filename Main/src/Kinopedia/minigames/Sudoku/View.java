@@ -30,7 +30,6 @@ public class View extends JFrame {
     JLabel timerLabel;
     JLabel livesLabel;
     JLabel sudokuLabel;
-    JLabel livesLabel2;
 
     public View() {
         timerLabel = new JLabel();
