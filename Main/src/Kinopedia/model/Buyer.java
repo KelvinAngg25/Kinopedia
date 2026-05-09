@@ -24,7 +24,7 @@ public class Buyer extends JFrame {
     public Buyer() {
         setTitle("Halaman Utama (Buyer)");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(380, 650);
+        setSize(470, 844);
         setLocationRelativeTo(null);
 
         JPanel root = new JPanel();
@@ -39,19 +39,19 @@ public class Buyer extends JFrame {
 
         ImageIcon icon = loadLogo();
         if (icon != null) {
-            Image scaled = icon.getImage().getScaledInstance(170, 170, Image.SCALE_SMOOTH);
+            Image scaled = icon.getImage().getScaledInstance(260, 260, Image.SCALE_SMOOTH);
+            logo.setIcon(new ImageIcon(scaled));
             logo.setIcon(new ImageIcon(scaled));
         } else {
             logo.setText("LOGO NOT FOUND");
             logo.setForeground(Color.RED);
         }
-//
+
 //        JLabel title = new JLabel("Kinopedia");
 //        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-//        title.setFont(new Font("SansSerif", Font.BOLD, 28));
+//        title.setFont(new Font("SansSerif", Font.BOLD, 34));
 //        title.setForeground(Color.BLACK);
 
-        root.add(Box.createVerticalStrut(10));
         root.add(logo);
         root.add(Box.createVerticalStrut(10));
 //        root.add(title);
@@ -64,6 +64,8 @@ public class Buyer extends JFrame {
         root.add(menuButton("Riwayat Pembelian", this::onRiwayatPembelian));
         root.add(Box.createVerticalStrut(14));
         root.add(menuButton("Log Out", this::onLogout));
+        root.add(Box.createVerticalGlue());
+        root.add(Box.createVerticalGlue());
     }
 
     private ImageIcon loadLogo() {
@@ -125,6 +127,8 @@ public class Buyer extends JFrame {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new Buyer().setVisible(true));
     }
+    
+    
 
     static class RoundedButton extends JButton {
         private final int radius;
@@ -138,7 +142,7 @@ public class Buyer extends JFrame {
         }
 
         @Override
-        protected void paintComponent(Graphics g) {
+        public void paintComponent(Graphics g) {
             Graphics2D g2 = (Graphics2D) g.create();
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
