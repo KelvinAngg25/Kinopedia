@@ -10,13 +10,11 @@ package Kinopedia;
  *
  * @author William
  */
-public class Main {
+import javax.swing.SwingUtilities;
+import Kinopedia.model.Buyer;
 
-    /**
-     * @param args the command line arguments
-     */
+public class Main {
     public static void main(String[] args) {
-        // TODO code application logic here
+        SwingUtilities.invokeLater(() -> new Buyer().setVisible(true));
     }
-    
 }
