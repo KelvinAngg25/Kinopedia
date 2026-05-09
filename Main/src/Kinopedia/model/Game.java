@@ -9,18 +9,19 @@ package Kinopedia.model;
  *
  * @author William
  */
+import java.awt.geom.RoundRectangle2D;
+import java.awt.image.BufferedImage;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class Game extends JFrame {
-
-    private final JFrame backTo;
+public class Game extends JFrame{
+     private final JFrame backTo;
 
     public Game(JFrame backTo) {
         this.backTo = backTo;
 
-        setTitle("Mini Games");
+        setTitle("Kinopedia");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(380, 650);
         setLocationRelativeTo(null);
@@ -68,13 +69,9 @@ public class Game extends JFrame {
 
         content.add(sectionTitle("Application"));
         content.add(iconRow(new String[]{"Steam"}));
-
-        JLabel bottomLogo = new JLabel("K", SwingConstants.CENTER);
-        bottomLogo.setFont(new Font("SansSerif", Font.BOLD, 24));
-        root.add(bottomLogo, BorderLayout.SOUTH);
     }
 
-    // (Optional) run this file directly
+    // (Optional) test Bundle directly
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             JFrame dummyBack = new JFrame();
@@ -82,7 +79,7 @@ public class Game extends JFrame {
             dummyBack.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             dummyBack.setVisible(true);
 
-            new Game(dummyBack).setVisible(true);
+            new Game(dummyBack).setVisible(true);   // <-- NOT new Game()
             dummyBack.setVisible(false);
         });
     }
@@ -111,14 +108,13 @@ public class Game extends JFrame {
         card.setBackground(Color.WHITE);
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
 
-        JLabel icon = new JLabel();
+        JLabel icon = new RoundedImageLabel(10);
         icon.setPreferredSize(new Dimension(55, 55));
         icon.setHorizontalAlignment(SwingConstants.CENTER);
         icon.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // BEGINNER: decide filename using simple ifs
         String fileName = "";
-        if (name.trim().equalsIgnoreCase("Valorant")) fileName = "Valourant.png";
+        if (name.equals("Valorant")) fileName = "Valorantt.png"; 
         if (name.equals("PUBG Mobile")) fileName = "PUBG.png";
         if (name.equals("CODM")) fileName = "CODMmobile.jpg";
         if (name.equals("Free Fire")) fileName = "FreeFire.jpg";
@@ -126,23 +122,17 @@ public class Game extends JFrame {
         if (name.equals("eFootball")) fileName = "efootball.png";
         if (name.equals("Steam")) fileName = "Steam.png";
 
-        // Try load the image
         ImageIcon img = null;
         if (!fileName.equals("")) {
-            System.out.println("1. Game Name: '" + name + "'");
-            System.out.println("2. Assigned File: '" + fileName + "'");
-
-// Assuming you get the URL like this: URL url = getClass().getResource(...);
-            System.out.println("3. The URL: " + img);
-        System.out.println("-------------------------");
             java.net.URL imgUrl = getClass().getResource("/Kinopedia/model/IMAGESS/" + fileName);
+            System.out.println("URL = " + imgUrl); // print the real URL, not img
+
             if (imgUrl != null) {
                 Image scaled = new ImageIcon(imgUrl).getImage().getScaledInstance(55, 55, Image.SCALE_SMOOTH);
                 img = new ImageIcon(scaled);
             }
         }
 
-        // If image exists, show it. If not, show placeholder
         if (img != null) {
             icon.setIcon(img);
             icon.setOpaque(false);
@@ -167,4 +157,26 @@ public class Game extends JFrame {
         dispose();
         backTo.setVisible(true);
     }
+    
+    private static class RoundedImageLabel extends JLabel {
+    private final int radius;
+
+    public RoundedImageLabel(int radius) {
+        this.radius = radius;
+        setOpaque(false);
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g.create();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        Shape clip = new RoundRectangle2D.Float(0, 0, getWidth(), getHeight(), radius, radius);
+        g2.setClip(clip);
+
+        super.paintComponent(g2);
+
+        g2.dispose();
+    }
+}
 }

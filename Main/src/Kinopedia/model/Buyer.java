@@ -108,8 +108,9 @@ public class Buyer extends JFrame {
     }
 
     private void onMiniGames(ActionEvent e) {
-        new Game(this).setVisible(true);
-        setVisible(false);
+//        new Game(this).setVisible(true);
+        setVisible(true);
+        JOptionPane.showMessageDialog(this,"you clicked Mini Games !!");
     }
 
     private void onRiwayatPembelian(ActionEvent e) {
