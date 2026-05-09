@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Kinopedia.logic;
+package Kinopedia.PilihanBundle;
 
 /**
  *
- * @author William
+ * @author Victus
  */
-public class MetodeBayar {
+public class BundleEfootball {
     
 }
