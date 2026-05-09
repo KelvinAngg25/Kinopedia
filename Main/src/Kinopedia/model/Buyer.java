@@ -19,7 +19,7 @@ public class Buyer extends JFrame {
 
     // Make sure the file exists exactly here:
     // src/Kinopedia/model/IMAGESS/LogoKinopedia.png
-    private static final String LOGO_PATH = "/Kinopedia/model/IMAGESS/LogoKinopedia.png";
+    private static final String LOGO_PATH = "IMAGESS/LogoKinopedia.png";
 
     public Buyer() {
         setTitle("Halaman Utama (Buyer)");
@@ -67,10 +67,10 @@ public class Buyer extends JFrame {
     }
 
     private ImageIcon loadLogo() {
-    java.net.URL url = getClass().getResource("/Kinopedia/model/IMAGESS/LogoKinopedia.png");
+    java.net.URL url = getClass().getResource("IMAGESS/LogoKinopedia.png");
     if (url == null) {
         url = Thread.currentThread().getContextClassLoader()
-           .getResource("Kinopedia/model/IMAGESS/LogoKinopedia.png");
+           .getResource("IMAGESS/LogoKinopedia.png");
     }
     System.out.println("logo url = " + url);
     if (url == null) {

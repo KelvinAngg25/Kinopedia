@@ -124,7 +124,7 @@ public class Game extends JFrame{
 
         ImageIcon img = null;
         if (!fileName.equals("")) {
-            java.net.URL imgUrl = getClass().getResource("/Kinopedia/model/IMAGESS/" + fileName);
+            java.net.URL imgUrl = getClass().getResource("IMAGESS/" + fileName);
             System.out.println("URL = " + imgUrl); // print the real URL, not img
 
             if (imgUrl != null) {
