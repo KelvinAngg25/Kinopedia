@@ -47,11 +47,6 @@ public class Buyer extends JFrame {
             logo.setForeground(Color.RED);
         }
 
-//        JLabel title = new JLabel("Kinopedia");
-//        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-//        title.setFont(new Font("SansSerif", Font.BOLD, 34));
-//        title.setForeground(Color.BLACK);
-
         root.add(logo);
         root.add(Box.createVerticalStrut(10));
 //        root.add(title);
@@ -69,18 +64,18 @@ public class Buyer extends JFrame {
     }
 
     private ImageIcon loadLogo() {
-    java.net.URL url = getClass().getResource("IMAGESS/LogoKinopedia.png");
-    if (url == null) {
-        url = Thread.currentThread().getContextClassLoader()
-           .getResource("IMAGESS/LogoKinopedia.png");
+        java.net.URL url = getClass().getResource("IMAGESS/LogoKinopedia.png");
+        if (url == null) {
+            url = Thread.currentThread().getContextClassLoader()
+                    .getResource("IMAGESS/LogoKinopedia.png");
+        }
+        System.out.println("logo url = " + url);
+        if (url == null) {
+            return null;
+        } else {
+            return new ImageIcon(url);
+        }
     }
-    System.out.println("logo url = " + url);
-    if (url == null) {
-        return null;
-    } else {
-        return new ImageIcon(url);
-    }
-}
 
     private JButton menuButton(String text, java.awt.event.ActionListener listener) {
         RoundedButton btn = new RoundedButton(text, 18);
@@ -105,14 +100,13 @@ public class Buyer extends JFrame {
     }
 
     private void onTopUp(ActionEvent e) {
-    new Game(this).setVisible(true); // open Game page
-    setVisible(false);               // hide Buyer page
+        new Game(this).setVisible(true); // open Game page
+        setVisible(false);               // hide Buyer page
     }
 
     private void onMiniGames(ActionEvent e) {
-//        new Game(this).setVisible(true);
         setVisible(true);
-        JOptionPane.showMessageDialog(this,"you clicked Mini Games !!");
+        JOptionPane.showMessageDialog(this, "you clicked Mini Games !!");
     }
 
     private void onRiwayatPembelian(ActionEvent e) {
@@ -121,16 +115,17 @@ public class Buyer extends JFrame {
 
     private void onLogout(ActionEvent e) {
         int confirm = JOptionPane.showConfirmDialog(this, "Log out?", "Confirm", JOptionPane.YES_NO_OPTION);
-        if (confirm == JOptionPane.YES_OPTION) dispose();
+        if (confirm == JOptionPane.YES_OPTION) {
+            dispose();
+        }
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new Buyer().setVisible(true));
     }
-    
-    
 
     static class RoundedButton extends JButton {
+
         private final int radius;
         private Shape shape;
 
