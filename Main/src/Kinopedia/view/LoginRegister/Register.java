@@ -5,6 +5,7 @@
  */
 package Kinopedia.view.LoginRegister;
 
+import Kinopedia.model.*;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.BorderFactory;
@@ -14,10 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-/**
- *
- * @author William
- */
 public class Register extends JFrame {
     private JLabel ErrorMessage1;
     private JLabel ErrorMessage2;
@@ -122,7 +119,9 @@ public class Register extends JFrame {
                 CetakError("Masih ada inputan yang kosong", "Tolong Pastikan inputan terisi semua!");
             }
             else {
-                CetakError("Berhasil Masuk", "William!");
+                dispose();
+                Buyer frame = new Buyer(username);
+                frame.setVisible(true);
             } 
         }); 
         
@@ -139,4 +138,5 @@ public class Register extends JFrame {
     public static void main(String[] args) {
         new Register();
     }
+    
 }

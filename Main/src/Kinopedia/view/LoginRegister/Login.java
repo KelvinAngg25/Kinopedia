@@ -5,6 +5,7 @@
  */
 package Kinopedia.view.LoginRegister;
 
+import Kinopedia.model.*;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -80,15 +81,15 @@ public class Login extends JFrame {
         inputPass.setBackground(new Color(200, 200, 200)); // Warna abu-abu
         add(inputPass);
         
-        JButton btnDaftar = new JButton("Daftar");
-        btnDaftar.setBounds(50, 400, 350, 45);
-        btnDaftar.setBackground(new Color(255, 140, 0)); // oranye
-        btnDaftar.setForeground(Color.WHITE);
-        btnDaftar.setBorder(new RoundedBorder(15));
-        btnDaftar.setFont(new Font("Arial", Font.BOLD, 14));
-        btnDaftar.setBorder(BorderFactory.createEmptyBorder());
-        btnDaftar.setFocusPainted(false);
-        add(btnDaftar);
+        JButton btnMasuk = new JButton("Masuk");
+        btnMasuk.setBounds(50, 400, 350, 45);
+        btnMasuk.setBackground(new Color(255, 140, 0)); // oranye
+        btnMasuk.setForeground(Color.WHITE);
+        btnMasuk.setBorder(new RoundedBorder(15));
+        btnMasuk.setFont(new Font("Arial", Font.BOLD, 14));
+        btnMasuk.setBorder(BorderFactory.createEmptyBorder());
+        btnMasuk.setFocusPainted(false);
+        add(btnMasuk);
         
         JLabel pindahKeUser = new JLabel("Belum Pernah Daftar?");
         pindahKeUser.setFont(new Font("Poppins", Font.PLAIN, 16));
@@ -120,7 +121,7 @@ public class Login extends JFrame {
         add(backgroundErrorMessage);
         
         
-        btnDaftar.addActionListener(e -> {
+        btnMasuk.addActionListener(e -> {
             String username = inputUser.getText();
             String pass = inputPass.getText();
             
@@ -130,6 +131,13 @@ public class Login extends JFrame {
             else if (username.isEmpty() || username.isEmpty()) {
                 CetakError("Masih ada inputan yang kosong", "Tolong Pastikan inputan terisi semua!");
             } 
+            else {
+//                if (username.equals("will") && pass.equals("123")) {
+                dispose();
+                Buyer frame = new Buyer(username);
+                frame.setVisible(true);
+//                }
+            }
         }); 
         
         pindahKeUser.addMouseListener(new java.awt.event.MouseAdapter(){

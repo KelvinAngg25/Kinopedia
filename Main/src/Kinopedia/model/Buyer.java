@@ -9,6 +9,7 @@ package Kinopedia.model;
  *
  * @author William
  */
+import Kinopedia.view.LoginRegister.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -17,46 +18,48 @@ import java.awt.geom.RoundRectangle2D;
 
 public class Buyer extends JFrame {
 
-    // Make sure the file exists exactly here:
-    // src/Kinopedia/model/IMAGESS/LogoKinopedia.png
-    private static final String LOGO_PATH = "IMAGESS/LogoKinopedia.png";
-
-    public Buyer() {
-        setTitle("Halaman Utama (Buyer)");
+    public Buyer(String namaYangLogin) {
+        setTitle("Kinopedia | Halaman Utama ");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(470, 844);
-        setLocationRelativeTo(null);
+        
+        JPanel logoPanel = new JPanel();
+        logoPanel.setBackground(Color.WHITE);
+        logoPanel.setLayout(new BoxLayout(logoPanel, BoxLayout.Y_AXIS));
+        logoPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
+        JLabel titleLabel1 = new JLabel("Selamat datang, " + namaYangLogin + "!");
+        titleLabel1.setFont(new Font("SansSerif", Font.BOLD, 24));
+        titleLabel1.setForeground(new Color(0xFF8C1A));
+        titleLabel1.setAlignmentX(Component.CENTER_ALIGNMENT);
+        logoPanel.add(titleLabel1);
+        
+        logoPanel.add(Box.createVerticalStrut(30));
 
+        ImageIcon icon = new ImageIcon(getClass().getResource("IMAGESS/LogoKinopedia.png"));
+        Image scaledImage = icon.getImage().getScaledInstance(
+            170, 170, 
+            Image.SCALE_SMOOTH
+        );
+        JLabel logoKinopedia = new JLabel (new ImageIcon(scaledImage));
+        logoKinopedia.setAlignmentX(Component.CENTER_ALIGNMENT);
+        logoPanel.add(logoKinopedia);
+        
+        
+        
+        JLabel titleLabel = new JLabel("Kinopedia");
+        titleLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
+        titleLabel.setForeground(Color.BLACK);
+        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        logoPanel.add(titleLabel);
+        
+    
         JPanel root = new JPanel();
         root.setBackground(Color.WHITE);
         root.setBorder(new EmptyBorder(35, 40, 35, 40));
         root.setLayout(new BoxLayout(root, BoxLayout.Y_AXIS));
-        setContentPane(root);
-
-        // Logo
-        JLabel logo = new JLabel();
-        logo.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        ImageIcon icon = loadLogo();
-        if (icon != null) {
-            Image scaled = icon.getImage().getScaledInstance(260, 260, Image.SCALE_SMOOTH);
-            logo.setIcon(new ImageIcon(scaled));
-            logo.setIcon(new ImageIcon(scaled));
-        } else {
-            logo.setText("LOGO NOT FOUND");
-            logo.setForeground(Color.RED);
-        }
-
-//        JLabel title = new JLabel("Kinopedia");
-//        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-//        title.setFont(new Font("SansSerif", Font.BOLD, 34));
-//        title.setForeground(Color.BLACK);
-
-        root.add(logo);
-        root.add(Box.createVerticalStrut(10));
-//        root.add(title);
-        root.add(Box.createVerticalStrut(35));
-
+        root.add(logoPanel);
+        root.add(Box.createVerticalStrut(80));
         root.add(menuButton("Top Up", this::onTopUp));
         root.add(Box.createVerticalStrut(14));
         root.add(menuButton("Mini Games", this::onMiniGames));
@@ -66,21 +69,10 @@ public class Buyer extends JFrame {
         root.add(menuButton("Log Out", this::onLogout));
         root.add(Box.createVerticalGlue());
         root.add(Box.createVerticalGlue());
+        add(root);
+        
+        setLocationRelativeTo(null);
     }
-
-    private ImageIcon loadLogo() {
-    java.net.URL url = getClass().getResource("IMAGESS/LogoKinopedia.png");
-    if (url == null) {
-        url = Thread.currentThread().getContextClassLoader()
-           .getResource("IMAGESS/LogoKinopedia.png");
-    }
-    System.out.println("logo url = " + url);
-    if (url == null) {
-        return null;
-    } else {
-        return new ImageIcon(url);
-    }
-}
 
     private JButton menuButton(String text, java.awt.event.ActionListener listener) {
         RoundedButton btn = new RoundedButton(text, 18);
@@ -104,28 +96,34 @@ public class Buyer extends JFrame {
         return btn;
     }
 
-    private void onTopUp(ActionEvent e) {
-    new Game(this).setVisible(true); // open Game page
-    setVisible(false);               // hide Buyer page
+    public void onTopUp(ActionEvent e) {
+        dispose();
+        new Game(this).setVisible(true); 
     }
 
-    private void onMiniGames(ActionEvent e) {
-//        new Game(this).setVisible(true);
+    public void onMiniGames(ActionEvent e) {
+        dispose();
         setVisible(true);
         JOptionPane.showMessageDialog(this,"you clicked Mini Games !!");
     }
 
-    private void onRiwayatPembelian(ActionEvent e) {
+    public void onRiwayatPembelian(ActionEvent e) {
+        dispose();
         JOptionPane.showMessageDialog(this, "Riwayat Pembelian clicked");
     }
 
-    private void onLogout(ActionEvent e) {
+    public void onLogout(ActionEvent e) {
         int confirm = JOptionPane.showConfirmDialog(this, "Log out?", "Confirm", JOptionPane.YES_NO_OPTION);
-        if (confirm == JOptionPane.YES_OPTION) dispose();
+        if (confirm == JOptionPane.YES_OPTION) {
+            dispose();
+            Login frame = new Login();
+            frame.setVisible(true);
+        }
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new Buyer().setVisible(true));
+        Buyer frame = new Buyer("");
+        frame.setVisible(true);
     }
     
     
