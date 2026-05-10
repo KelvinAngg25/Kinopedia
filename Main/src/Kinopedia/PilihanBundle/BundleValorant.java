@@ -10,17 +10,18 @@ package Kinopedia.PilihanBundle;
  * @author Victus
  */
 import javax.swing.*;
-import javax.swing.border.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.net.URL;
 
 public class BundleValorant extends JFrame {
 
-    private final JFrame backTo;
+    private JFrame backTo;
 
-    private final String currencyName = "Valorant Points";
-    private final ImageIcon currencyIcon = loadIcon("/Kinopedia/model/IMAGESS/Valorant-pointss.png", 18, 18);
-    private final ImageIcon logoFooter   = loadIcon("/Kinopedia/model/IMAGESS/LogoKinopedia.png", 70, 70);
+    private String currencyName = "Valorant Points";
+    private ImageIcon currencyIcon;
+    private ImageIcon logoFooter;
 
     public BundleValorant(JFrame backTo) {
         this.backTo = backTo;
@@ -33,38 +34,46 @@ public class BundleValorant extends JFrame {
 
         Color ORANGE = new Color(0xFF8C1A);
 
+        // load icons
+        currencyIcon = loadIcon("/Kinopedia/model/IMAGESS/Valorant-pointss.png", 18, 18);
+        logoFooter   = loadIcon("/Kinopedia/model/IMAGESS/LogoKinopedia.png", 70, 70);
+
+        // root
         JPanel root = new JPanel(new BorderLayout());
         root.setBackground(Color.WHITE);
         root.setBorder(new EmptyBorder(18, 18, 18, 18));
         setContentPane(root);
 
-        // ── Top bar ──────────────────────────────────────────────
+        // top bar
         JButton backBtn = new JButton("< Kembali");
         backBtn.setFocusPainted(false);
         backBtn.setBorderPainted(false);
         backBtn.setContentAreaFilled(false);
+        backBtn.setFont(new Font("SansSerif", Font.PLAIN, 16));
         backBtn.setHorizontalAlignment(SwingConstants.LEFT);
-        backBtn.addActionListener(e -> { dispose(); backTo.setVisible(true); });
+        backBtn.addActionListener(e -> {
+            dispose();
+            if (backTo != null) backTo.setVisible(true);
+        });
 
         JPanel top = new JPanel(new BorderLayout());
         top.setBackground(Color.WHITE);
         top.add(backBtn, BorderLayout.WEST);
         root.add(top, BorderLayout.NORTH);
 
-        // ── Scroll area (ONLY fields + bundling) ──────────────────
+        // scroll content
         JPanel content = new JPanel();
         content.setBackground(Color.WHITE);
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
         content.setBorder(new EmptyBorder(8, 12, 0, 12));
 
-        JScrollPane scroll = new JScrollPane(content,
-                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane scroll = new JScrollPane(content);
         scroll.setBorder(null);
         scroll.getViewport().setBackground(Color.WHITE);
+        scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         root.add(scroll, BorderLayout.CENTER);
 
-        // ── NUMBER ID ────────────────────────────────────────────
+        // NUMBER ID
         JLabel idLabel = new JLabel("NUMBER ID");
         idLabel.setFont(new Font("SansSerif", Font.PLAIN, 10));
         idLabel.setForeground(Color.DARK_GRAY);
@@ -74,12 +83,15 @@ public class BundleValorant extends JFrame {
 
         JTextField idField = new JTextField("225180606 (2554)");
         idField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
-        idField.setBorder(orangeFieldBorder());
+        idField.setBorder(BorderFactory.createCompoundBorder(
+                new LineBorder(ORANGE, 2, true),
+                new EmptyBorder(8, 12, 8, 12)
+        ));
         idField.setAlignmentX(Component.LEFT_ALIGNMENT);
         content.add(idField);
         content.add(Box.createVerticalStrut(10));
 
-        // ── ACCOUNT NAME ─────────────────────────────────────────
+        // ACCOUNT NAME
         JLabel accLabel = new JLabel("ACCOUNT NAME");
         accLabel.setFont(new Font("SansSerif", Font.PLAIN, 10));
         accLabel.setForeground(Color.DARK_GRAY);
@@ -91,12 +103,15 @@ public class BundleValorant extends JFrame {
         accNameField.setEditable(false);
         accNameField.setBackground(new Color(0xD9D9D9));
         accNameField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
-        accNameField.setBorder(orangeFieldBorder());
+        accNameField.setBorder(BorderFactory.createCompoundBorder(
+                new LineBorder(ORANGE, 2, true),
+                new EmptyBorder(8, 12, 8, 12)
+        ));
         accNameField.setAlignmentX(Component.LEFT_ALIGNMENT);
         content.add(accNameField);
         content.add(Box.createVerticalStrut(12));
 
-        // ── Tag "1. Bundling" (simple) ────────────────────────────
+        // tag "1. Bundling"
         JPanel tagPanel = new JPanel(new BorderLayout());
         tagPanel.setBackground(Color.WHITE);
         tagPanel.setBorder(BorderFactory.createCompoundBorder(
@@ -113,7 +128,7 @@ public class BundleValorant extends JFrame {
         content.add(tagPanel);
         content.add(Box.createVerticalStrut(8));
 
-        // ── Orange box + grid ────────────────────────────────────
+        // orange box + grid
         JPanel orangeBox = new JPanel(new BorderLayout());
         orangeBox.setBackground(ORANGE);
         orangeBox.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -135,7 +150,7 @@ public class BundleValorant extends JFrame {
         content.add(orangeBox);
         content.add(Box.createVerticalStrut(10));
 
-        // ── Footer fixed (pay + logo) ─────────────────────────────
+        // footer fixed
         JPanel footer = new JPanel();
         footer.setBackground(Color.WHITE);
         footer.setLayout(new BoxLayout(footer, BoxLayout.Y_AXIS));
@@ -149,28 +164,25 @@ public class BundleValorant extends JFrame {
         payBtn.setFocusPainted(false);
         payBtn.setOpaque(true);
         payBtn.setBorder(BorderFactory.createEmptyBorder(10, 12, 10, 12));
-        payBtn.setAlignmentX(Component.LEFT_ALIGNMENT);
-        payBtn.setMaximumSize(new Dimension(Integer.MAX_VALUE, 44));
 
-        footer.add(payBtn);
-        footer.add(Box.createVerticalStrut(8));
+        JPanel payWrap = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        payWrap.setBackground(Color.WHITE);
+        payWrap.add(payBtn);
+        footer.add(payWrap);
+
+        footer.add(Box.createVerticalStrut(14));
 
         JLabel logoLabel = (logoFooter != null) ? new JLabel(logoFooter) : new JLabel("Logo");
         logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         footer.add(logoLabel);
     }
 
-    private Border orangeFieldBorder() {
-        Color ORANGE = new Color(0xFF8C1A);
-        return BorderFactory.createCompoundBorder(
-                new LineBorder(ORANGE, 2, true),
-                new EmptyBorder(8, 12, 8, 12)
-        );
-    }
-
     private ImageIcon loadIcon(String path, int w, int h) {
         URL url = getClass().getResource(path);
-        if (url == null) { System.out.println("Icon not found: " + path); return null; }
+        if (url == null) {
+            System.out.println("Icon not found: " + path);
+            return null;
+        }
         Image img = new ImageIcon(url).getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
         return new ImageIcon(img);
     }

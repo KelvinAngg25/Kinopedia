@@ -244,20 +244,28 @@ public class Game extends JFrame {
     }
 
     private static class RoundedImageLabel extends JLabel {
-        private final int radius;
+
+        private int radius;
 
         public RoundedImageLabel(int radius) {
             this.radius = radius;
             setOpaque(false);
+            setHorizontalAlignment(SwingConstants.CENTER);
         }
 
         @Override
-        public void paintComponent(Graphics g) {
+        protected void paintComponent(Graphics g) {
+            // 1) copy graphics
             Graphics2D g2 = (Graphics2D) g.create();
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            Shape clip = new RoundRectangle2D.Float(0, 0, getWidth(), getHeight(), radius, radius);
-            g2.setClip(clip);
+
+            // 2) make a rounded shape and clip (everything outside becomes hidden)
+            Shape round = new RoundRectangle2D.Float(0, 0, getWidth(), getHeight(), radius, radius);
+            g2.setClip(round);
+
+            // 3) draw the normal JLabel (icon) but clipped
             super.paintComponent(g2);
+
+            // 4) cleanup
             g2.dispose();
         }
     }

@@ -10,28 +10,32 @@ package Kinopedia.PilihanBundle;
  * @author Victus
  */
 import javax.swing.*;
-import javax.swing.border.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.net.URL;
 
 public class BundleFF extends JFrame {
 
-    private final JFrame backTo;
+    private JFrame backTo;
 
-    private final String currencyName = "Diamonds";
-    private final ImageIcon currencyIcon = loadIcon("/Kinopedia/model/IMAGESS/Diamond.png", 18, 18);
-    private final ImageIcon logoFooter   = loadIcon("/Kinopedia/model/IMAGESS/LogoKinopedia.png", 70, 70);
+    private String currencyName = "Diamonds";
+    private ImageIcon currencyIcon;
+    private ImageIcon logoFooter;
 
     public BundleFF(JFrame backTo) {
         this.backTo = backTo;
 
         setTitle("Free Fire - Bundling");
-        setSize(390, 844);
+        setSize(470, 844);
         setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         Color ORANGE = new Color(0xFF8C1A);
+
+        currencyIcon = loadIcon("/Kinopedia/model/IMAGESS/Diamond.png", 18, 18);
+        logoFooter   = loadIcon("/Kinopedia/model/IMAGESS/LogoKinopedia.png", 70, 70);
 
         JPanel root = new JPanel(new BorderLayout());
         root.setBackground(Color.WHITE);
@@ -44,7 +48,10 @@ public class BundleFF extends JFrame {
         backBtn.setContentAreaFilled(false);
         backBtn.setFont(new Font("SansSerif", Font.PLAIN, 13));
         backBtn.setHorizontalAlignment(SwingConstants.LEFT);
-        backBtn.addActionListener(e -> { dispose(); backTo.setVisible(true); });
+        backBtn.addActionListener(e -> {
+            dispose();
+            if (backTo != null) backTo.setVisible(true);
+        });
 
         JPanel top = new JPanel(new BorderLayout());
         top.setBackground(Color.WHITE);
@@ -56,11 +63,10 @@ public class BundleFF extends JFrame {
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
         content.setBorder(new EmptyBorder(8, 0, 0, 0));
 
-        JScrollPane scroll = new JScrollPane(content,
-                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane scroll = new JScrollPane(content);
         scroll.setBorder(null);
         scroll.getViewport().setBackground(Color.WHITE);
+        scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         root.add(scroll, BorderLayout.CENTER);
 
         JLabel idLabel = new JLabel("NUMBER ID");
@@ -72,7 +78,10 @@ public class BundleFF extends JFrame {
 
         JTextField idField = new JTextField("225180606 (2554)");
         idField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 42));
-        idField.setBorder(orangeFieldBorder());
+        idField.setBorder(BorderFactory.createCompoundBorder(
+                new LineBorder(ORANGE, 2, true),
+                new EmptyBorder(6, 10, 6, 10)
+        ));
         idField.setAlignmentX(Component.LEFT_ALIGNMENT);
         content.add(idField);
         content.add(Box.createVerticalStrut(10));
@@ -88,7 +97,10 @@ public class BundleFF extends JFrame {
         accNameField.setEditable(false);
         accNameField.setBackground(new Color(0xD9D9D9));
         accNameField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 42));
-        accNameField.setBorder(orangeFieldBorder());
+        accNameField.setBorder(BorderFactory.createCompoundBorder(
+                new LineBorder(ORANGE, 2, true),
+                new EmptyBorder(6, 10, 6, 10)
+        ));
         accNameField.setAlignmentX(Component.LEFT_ALIGNMENT);
         content.add(accNameField);
         content.add(Box.createVerticalStrut(12));
@@ -143,28 +155,25 @@ public class BundleFF extends JFrame {
         payBtn.setFocusPainted(false);
         payBtn.setOpaque(true);
         payBtn.setBorder(BorderFactory.createEmptyBorder(10, 12, 10, 12));
-        payBtn.setAlignmentX(Component.LEFT_ALIGNMENT);
-        payBtn.setMaximumSize(new Dimension(Integer.MAX_VALUE, 44));
 
-        bottom.add(payBtn);
-        bottom.add(Box.createVerticalStrut(8));
+        JPanel payWrap = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        payWrap.setBackground(Color.WHITE);
+        payWrap.add(payBtn);
+        bottom.add(payWrap);
+
+        bottom.add(Box.createVerticalStrut(14));
 
         JLabel logoLabel = (logoFooter != null) ? new JLabel(logoFooter) : new JLabel("Kinopedia");
         logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         bottom.add(logoLabel);
     }
 
-    private Border orangeFieldBorder() {
-        Color ORANGE = new Color(0xFF8C1A);
-        return BorderFactory.createCompoundBorder(
-                new LineBorder(ORANGE, 2, true),
-                new EmptyBorder(6, 10, 6, 10)
-        );
-    }
-
     private ImageIcon loadIcon(String path, int w, int h) {
         URL url = getClass().getResource(path);
-        if (url == null) { System.out.println("Icon not found: " + path); return null; }
+        if (url == null) {
+            System.out.println("Icon not found: " + path);
+            return null;
+        }
         Image img = new ImageIcon(url).getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
         return new ImageIcon(img);
     }
