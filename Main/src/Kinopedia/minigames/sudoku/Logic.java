@@ -29,6 +29,10 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import java.util.Random;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JTextField;
 public class Logic extends JFrame implements Runnable{
     private int menit,detik;
     boolean pause;
@@ -38,13 +42,14 @@ public class Logic extends JFrame implements Runnable{
     private JLabel sudokuLabel;
     private JButton tombolPause;
     private boolean gameRunning = true;
-
+    private JButton angkadiPilih = null;
+    private int life;
     
-
-    public Logic(int menit, int detik, boolean pause) {
-        this.menit = menit;
-        this.detik = detik;
-        this.pause = pause;
+    public Logic() {
+        this.menit = 5;
+        this.detik = 0;
+        this.pause = false;
+        this.life = 3;
     }
     
     public void timer(){
@@ -64,105 +69,189 @@ public class Logic extends JFrame implements Runnable{
         });
     }
     
-    public static int[][] generatePuzzle() {
-        return new int[][] {
-            {5, 2, 3, 0, 0, 0, 6, 8, 7},
-            {0, 0, 0, 0, 4, 0, 0, 0, 9},
-            {1, 0, 0, 0, 0, 0, 3, 0, 0},
-            {4, 0, 0, 5, 0, 0, 8, 0, 0},
-            {0, 0, 0, 0, 2, 0, 0, 0, 0},
-            {0, 0, 9, 0, 6, 0, 0, 0, 1},
-            {0, 0, 0, 7, 0, 0, 0, 0, 2},
-            {7, 4, 0, 0, 8, 0, 0, 0, 0},
-            {8, 3, 1, 0, 0, 0, 6, 7, 0}
-        };
+    private int[][] Puzzle1() {
+        int[][] puzzle = new int[9][9];
+        puzzle[0] = new int[]{5, 2, 3, 0, 0, 0, 6, 8, 7};
+        puzzle[1] = new int[]{0, 0, 0, 0, 4, 0, 0, 0, 9};
+        puzzle[2] = new int[]{1, 0, 0, 0, 0, 0, 3, 0, 0};
+        puzzle[3] = new int[]{4, 0, 0, 5, 0, 0, 8, 0, 0};
+        puzzle[4] = new int[]{0, 0, 0, 0, 2, 0, 0, 0, 0};
+        puzzle[5] = new int[]{0, 0, 9, 0, 6, 0, 0, 0, 1};
+        puzzle[6] = new int[]{0, 0, 0, 7, 0, 0, 0, 0, 2};
+        puzzle[7] = new int[]{7, 4, 0, 0, 8, 0, 0, 0, 0};
+        puzzle[8] = new int[]{8, 3, 1, 0, 0, 0, 6, 7, 0};
+        return puzzle;
         
+    }
+    
+    public static int [][] Puzzle2(){
+        int[][] puzzle = new int[9][9];
+        puzzle[0] = new int[]{5, 2, 3, 0, 0, 0, 6, 8, 7};
+        puzzle[1] = new int[]{0, 0, 0, 0, 4, 0, 0, 0, 9};
+        puzzle[2] = new int[]{1, 0, 0, 0, 0, 0, 3, 0, 0};
+        puzzle[3] = new int[]{4, 0, 0, 5, 0, 0, 8, 0, 0};
+        puzzle[4] = new int[]{0, 0, 0, 0, 2, 0, 0, 0, 0};
+        puzzle[5] = new int[]{0, 0, 9, 0, 6, 0, 0, 0, 1};
+        puzzle[6] = new int[]{0, 0, 0, 7, 0, 0, 0, 0, 2};
+        puzzle[7] = new int[]{7, 4, 0, 0, 8, 0, 0, 0, 0};
+        puzzle[8] = new int[]{8, 3, 1, 0, 0, 0, 6, 7, 0};
+        return puzzle;
     }
 
     @Override
     public void run() {
         while (!pause){
-            
+            timer();
             try{
                 Thread.sleep(1000);
-                timer();
+                
             }catch(InterruptedException e){
 
             }
         }
     }
     
+    private int p = 0;
+    private int pilihAngka = 0;
+    Random rand = new Random();
+    
     public void game(){
         setSize(470, 844);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
+        setLayout(null);
 
         JButton tombolPause = new JButton("| |");
         tombolPause.setFont(new Font("Poppins", Font.BOLD, 30));
         tombolPause.setContentAreaFilled(false);
         tombolPause.setBorderPainted(false);
         tombolPause.setFocusPainted(false);
+        tombolPause.setBounds(170,-20,100,100);
         tombolPause.addActionListener(e -> {
-            pause = true;
-            pause();
+            if(p==0){
+                p=1;
+                pause = true;
+                pause();
+            }
+           
         });
+        add(tombolPause);
 
         timerLabel = new JLabel();
         timerLabel.setFont(new Font("Poppins", Font.BOLD, 40));
+        timerLabel.setBounds(10,20,150,50);
+        add(timerLabel);
 
         livesLabel = new JLabel("Lives : 3/3");
         livesLabel.setFont(new Font("Poppins", Font.BOLD, 30));
-        JPanel TLPanel = new JPanel(new BorderLayout());
-        TLPanel.add(timerLabel, BorderLayout.WEST);
-        TLPanel.add(livesLabel, BorderLayout.EAST);
-
-        JPanel pausePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        pausePanel.add(tombolPause);
-
-        JPanel topPanel = new JPanel(new BorderLayout());
-        topPanel.add(pausePanel, BorderLayout.NORTH);
-        topPanel.add(TLPanel,BorderLayout.SOUTH );
-
-
-        add(topPanel, BorderLayout.NORTH);
+        livesLabel.setBounds(280,20,150,50);
+        add(livesLabel);
+       
         Thread timerThread = new Thread(this);
         timerThread.setDaemon(true);
         timerThread.start();
 
+        
+        for (int i = 0;i<9;i++){
+            final int valueAngka = i+1;
+            String a = ""+(i+1);
+            int kanan = i*60+90;
+            JButton angka = new JButton(a);
+            angka.setFont(new Font("Poppins", Font.BOLD, 40));
+            angka.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            angka.setFocusPainted(false);
+            angka.setBackground(Color.LIGHT_GRAY);
+            
+            
+            if(i>4 && i!=8){
+                kanan = (i%4)*60+60;
+                angka.setBounds(kanan,640,50,50);
+            }else if(i==8){
+                kanan = 4*60+60;
+                angka.setBounds(kanan,640,50,50);
+            }else{
+                angka.setBounds(kanan,570,50,50);
+            }
+            add(angka);
+            
+            angka.addActionListener(e ->{
+                if(angkadiPilih != null){
+                    angkadiPilih.setBackground(Color.LIGHT_GRAY);
+                }
+                pilihAngka = valueAngka;
+                angkadiPilih = angka;
+                angka.setBackground(Color.WHITE);
+                
+            });
+        }
+        
         JPanel sudokuPanel = new JPanel(new java.awt.GridLayout(9, 9));
-        sudokuPanel.setPreferredSize(new Dimension(400, 400));
-        sudokuPanel.setMaximumSize(new Dimension(400, 400));
-        sudokuPanel.setMinimumSize(new Dimension(400, 400));
+        sudokuPanel.setBounds(30,100,400,400);
         sudokuPanel.setBackground(Color.WHITE);
         sudokuPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        int random = rand.nextInt(10+1);
+        
+//        if(random ==1){
+//            int[][] puzzle = Puzzle1();
+//        }else if(random ==2){
+//            int[][] puzzle = Puzzle2();
+//        }else if(random ==3){
+//            int[][] puzzle = Puzzle3();
+//        }else if(random ==4){
+//            int[][] puzzle = Puzzle4();
+//        }else if(random ==5){
+//            int[][] puzzle = Puzzle5();
+//        }else if(random ==6){
+//            int[][] puzzle = Puzzle6();
+//        }else if(random ==7){
+//            int[][] puzzle = Puzzle7();
+//        }else if(random ==8){
+//            int[][] puzzle = Puzzle8();
+//        }else if(random ==9){
+//            int[][] puzzle = Puzzle9();
+//        }else if(random ==10){
+//            int[][] puzzle = Puzzle10();
+//        }
 
-        JPanel centerPanel = new JPanel(new GridBagLayout());
-        centerPanel.add(sudokuPanel);
-        add(centerPanel, BorderLayout.CENTER);
-
-
-        int[][] puzzle = generatePuzzle();
+        int[][] puzzle = Puzzle1();
+        
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 9; col++) {
-                JTextField cell = new JTextField();
-                cell.setHorizontalAlignment(JTextField.CENTER);
+                JButton cell = new JButton();
+                cell.setHorizontalAlignment(JButton.CENTER);
                 cell.setFont(new Font("Poppins", Font.BOLD, 20));
                 cell.setPreferredSize(new Dimension(55, 55));
-                int top    = (row % 3 == 0) ? 3 : 1;
-                int left   = (col % 3 == 0) ? 3 : 1;
-                int bottom = (row == 8)     ? 3 : 1;
-                int right  = (col == 8)     ? 3 : 1;
-                cell.setBorder(BorderFactory.createMatteBorder(top, left, bottom, right, Color.BLACK));
+                if((row ==2 && col==2) || (row==2 && col ==5) || (row ==5 && col ==2)|| (row==5 && col==5)){
+                    cell.setBorder(BorderFactory.createMatteBorder(1, 1, 3, 3, Color.BLACK));
+                }else if(row ==2 || row==5){
+                    cell.setBorder(BorderFactory.createMatteBorder(1, 1, 3, 1, Color.BLACK));
+                }else if(col==2 || col==5){
+                    cell.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 3, Color.BLACK));
+                }else{
+                    cell.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
+                }
+                
 
                 if (puzzle[row][col] != 0) {
                     cell.setText(String.valueOf(puzzle[row][col]));
-                    cell.setEditable(false);
+                    cell.setEnabled(false);
                     cell.setBackground(Color.LIGHT_GRAY);
+                    cell.setDisabledIcon(null);
+                }else{
+                    cell.setBackground(Color.WHITE);
+                    cell.setOpaque(true);
+                    cell.addActionListener(e -> {
+                    if (pilihAngka != 0) {
+                        cell.setText(String.valueOf(pilihAngka));
+                        cell.setForeground(new Color(0, 0, 180));
+                        cell.setBackground(Color.LIGHT_GRAY);
+                    }
+                    });
                 }
                 sudokuPanel.add(cell);
             }
-        }   
+        }
+        add(sudokuPanel);
         
         
     }
@@ -177,7 +266,7 @@ public class Logic extends JFrame implements Runnable{
             playAgain.setFont(new Font("Monospaced", Font.BOLD, 60));
             playAgain.addActionListener(e -> {
                 dispose();
-                Logic game = new Logic(5, 0, false);
+                Logic game = new Logic();
                 game.game();
                 game.setVisible(true);
             });
@@ -200,9 +289,7 @@ public class Logic extends JFrame implements Runnable{
             
             revalidate();
             repaint();
-        
         });
-           
     }
     
     public void gameOver(){
@@ -219,7 +306,7 @@ public class Logic extends JFrame implements Runnable{
             playAgain.setContentAreaFilled(false);
             playAgain.addActionListener(e -> {
                 dispose();
-                Logic game = new Logic(5, 0, false);
+                Logic game = new Logic();
                 game.game();
                 game.setVisible(true);
             });
@@ -243,9 +330,6 @@ public class Logic extends JFrame implements Runnable{
             result.add(tombolPlayExit,BorderLayout.CENTER);
             
             add(result, BorderLayout.SOUTH);
-            
-            revalidate();
-            repaint();
         
         });
            
@@ -273,6 +357,8 @@ public class Logic extends JFrame implements Runnable{
                 Thread t = new Thread(this);
                 t.setDaemon(true);
                 t.start();
+                p=0;
+                
                 
                 
             });
@@ -326,12 +412,12 @@ public class Logic extends JFrame implements Runnable{
         btnStart.setBorder(BorderFactory.createLineBorder(Color.BLACK, 7));
         btnStart.setFocusPainted(false);
         btnStart.addActionListener(e -> {
-            getContentPane().removeAll();
-            Logic game = new Logic(5, 1, false);
-            game.game();
-            game.setVisible(true);
-            revalidate();
-            repaint();
+            dispose();
+            SwingUtilities.invokeLater(() -> {
+                Logic game = new Logic();
+                game.game();
+                game.setVisible(true);
+            });
         });
         button.add(btnStart,BorderLayout.NORTH);
         
@@ -342,18 +428,11 @@ public class Logic extends JFrame implements Runnable{
         btnExit.setFocusPainted(false);
         btnExit.setBorder(BorderFactory.createLineBorder(Color.BLACK, 7));
         btnExit.addActionListener(e ->{
-            System.exit(0);
+            new Kinopedia.minigames.MainMiniGames().setVisible(true);
+            dispose();
         });
         button.add(btnExit, BorderLayout.SOUTH);
         
         add(button, BorderLayout.SOUTH);
-        
-        
-        
     }
-
-
-    
-    
-    
 }
