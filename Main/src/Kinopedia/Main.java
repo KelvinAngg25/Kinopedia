@@ -1,5 +1,7 @@
 package Kinopedia;
 
+
+import Kinopedia.view.LoginRegister.Login;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -31,5 +33,7 @@ public class Main {
         System.out.println("Halo");
         cekUser.loadSemuaUser(dataUser);
         cekTrans.loadSemuaTransaksi(dataTransaksi);
+        
+        new Login();
     }
 }

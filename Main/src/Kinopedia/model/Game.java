@@ -97,7 +97,7 @@ public class Game extends JFrame {
         footer.setBackground(Color.WHITE);
         footer.setBorder(new EmptyBorder(10, 0, 0, 0));
 
-        ImageIcon logoImg = loadIcon("LogoKinopedia.png", 90, 90);
+        ImageIcon logoImg = loadIcon("LogoKinopedia.png", 50, 50);
         JLabel logoLabel = (logoImg != null) ? new JLabel(logoImg) : new JLabel("Kinopedia");
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
 

@@ -9,7 +9,7 @@ package Kinopedia.model;
  *
  * @author William
  */
-import Kinopedia.view.*;
+import Kinopedia.view.History;
 import Kinopedia.view.LoginRegister.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -18,8 +18,7 @@ import java.awt.event.ActionEvent;
 import java.awt.geom.RoundRectangle2D;
 
 public class Buyer extends JFrame {
-
-    public Buyer(String namaYangLogin) {
+    public Buyer() {
         setTitle("Kinopedia | Halaman Utama ");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(470, 844);
@@ -28,12 +27,6 @@ public class Buyer extends JFrame {
         logoPanel.setBackground(Color.WHITE);
         logoPanel.setLayout(new BoxLayout(logoPanel, BoxLayout.Y_AXIS));
         logoPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        
-        JLabel titleLabel1 = new JLabel("Selamat datang, " + namaYangLogin + "!");
-        titleLabel1.setFont(new Font("SansSerif", Font.BOLD, 24));
-        titleLabel1.setForeground(new Color(0xFF8C1A));
-        titleLabel1.setAlignmentX(Component.CENTER_ALIGNMENT);
-        logoPanel.add(titleLabel1);
         
         logoPanel.add(Box.createVerticalStrut(30));
 
@@ -109,7 +102,8 @@ public class Buyer extends JFrame {
 
     public void onRiwayatPembelian(ActionEvent e) {
         dispose();
-        new History();
+        History frame = new History();
+        frame.setVisible(true);
     }
 
     public void onLogout(ActionEvent e) {
@@ -117,11 +111,12 @@ public class Buyer extends JFrame {
         if (confirm == JOptionPane.YES_OPTION) {
             dispose();
             Login frame = new Login();
+            frame.setVisible(true);
         }
     }
 
     public static void main(String[] args) {
-        Buyer frame = new Buyer("");
+        Buyer frame = new Buyer();
         frame.setVisible(true);
     }
 

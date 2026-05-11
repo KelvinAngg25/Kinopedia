@@ -35,7 +35,7 @@ public class BundleFF extends JFrame {
         Color ORANGE = new Color(0xFF8C1A);
 
         currencyIcon = loadIcon("/Kinopedia/model/IMAGESS/Diamond.png", 18, 18);
-        logoFooter   = loadIcon("/Kinopedia/model/IMAGESS/LogoKinopedia.png", 70, 70);
+        logoFooter   = loadIcon("/Kinopedia/model/IMAGESS/LogoKinopedia.png", 50, 50);
 
         JPanel root = new JPanel(new BorderLayout());
         root.setBackground(Color.WHITE);

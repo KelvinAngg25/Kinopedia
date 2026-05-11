@@ -36,7 +36,7 @@ public class BundlePUBG extends JFrame {
 
         // load icons
         currencyIcon = loadIcon("/Kinopedia/model/IMAGESS/UC-PUBGs.png", 22, 22);
-        logoFooter   = loadIcon("/Kinopedia/model/IMAGESS/LogoKinopedia.png", 70, 70);
+        logoFooter   = loadIcon("/Kinopedia/model/IMAGESS/LogoKinopedia.png", 50, 50);
 
         // root
         JPanel root = new JPanel(new BorderLayout());

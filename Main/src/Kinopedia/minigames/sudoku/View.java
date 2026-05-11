@@ -8,10 +8,17 @@ package Kinopedia.minigames.sudoku;
 import javax.swing.SwingUtilities;
 
 
+/**
+ *
+ * @author William
+ */
 public class View{
     public static void main(String[] args) {
-        Logic c = new Logic(5, 1, false);
-        c.menuGame();
-        c.setVisible(true);
+        SwingUtilities.invokeLater(() -> {
+            Logic c = new Logic();
+            c.menuGame();
+            c.setVisible(true);
+        });
+        
     }
 }

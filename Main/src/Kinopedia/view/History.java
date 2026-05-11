@@ -8,7 +8,7 @@ package Kinopedia.view;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import Kinopedia.model.*;
+import Kinopedia.model.Buyer;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -89,12 +89,12 @@ public class History extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 // Kode saat label diklik
                 dispose();
-                Buyer frame = new Buyer("");
-                frame.setVisible(true);
+                Buyer frame1 = new Buyer();
+                frame1.setVisible(true);
             }
         });
 
-        setVisible(true);
+        
     }
 
     // ================= CARD =================
@@ -216,7 +216,8 @@ public class History extends JFrame {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new History();
+                History frame = new History();
+                frame.setVisible(true);
             }
         });
     }
