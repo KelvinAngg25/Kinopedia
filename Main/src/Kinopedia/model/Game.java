@@ -158,8 +158,8 @@ public class Game extends JFrame {
         if (name.equals("PUBG Mobile")) fileName = "PUBG.png";
         if (name.equals("CODM")) fileName = "CODMmobile.jpg";
         if (name.equals("Free Fire")) fileName = "FreeFire.jpg";
+        if (name.equals("eFootball")) fileName = "efootball.jpg ";
         if (name.equals("Mobile Legend")) fileName = "ML.png";
-        if (name.equals("eFootball")) fileName = "EFOOTBALL.png";
         if (name.equals("Steam")) fileName = "Steam.png";
 
         ImageIcon img = loadIcon(fileName, 70, 70);
