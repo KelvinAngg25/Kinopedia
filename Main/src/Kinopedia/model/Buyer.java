@@ -98,13 +98,12 @@ public class Buyer extends JFrame {
 
     public void onTopUp(ActionEvent e) {
         dispose();
-        new Game(this).setVisible(true); 
+        new Game(this).setVisible(true);
     }
 
-    public void onMiniGames(ActionEvent e) {
-        dispose();
+    private void onMiniGames(ActionEvent e) {
         setVisible(true);
-        JOptionPane.showMessageDialog(this,"you clicked Mini Games !!");
+        JOptionPane.showMessageDialog(this, "you clicked Mini Games !!");
     }
 
     public void onRiwayatPembelian(ActionEvent e) {
@@ -117,7 +116,6 @@ public class Buyer extends JFrame {
         if (confirm == JOptionPane.YES_OPTION) {
             dispose();
             Login frame = new Login();
-            frame.setVisible(true);
         }
     }
 
@@ -125,10 +123,9 @@ public class Buyer extends JFrame {
         Buyer frame = new Buyer("");
         frame.setVisible(true);
     }
-    
-    
 
     static class RoundedButton extends JButton {
+
         private final int radius;
         private Shape shape;
 
