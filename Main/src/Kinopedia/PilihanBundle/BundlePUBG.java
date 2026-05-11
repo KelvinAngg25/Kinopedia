@@ -66,12 +66,15 @@ public class BundlePUBG extends JFrame {
         content.setBackground(Color.WHITE);
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
         content.setBorder(new EmptyBorder(10, 0, 0, 0));
+        
+        root.add(content, BorderLayout.CENTER);
 
-        JScrollPane scroll = new JScrollPane(content);
-        scroll.setBorder(null);
-        scroll.getViewport().setBackground(Color.WHITE);
-        scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        root.add(scroll, BorderLayout.CENTER);
+//        JScrollPane scroll = new JScrollPane(content);
+//        scroll.setBorder(null);
+//        scroll.getViewport().setBackground(Color.WHITE);
+//        scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+//        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER); 
+//        root.add(scroll, BorderLayout.CENTER);
 
         // NUMBER ID
         JLabel idLabel = new JLabel("NUMBER ID");
@@ -105,11 +108,12 @@ public class BundlePUBG extends JFrame {
         accNameField.setEditable(false);
         accNameField.setBackground(new Color(0xD9D9D9));
         accNameField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 44));
+        accNameField.setAlignmentX(Component.LEFT_ALIGNMENT);
         accNameField.setBorder(BorderFactory.createCompoundBorder(
                 new LineBorder(ORANGE, 2, true),
                 new EmptyBorder(6, 10, 6, 10)
         ));
-        accNameField.setHorizontalAlignment(JTextField.CENTER);
+        accNameField.setHorizontalAlignment(JTextField.LEFT);
         accNameField.setAlignmentX(Component.LEFT_ALIGNMENT);
         content.add(accNameField);
 

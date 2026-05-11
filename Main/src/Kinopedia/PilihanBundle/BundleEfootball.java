@@ -34,7 +34,7 @@ public class BundleEfootball extends JFrame {
 
         Color ORANGE = new Color(0xFF8C1A);
 
-        currencyIcon = loadIcon("/Kinopedia/model/IMAGESS/efootballgoldss.png", 18, 18);
+        currencyIcon = loadIcon("/Kinopedia/model/IMAGESS/efootballgolds.png", 18, 18);
         logoFooter   = loadIcon("/Kinopedia/model/IMAGESS/LogoKinopedia.png", 70, 70);
 
         JPanel root = new JPanel(new BorderLayout());
