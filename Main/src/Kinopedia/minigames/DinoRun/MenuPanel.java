@@ -15,15 +15,26 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
 
 public class MenuPanel extends JPanel {
 
     private GameFrame frame;
+    private Image dinoImg;
+    private Image cactusImg;
+    private Image birdImg;
 
     public MenuPanel(GameFrame frame) {
+        dinoImg = new ImageIcon(
+            getClass().getResource(
+                "/Kinopedia/minigames/DinoRun/Asset/Dino.png"
+            )
+        ).getImage();
+        
         this.frame = frame;
         setPreferredSize(new Dimension(GameFrame.WIDTH, GameFrame.HEIGHT));
         setBackground(Color.WHITE);
@@ -66,30 +77,10 @@ public class MenuPanel extends JPanel {
     }
 
     private void drawDino(Graphics2D g, int x, int y) {
-        g.setColor(Color.BLACK);
-        int s = 8;
-        // Badan
-        g.fillRect(x + 3*s, y,       5*s, 4*s);
-        // Leher
-        g.fillRect(x + 3*s, y + 4*s, 3*s, 2*s);
-        // Kepala
-        g.fillRect(x + 4*s, y - 2*s, 5*s, 4*s);
-        // Moncong
-        g.fillRect(x + 8*s, y,       2*s, s);
-        // Mata
-        g.setColor(Color.WHITE);
-        g.fillRect(x + 7*s, y - s,   s, s);
-        g.setColor(Color.BLACK);
-        // Ekor
-        g.fillRect(x,       y + 2*s, 3*s, 2*s);
-        g.fillRect(x + s,   y + 4*s, 2*s, s);
-        // Kaki
-        g.fillRect(x + 4*s, y + 6*s, 2*s, 3*s);
-        g.fillRect(x + 4*s, y + 9*s, 3*s, s);
-        g.fillRect(x + 6*s, y + 7*s, 2*s, 2*s);
-        // Tangan
-        g.fillRect(x + 5*s, y + 4*s, s, s);
-    }
+
+        g.drawImage(dinoImg, x, y, 80, 80, null);
+
+    }   
 
     private JButton createPixelButton(final String text, final Color bg) {
         JButton btn = new JButton() {
