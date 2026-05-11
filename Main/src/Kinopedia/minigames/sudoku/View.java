@@ -19,6 +19,5 @@ public class View{
             c.menuGame();
             c.setVisible(true);
         });
-        
     }
 }

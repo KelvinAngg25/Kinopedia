@@ -44,7 +44,8 @@ public class MenuPanel extends JPanel {
         exitBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+                new Kinopedia.minigames.MainMiniGames().setVisible(true);
+                frame.dispose();
             }
         });
         add(exitBtn);

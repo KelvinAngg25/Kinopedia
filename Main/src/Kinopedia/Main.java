@@ -28,6 +28,7 @@ public class Main {
     public static void main(String[] args) {
         DataUser cekUser = new DataUser("", "", 0, 0);
         DataTransaksi cekTrans = new DataTransaksi("", "", "", "", "", "", "", 0, true, "", "");
+        DataUser userDipilih = null;
         
         // TODO code application logic here
         System.out.println("Halo");

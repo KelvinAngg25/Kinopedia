@@ -3,44 +3,36 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Kinopedia.model;
+package Kinopedia.minigames;
 
 /**
  *
  * @author William
  */
 
-import Kinopedia.PilihanBundle.BundleValorant;
-import Kinopedia.PilihanBundle.BundlePUBG;
-import Kinopedia.PilihanBundle.BundleCODM;
-import Kinopedia.PilihanBundle.BundleFF;
-import Kinopedia.PilihanBundle.BundleML;
-import Kinopedia.PilihanBundle.BundleEfootball;
-import Kinopedia.PilihanBundle.BundleSteam;
-
+import Kinopedia.model.Buyer;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 
-public class Game extends JFrame {
-    
+public class MainMiniGames extends JFrame {
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            JFrame dummyBack = new JFrame();
-            dummyBack.setSize(470, 844);
-            dummyBack.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            dummyBack.setVisible(true);
+//            JFrame dummyBack = new JFrame();
+//            dummyBack.setSize(470, 844);
+//            dummyBack.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//            dummyBack.setVisible(true);
 
-            new Game(dummyBack).setVisible(true);
-            dummyBack.setVisible(false);
+            new MainMiniGames().setVisible(true);
+//            dummyBack.setVisible(false);
         });
     }
 
-    private final JFrame backTo;
+//    private final JFrame backTo;
 
-    public Game(JFrame backTo) {
-        this.backTo = backTo;
+    public MainMiniGames() {
 
         setTitle("Kinopedia");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -75,23 +67,15 @@ public class Game extends JFrame {
         // less left padding => more left sided
         content.setBorder(new EmptyBorder(10, 0, 10, 0));
         root.add(content, BorderLayout.CENTER);
+        
+//        koinLabel = new JLabel("Koin: " + buyer.getKoin());
+//        koinLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
+//        content.add(koinLabel);
 
-        content.add(sectionTitle("First Person Shooter (FPS)"));
+        
         content.add(Box.createVerticalStrut(10));
-        content.add(iconRow(new String[]{"Valorant", "PUBG Mobile", "CODM", "Free Fire"}));
-
-        content.add(Box.createVerticalStrut(14));
-        content.add(sectionTitle("Mobile Arena"));
-        content.add(iconRow(new String[]{"Mobile Legend"}));
-
-        content.add(Box.createVerticalStrut(14));
-        content.add(sectionTitle("Sports"));
-        content.add(iconRow(new String[]{"eFootball"}));
-
-        content.add(Box.createVerticalStrut(14));
-        content.add(sectionTitle("Application"));
-        content.add(iconRow(new String[]{"Steam"}));
-
+        content.add(iconRow(new String[]{"Flappy Wild", "DinoRun", "Sudoku"}));
+        
         // ===== FOOTER LOGO (CENTERED) =====
         JPanel footer = new JPanel(new BorderLayout());
         footer.setBackground(Color.WHITE);
@@ -153,13 +137,9 @@ public class Game extends JFrame {
         });
 
         String fileName = "";
-        if (name.equals("Valorant")) fileName = "Valorantt.png";
-        if (name.equals("PUBG Mobile")) fileName = "PUBG.png";
-        if (name.equals("CODM")) fileName = "CODMmobile.jpg";
-        if (name.equals("Free Fire")) fileName = "FreeFire.jpg";
-        if (name.equals("eFootball")) fileName = "efootball.jpg";
-        if (name.equals("Mobile Legend")) fileName = "ML.png";
-        if (name.equals("Steam")) fileName = "Steam.png";
+        if (name.equals("DinoRun")) fileName = "logoDinoRun.png";
+        if (name.equals("Sudoku")) fileName = "logoSudoku.jpg";
+        if (name.equals("Flappy Wild")) fileName = "LogoFlappyWild.png";
 
         ImageIcon img = loadIcon(fileName, 70, 70);
         if (img != null) {
@@ -185,61 +165,36 @@ public class Game extends JFrame {
     }
 
     private void openBundlePage(String name) {
-        if (name.equals("Valorant")) {
-            new BundleValorant(this).setVisible(true);
-            setVisible(false);
-            return;
+        if (name.equals("Flappy Wild")) {
+            new Kinopedia.minigames.FllapyWild.GameWindow().setVisible(true);
         }
 
-        if (name.equals("PUBG Mobile")) {
-            new BundlePUBG(this).setVisible(true);
-            setVisible(false);
-            return;
+        if (name.equals("DinoRun")) {
+            new Kinopedia.minigames.DinoRun.GameFrame().setVisible(true);
         }
 
-        if (name.equals("CODM")) {
-            new BundleCODM(this).setVisible(true);
-            setVisible(false);
-            return;
-        }
+        if (name.equals("Sudoku")) {
+            Kinopedia.minigames.sudoku.Logic frame = new Kinopedia.minigames.sudoku.Logic();
+            frame.menuGame();
+            frame.setVisible(true);
 
-        if (name.equals("Free Fire")) {
-            new BundleFF(this).setVisible(true);
-            setVisible(false);
-            return;
         }
-
-        if (name.equals("Mobile Legend")) {
-            new BundleML(this).setVisible(true);
-            setVisible(false);
-            return;
-        }
-
-        if (name.equals("eFootball")) {
-            new BundleEfootball(this).setVisible(true);
-            setVisible(false);
-            return;
-        }
-
-        if (name.equals("Steam")) {
-            new BundleSteam(this).setVisible(true);
-            setVisible(false);
-        }
+        dispose();
     }
 
     private ImageIcon loadIcon(String fileName, int w, int h) {
         if (fileName == null || fileName.equals("")) return null;
 
-        java.net.URL url = getClass().getResource("/Kinopedia/model/IMAGESS/" + fileName);
+        java.net.URL url = getClass().getResource("/Kinopedia/minigames/gambarMain/" + fileName);
         if (url == null) return null;
 
         Image scaled = new ImageIcon(url).getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
         return new ImageIcon(scaled);
     }
-
+    
     private void goBack() {
+        new Buyer().setVisible(true);
         dispose();
-        backTo.setVisible(true);
     }
 
     private static class RoundedImageLabel extends JLabel {
@@ -269,3 +224,4 @@ public class Game extends JFrame {
         }
     }
 }
+

@@ -428,7 +428,8 @@ public class Logic extends JFrame implements Runnable{
         btnExit.setFocusPainted(false);
         btnExit.setBorder(BorderFactory.createLineBorder(Color.BLACK, 7));
         btnExit.addActionListener(e ->{
-            System.exit(0);
+            new Kinopedia.minigames.MainMiniGames().setVisible(true);
+            dispose();
         });
         button.add(btnExit, BorderLayout.SOUTH);
         

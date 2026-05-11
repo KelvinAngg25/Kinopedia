@@ -96,8 +96,8 @@ public class Buyer extends JFrame {
     }
 
     private void onMiniGames(ActionEvent e) {
-        setVisible(true);
-        JOptionPane.showMessageDialog(this, "you clicked Mini Games !!");
+        dispose();
+        new Kinopedia.minigames.MainMiniGames().setVisible(true);
     }
 
     public void onRiwayatPembelian(ActionEvent e) {

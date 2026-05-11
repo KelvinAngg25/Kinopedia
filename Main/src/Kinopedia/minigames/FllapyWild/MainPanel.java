@@ -78,8 +78,13 @@ public class MainPanel extends JPanel {
 
         JButton btnExit = createStyledButton("EXIT", new Color(80, 80, 80), Color.WHITE);
         btnExit.setBounds(85, 710, 300, 70);
-        btnExit.addActionListener(e -> System.exit(0));
+        btnExit.addActionListener(e -> exit());
         add(btnExit);
+    }
+    
+    private void exit() {
+        new Kinopedia.minigames.MainMiniGames().setVisible(true);
+        gameWindow.dispose();
     }
 
     public void resetMenu() {
