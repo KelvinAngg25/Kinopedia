@@ -22,7 +22,7 @@ public class Pipe {
     // gapY = posisi Y TENGAH celah antara dua pipa
     private int gapY;
     // gapSize = tinggi celah (ruang untuk karakter lewat)
-    private int gapSize = 235;
+    private int gapSize = 180;
  
     // Kecepatan gerak ke kiri
     private float speed = 4.0f;
@@ -33,8 +33,8 @@ public class Pipe {
     public Pipe(float startX) {
         this.x = startX;
         // Posisi celah dibuat random
-        int minGapY = 280;
-        int maxGapY = GameWindow.HEIGHT - 380;
+        int minGapY = 200;
+        int maxGapY = GameWindow.HEIGHT - 280;
         this.gapY   = new Random().nextInt(maxGapY - minGapY) + minGapY;
     }
  

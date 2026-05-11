@@ -84,7 +84,7 @@ public class FlappyWild extends JPanel implements KeyListener, MouseListener {
         // ===== Tombol PAUSE (pojok kiri atas, tampil saat playing) =====
         btnPause = new ImageButton("btn_pause", "PAUSE",
             new Color(240, 240, 240), new Color(50, 50, 50));
-        btnPause.setBounds(10, 10, 140, 48);
+        btnPause.setBounds(10, 10, 120, 42);
         btnPause.addActionListener(e -> pauseGame());
         btnPause.setVisible(false);
         add(btnPause);
@@ -96,7 +96,7 @@ public class FlappyWild extends JPanel implements KeyListener, MouseListener {
         overlayButtons.setVisible(false);
         add(overlayButtons);
 
-        int btnW = 360, btnH = 68;
+        int btnW = 300, btnH = 60;
         int btnX = (GameWindow.WIDTH - btnW) / 2;
 
         // ===== Tombol CONTINUE (saat pause) =====
@@ -109,18 +109,14 @@ public class FlappyWild extends JPanel implements KeyListener, MouseListener {
         // ===== Tombol EXIT (saat pause) =====
         btnExit = new ImageButton("btn_exit", "EXIT",
             new Color(210, 50, 50), Color.WHITE);
-        btnExit.setBounds(btnX, GameWindow.HEIGHT / 2 + 95, btnW, btnH);
+        btnExit.setBounds(btnX, GameWindow.HEIGHT / 2 + 80, btnW, btnH);
         btnExit.addActionListener(e -> exitToMenu());
         overlayButtons.add(btnExit);
 
         // ===== Tombol KEMBALI (game over & victory) =====
         btnBack = new ImageButton("btn_kembali", "KEMBALI",
             new Color(210, 50, 50), Color.WHITE);
-        btnBack.setBounds(
-            (GameWindow.WIDTH - 300) / 2,
-            GameWindow.HEIGHT / 2 + 150,
-            300, 68
-        );
+        btnBack.setBounds((GameWindow.WIDTH - 260) / 2, GameWindow.HEIGHT / 2 + 130, 260, 60);
         btnBack.addActionListener(e -> exitToMenu());
         overlayButtons.add(btnBack);
     }

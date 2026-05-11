@@ -15,8 +15,8 @@ import java.awt.*;
 public class GameWindow extends JFrame {
 
     // Ukuran layar game
-    public static final int WIDTH  = 720;
-    public static final int HEIGHT = 1280;
+    public static final int WIDTH  = 470;
+    public static final int HEIGHT = 844;
 
     // CardLayout untuk berpindah panel
     private CardLayout cardLayout;
@@ -27,8 +27,9 @@ public class GameWindow extends JFrame {
     private FlappyWild flappyWild;
 
     public GameWindow() {
+        AssetManager.loadAll();
         setTitle("Flappy Wild");
-        setSize(WIDTH, HEIGHT);
+//        setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setLocationRelativeTo(null); // Tampilkan di tengah layar
@@ -46,6 +47,8 @@ public class GameWindow extends JFrame {
         mainContainer.add(flappyWild, "GAME");
 
         add(mainContainer);
+        pack();
+        setLocationRelativeTo(null);
 
         // Tampilkan halaman menu dulu
         showMenu();

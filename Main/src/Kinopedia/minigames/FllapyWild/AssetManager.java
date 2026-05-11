@@ -45,8 +45,8 @@ public class AssetManager {
         load("bebek_idle",   "character_prev/kwek_iddle.png");
 
         // PIPA
-        load("pipa_1", "pipes/pipe_top.png");
-        load("pipa_2", "pipes/pipe_bottom.png");
+        load("pipe_top", "pipes/pipe_top.png");
+        load("pipe_bottom", "pipes/pipe_bottom.png");
 
         // UI
         load("logo",           "ui/logo.png");
