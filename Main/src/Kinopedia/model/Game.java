@@ -119,7 +119,6 @@ public class Game extends JFrame {
     }
 
     private JPanel iconRow(String[] names) {
-        // tighter gaps => more left sided
         JPanel row = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         row.setBackground(Color.WHITE);
         row.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -158,7 +157,7 @@ public class Game extends JFrame {
         if (name.equals("PUBG Mobile")) fileName = "PUBG.png";
         if (name.equals("CODM")) fileName = "CODMmobile.jpg";
         if (name.equals("Free Fire")) fileName = "FreeFire.jpg";
-        if (name.equals("eFootball")) fileName = "efootball.jpg ";
+        if (name.equals("eFootball")) fileName = "efootball.jpg";
         if (name.equals("Mobile Legend")) fileName = "ML.png";
         if (name.equals("Steam")) fileName = "Steam.png";
 

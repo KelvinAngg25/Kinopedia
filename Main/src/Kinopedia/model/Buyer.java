@@ -9,6 +9,7 @@ package Kinopedia.model;
  *
  * @author William
  */
+import Kinopedia.view.*;
 import Kinopedia.view.LoginRegister.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -36,7 +37,7 @@ public class Buyer extends JFrame {
         
         logoPanel.add(Box.createVerticalStrut(30));
 
-        ImageIcon icon = new ImageIcon(getClass().getResource("/IMAGESS/LogoKinopedia.png"));
+        ImageIcon icon = new ImageIcon(getClass().getResource("IMAGESS/LogoKinopedia.png"));
         Image scaledImage = icon.getImage().getScaledInstance(
             170, 170, 
             Image.SCALE_SMOOTH
@@ -108,7 +109,7 @@ public class Buyer extends JFrame {
 
     public void onRiwayatPembelian(ActionEvent e) {
         dispose();
-        JOptionPane.showMessageDialog(this, "Riwayat Pembelian clicked");
+        new History();
     }
 
     public void onLogout(ActionEvent e) {

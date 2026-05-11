@@ -8,13 +8,16 @@ package Kinopedia.view;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import Kinopedia.model.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class History extends JFrame {
 
     public History() {
 
         setTitle("History");
-        setSize(420, 820);
+        setSize(470, 844);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
@@ -45,6 +48,8 @@ public class History extends JFrame {
         headerPanel.add(backLabel);
         headerPanel.add(Box.createHorizontalStrut(8));
         headerPanel.add(kembaliLabel);
+        
+        
 
         // ================= CONTENT =================
         JPanel contentPanel = new JPanel();
@@ -78,6 +83,16 @@ public class History extends JFrame {
         mainPanel.add(scrollPane, BorderLayout.CENTER);
 
         add(mainPanel);
+        
+        headerPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // Kode saat label diklik
+                dispose();
+                Buyer frame = new Buyer("");
+                frame.setVisible(true);
+            }
+        });
 
         setVisible(true);
     }
