@@ -121,29 +121,41 @@ public class History extends JFrame {
         JLabel date = new JLabel("21-05-2024 · 17:30");
         date.setForeground(new Color(220, 220, 220));
         date.setFont(new Font("SansSerif", Font.PLAIN, 14));
-
+        
         textPanel.add(title);
         textPanel.add(Box.createVerticalStrut(22));
         textPanel.add(id);
         textPanel.add(Box.createVerticalStrut(10));
         textPanel.add(date);
+        textPanel.setPreferredSize(new Dimension(250, 140));
 
         // ================= ARROW =================
-        JLabel arrow = new JLabel("›");
+        JButton arrow = new JButton("›");
         arrow.setForeground(Color.WHITE);
         arrow.setFont(new Font("SansSerif", Font.BOLD, 40));
+        arrow.setContentAreaFilled(false);
+        arrow.setBorderPainted(false);
+        arrow.setFocusPainted(false);
+        arrow.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        arrow.setPreferredSize(new Dimension(50, 50));
+        arrow.addActionListener(e -> {
+            System.out.println("Tombol berhasil ditekan");
+            System.exit(0);
+            
+        });
+        
 
-        JPanel arrowPanel = new JPanel();
+        JPanel arrowPanel = new JPanel(new BorderLayout());
         arrowPanel.setOpaque(false);
-        arrowPanel.setLayout(new GridBagLayout());
-        arrowPanel.setPreferredSize(new Dimension(40, 40));
-
-        arrowPanel.add(arrow);
+        arrowPanel.setPreferredSize(new Dimension(50, 140));
+        
+        
+        arrowPanel.add(arrow, BorderLayout.CENTER);
 
         // ================= ADD =================
+        card.setLayout(new BorderLayout());
         card.add(textPanel, BorderLayout.CENTER);
         card.add(arrowPanel, BorderLayout.EAST);
-
         return card;
     }
 
@@ -161,7 +173,7 @@ public class History extends JFrame {
 
         @Override
         protected void paintComponent(Graphics g) {
-
+            super.paintComponent(g);
             Graphics2D g2 = (Graphics2D) g.create();
 
             g2.setRenderingHint(
@@ -191,7 +203,7 @@ public class History extends JFrame {
 
             g2.dispose();
 
-            super.paintComponent(g);
+            
         }
     }
 
