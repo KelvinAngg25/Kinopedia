@@ -12,16 +12,44 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Random;
+import javax.swing.ImageIcon;
 
 public class GameOverPanel extends JPanel {
+    
+    private Image dinoImg;
+    private Image cactusImg;
+    private Image birdImg;
 
     private GameFrame frame;
     private JLabel    scoreLabel;
 
     public GameOverPanel(GameFrame frame) {
+        
+
+        dinoImg = new ImageIcon(
+            getClass().getResource(
+                "/Kinopedia/minigames/DinoRun/Asset/Dino.png"
+            )
+        ).getImage();
+
+        cactusImg = new ImageIcon(
+            getClass().getResource(
+                "/Kinopedia/minigames/DinoRun/Asset/KaktusBesar.png"
+            )
+        ).getImage();
+
+        birdImg = new ImageIcon(
+            getClass().getResource(
+                "/Kinopedia/minigames/DinoRun/Asset/Burung.png"
+            )
+        ).getImage();
+        
         this.frame = frame;
         setPreferredSize(new Dimension(GameFrame.WIDTH, GameFrame.HEIGHT));
         setBackground(Color.WHITE);
@@ -110,45 +138,21 @@ public class GameOverPanel extends JPanel {
     }
 
     private void drawDino(Graphics2D g, int x, int y) {
-        g.setColor(Color.BLACK);
-        int s = 7;
-        g.fillRect(x + 3*s, y,       5*s, 4*s);
-        g.fillRect(x + 3*s, y + 4*s, 3*s, 2*s);
-        g.fillRect(x + 4*s, y - 2*s, 5*s, 4*s);
-        g.fillRect(x + 8*s, y,       2*s, s);
-        g.setColor(Color.WHITE);
-        g.fillRect(x + 7*s, y - s,   s, s);
-        g.setColor(Color.BLACK);
-        // Tanda X mata
-        g.drawLine(x + 7*s, y - s, x + 8*s - 1, y - 1);
-        g.drawLine(x + 7*s, y - 1, x + 8*s - 1, y - s);
-        g.fillRect(x,       y + 2*s, 3*s, 2*s);
-        g.fillRect(x + 4*s, y + 6*s, 2*s, 3*s);
-        g.fillRect(x + 4*s, y + 9*s, 3*s, s);
-        g.fillRect(x + 6*s, y + 7*s, 2*s, 2*s);
-    }
+
+        g.drawImage(dinoImg, x, y, 80, 80, null);
+
+    }    
 
     private void drawCactus(Graphics2D g, int x, int y) {
-        g.setColor(Color.BLACK);
-        int s = 6;
-        int h = 82;
-        g.fillRect(x + s, y, s, h);
-        int armY = y + h / 3;
-        g.fillRect(x,       armY,     s, s * 2);
-        g.fillRect(x,       armY - s, s, s);
-        g.fillRect(x + 2*s, armY + s, s, s * 2);
-        g.fillRect(x + 2*s, armY,     s, s);
+
+        g.drawImage(cactusImg, x, y, 45, 55, null);
+
     }
 
     private void drawBird(Graphics2D g, int x, int y) {
-        g.setColor(Color.BLACK);
-        int s = 5;
-        g.fillRect(x + 2*s, y + s,   4*s, 2*s);
-        g.fillRect(x + 6*s, y,       2*s, 2*s);
-        g.fillRect(x + 8*s, y + s/2, s,   s);
-        g.fillRect(x + 2*s, y - s,   4*s, s);
-        g.fillRect(x,       y,       2*s, s);
-        g.fillRect(x,       y + s,   2*s, s);
+
+        g.drawImage(birdImg, x, y, 60, 40, null);
+
     }
 
     private JButton createOutlineButton(final String text) {
