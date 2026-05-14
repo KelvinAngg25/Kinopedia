@@ -1,9 +1,3 @@
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Kinopedia.model;
 
 import javax.swing.*;
@@ -36,15 +30,25 @@ public class MetodeBayar extends JFrame{
             }
         });
         
-        JButton btnMasuk = new JButton("Lanjut ke Detail Pembayaran");
-        btnMasuk.setBounds(40, 660, 370, 45);
-        btnMasuk.setBackground(new Color(255, 140, 0));
-        btnMasuk.setForeground(Color.WHITE);
-        btnMasuk.setBorder(new RoundedBorder(15));
-        btnMasuk.setFont(new Font("Arial", Font.BOLD, 14));
-        btnMasuk.setBorder(BorderFactory.createEmptyBorder());
-        btnMasuk.setFocusPainted(false);
-        add(btnMasuk);
+        JButton btnNext = new JButton("Lanjut ke Detail Pembayaran");
+        btnNext.setBounds(40, 660, 370, 45);
+        btnNext.setBackground(new Color(255, 140, 0));
+        btnNext.setForeground(Color.WHITE);
+        btnNext.setBorder(new RoundedBorder(15, new Color(255, 140, 0)));
+        btnNext.setFont(new Font("Arial", Font.BOLD, 14));
+        btnNext.setBorder(BorderFactory.createEmptyBorder());
+        btnNext.setFocusPainted(false);
+        add(btnNext);
+        
+        btnNext.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (!getPilihanMetodePembayaran().equals("")) {
+                    new DetailPembayaran("Nicho Dave", "ASDK-100-234-456", getPilihanMetodePembayaran(), 100000, "Valorant").setVisible(true);
+                    dispose();
+                }
+            }
+        });
         
 //=========================================================================
 
@@ -243,6 +247,10 @@ public class MetodeBayar extends JFrame{
         }
     }
 
+    public String getPilihanMetodePembayaran() {
+        return pilihanMetodePembayaran;
+    }
+
     public void setPilihanMetodePembayaran(String pilihanMetodePembayaran) {
         this.pilihanMetodePembayaran = pilihanMetodePembayaran;
     }
@@ -256,14 +264,15 @@ public class MetodeBayar extends JFrame{
 
 class RoundedBorder implements Border {
     private int radius;
+    private Color color;
 
-    public RoundedBorder(int radius) {
+    public RoundedBorder(int radius, Color color) {
         this.radius = radius;
+        this.color = color;
     }
-
     @Override
     public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-        g.setColor(Color.GRAY);
+        g.setColor(color);
         g.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
     }
 

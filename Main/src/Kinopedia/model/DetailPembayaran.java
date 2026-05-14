@@ -1,0 +1,136 @@
+package Kinopedia.model;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import javax.swing.border.Border;
+
+public class DetailPembayaran extends JFrame{
+    
+    public DetailPembayaran(String usernameGame, String idGame, String jenisPembayaran, int totalHargaBundle, String pilihanGame) {
+        setTitle("Kinopedia");
+        setSize(470, 844);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(null);
+        
+        ImageIcon iconBack = new ImageIcon(getClass().getResource("/Kinopedia/model/ImageMetodeBayar/back.png"));
+        JLabel btnBack = new JLabel(iconBack);
+        btnBack.setBounds(35, 1, 100, 100);
+        add(btnBack);
+        
+        btnBack.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                dispose();
+                new MetodeBayar().setVisible(true);
+            }
+        });
+        
+        JButton btnMasuk = new JButton("Konfirmasi Pembayaran");
+        btnMasuk.setBounds(40, 660, 370, 45);
+        btnMasuk.setBackground(new Color(255, 140, 0));
+        btnMasuk.setForeground(Color.WHITE);
+        btnMasuk.setBorder(new RoundedBorder(15, new Color(255, 140, 0)));
+        btnMasuk.setFont(new Font("Arial", Font.BOLD, 14));
+        btnMasuk.setBorder(BorderFactory.createEmptyBorder());
+        btnMasuk.setFocusPainted(false);
+        add(btnMasuk);
+        
+        ImageIcon iconKinoepedia = new ImageIcon(getClass().getResource("/Kinopedia/model/ImageMetodeBayar/logoKinopediaKecil.png"));
+        JLabel iconKinopediaKecil = new JLabel(iconKinoepedia);
+        iconKinopediaKecil.setBounds(178, 700, 100, 100);
+        add(iconKinopediaKecil);
+        
+        JLabel detailPembayaran = new JLabel("Detail Pembayaran");
+        detailPembayaran.setBounds(40, 5, 200, 200);
+        detailPembayaran.setFont(new Font("Poppins", Font.BOLD, 18));
+        add(detailPembayaran);
+        
+        JPanel borderPilihanBayar = new JPanel();
+        borderPilihanBayar.setLayout(null);
+        borderPilihanBayar.setBorder(new RoundedBorder(20, new Color(255, 140, 0)));
+        borderPilihanBayar.setBounds(40, 125, 372, 480);
+        borderPilihanBayar.setOpaque(true);
+        borderPilihanBayar.setBackground(Color.WHITE);
+        add(borderPilihanBayar);
+
+        JPanel backgroundPilihanBayar = new JPanel();
+        backgroundPilihanBayar.setBackground(new Color(255, 140, 0));
+        backgroundPilihanBayar.setBounds(0, 0, 372, 230); 
+        backgroundPilihanBayar.setLayout(null);
+        borderPilihanBayar.add(backgroundPilihanBayar); 
+
+        JLabel headerName = new JLabel("Nama");
+        headerName.setBounds(20, 15, 100, 40);
+        headerName.setFont(new Font("Poppins", Font.PLAIN, 18));
+        headerName.setForeground(Color.BLACK);
+        backgroundPilihanBayar.add(headerName); 
+
+        JLabel valueName = new JLabel(usernameGame);
+        valueName.setBounds(20, 15, 330, 40);
+        valueName.setFont(new Font("Poppins", Font.PLAIN, 16));
+        valueName.setForeground(Color.WHITE);
+        valueName.setHorizontalAlignment(JLabel.RIGHT);
+        backgroundPilihanBayar.add(valueName);
+
+        JSeparator garis = new JSeparator();
+        garis.setBounds(20, 70, 330, 1);
+        garis.setForeground(Color.BLACK);
+        backgroundPilihanBayar.add(garis);
+
+        JLabel headerID = new JLabel("ID");
+        headerID.setBounds(20, 85, 100, 40);
+        headerID.setFont(new Font("Poppins", Font.PLAIN, 18));
+        headerID.setForeground(Color.BLACK);
+        backgroundPilihanBayar.add(headerID);
+
+        JLabel valueID = new JLabel(idGame);
+        valueID.setBounds(20, 85, 330, 40);
+        valueID.setFont(new Font("Poppins", Font.PLAIN, 16));
+        valueID.setForeground(Color.WHITE);
+        valueID.setHorizontalAlignment(JLabel.RIGHT);
+        backgroundPilihanBayar.add(valueID);
+
+        JSeparator garis1 = new JSeparator();
+        garis1.setBounds(20, 140, 330, 1);
+        garis1.setForeground(Color.BLACK);
+        backgroundPilihanBayar.add(garis1);
+
+        JLabel headerPembayaran = new JLabel("Pembayaran");
+        headerPembayaran.setBounds(20, 155, 160, 40);
+        headerPembayaran.setFont(new Font("Poppins", Font.PLAIN, 18));
+        headerPembayaran.setForeground(Color.BLACK);
+        backgroundPilihanBayar.add(headerPembayaran);
+
+        JLabel valuePembayaran = new JLabel(jenisPembayaran);
+        valuePembayaran.setBounds(20, 155, 330, 40);
+        valuePembayaran.setFont(new Font("Poppins", Font.PLAIN, 18));
+        valuePembayaran.setForeground(Color.WHITE);
+        valuePembayaran.setHorizontalAlignment(JLabel.RIGHT);
+        backgroundPilihanBayar.add(valuePembayaran);
+        
+        JSeparator garis2 = new JSeparator();
+        garis2.setBounds(20, 210, 330, 1);
+        garis2.setForeground(Color.BLACK);
+        backgroundPilihanBayar.add(garis2);
+
+        JLabel totalPembayaran = new JLabel("Total Pembayaran");
+        totalPembayaran.setBounds(20, 405, 330, 30);
+        totalPembayaran.setFont(new Font("Poppins", Font.PLAIN, 15));
+        totalPembayaran.setHorizontalAlignment(JLabel.RIGHT);
+        borderPilihanBayar.add(totalPembayaran);
+
+        JLabel totalHarga = new JLabel("Rp " + totalHargaBundle);
+        totalHarga.setBounds(20, 425, 330, 40);
+        totalHarga.setFont(new Font("Poppins", Font.BOLD, 26));
+        totalHarga.setHorizontalAlignment(JLabel.RIGHT);
+        borderPilihanBayar.add(totalHarga);
+    }
+    
+    public static void main(String[] args) {
+        DetailPembayaran frame = new DetailPembayaran("", "", "", 0, "");
+        frame.setVisible(true);
+    }
+}
