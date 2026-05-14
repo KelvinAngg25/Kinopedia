@@ -59,24 +59,4 @@ public class DataUser {
     public void setKredit(int kredit) {
         this.kredit = kredit;
     }
-    
-    public static void loadSemuaUser(ArrayList<DataUser> dataUser) {
-        File folder = new File("save/DataUser");
-        File[] files = folder.listFiles();
-
-        if (files != null) {
-            for (File file : files) {
-                try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-                    String baris;
-                    while ((baris = br.readLine()) != null) {
-                        String[] data = baris.split(",");
-                        dataUser.add(new DataUser(data[0], data[1], Integer.parseInt(data[2]), Integer.parseInt(data[3])));
-                    }
-                    br.close();
-                } catch (IOException e) {
-                    System.out.println("Gagal baca: " + file.getName());
-                }
-            }
-        }
-    }
 }

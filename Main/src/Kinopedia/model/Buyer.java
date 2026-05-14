@@ -9,6 +9,10 @@ package Kinopedia.model;
  *
  * @author William
  */
+import Kinopedia.DataTransaksi;
+import Kinopedia.DataUser;
+import Kinopedia.Main;
+import Kinopedia.Session;
 import Kinopedia.view.History;
 import Kinopedia.view.LoginRegister.*;
 import javax.swing.*;
@@ -16,9 +20,14 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.geom.RoundRectangle2D;
+import java.util.ArrayList;
 
 public class Buyer extends JFrame {
     public Buyer() {
+        DataUser userLogin = Session.getInstance().getCurrentUser();
+        System.out.println(userLogin.getNama());
+        
+        
         setTitle("Kinopedia | Halaman Utama ");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(470, 844);
@@ -109,8 +118,10 @@ public class Buyer extends JFrame {
     public void onLogout(ActionEvent e) {
         int confirm = JOptionPane.showConfirmDialog(this, "Log out?", "Confirm", JOptionPane.YES_NO_OPTION);
         if (confirm == JOptionPane.YES_OPTION) {
+            Main.saveSemuaData(Main.dataTransaksi, Main.dataUser, Main.admin);
+            Session.getInstance().logout();
             dispose();
-            Login frame = new Login();
+            Login frame = new Login(Main.dataTransaksi,Main.dataUser);
             frame.setVisible(true);
         }
     }
