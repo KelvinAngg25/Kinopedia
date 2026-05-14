@@ -1,12 +1,10 @@
 package Kinopedia.model;
 
-import Kinopedia.minigames.MainMiniGames;
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.border.Border;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
 
 public class MetodeBayar extends JFrame{
@@ -32,29 +30,25 @@ public class MetodeBayar extends JFrame{
             }
         });
         
-        JButton btnMasuk = new JButton("Lanjut ke Detail Pembayaran") {
+        JButton btnNext = new JButton("Lanjut ke Detail Pembayaran");
+        btnNext.setBounds(40, 660, 370, 45);
+        btnNext.setBackground(new Color(255, 140, 0));
+        btnNext.setForeground(Color.WHITE);
+        btnNext.setBorder(new RoundedBorder(15, new Color(255, 140, 0)));
+        btnNext.setFont(new Font("Arial", Font.BOLD, 14));
+        btnNext.setBorder(BorderFactory.createEmptyBorder());
+        btnNext.setFocusPainted(false);
+        add(btnNext);
+        
+        btnNext.addMouseListener(new MouseAdapter() {
             @Override
-            protected void paintComponent(Graphics g) {
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(getBackground());
-                g2.fillRoundRect(-1, -1, getWidth() + 2, getHeight() + 2, 30, 30);
-                g2.dispose();
-                super.paintComponent(g);
+            public void mouseClicked(MouseEvent e) {
+                if (!getPilihanMetodePembayaran().equals("")) {
+                    new DetailPembayaran("Nicho Dave", "ASDK-100-234-456", getPilihanMetodePembayaran(), 100000, "Valorant").setVisible(true);
+                    dispose();
+                }
             }
-        };
-        btnMasuk.setBounds(40, 660, 370, 45);
-        btnMasuk.setBackground(new Color(255, 140, 0));
-        btnMasuk.setForeground(Color.BLACK);
-        btnMasuk.setBorder(new RoundedBorder(20, new Color(255, 140, 0)));
-        btnMasuk.setFont(new Font("Arial", Font.BOLD, 14));
-        btnMasuk.setMargin(new Insets(0, 0, 0, 0));
-        btnMasuk.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
-        btnMasuk.setOpaque(false);
-        btnMasuk.setContentAreaFilled(false);
-        btnMasuk.setFocusable(false); 
-        btnMasuk.setFocusPainted(false);
-        add(btnMasuk);
+        });
         
 //=========================================================================
 
@@ -73,9 +67,8 @@ public class MetodeBayar extends JFrame{
         ImageIcon iconAwalPayPal = new ImageIcon(getClass().getResource("/Kinopedia/model/ImageMetodeBayar/paypal.jpg"));
         Image ambilGambarPayPal = iconAwalPayPal.getImage();
         Image gambarPayPalFix = ambilGambarPayPal.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
-        RoundedImageLabel PayPal = new RoundedImageLabel(18);
-        PayPal.setIcon(new ImageIcon(gambarPayPalFix));
-        PayPal.setBounds(10, 5, 80, 80);
+        JLabel PayPal = new JLabel(new ImageIcon(gambarPayPalFix));
+        PayPal.setBounds(0, 0, 100, 100);
         panelPayPal.add(PayPal);
         
 //=========================================================================
@@ -95,11 +88,10 @@ public class MetodeBayar extends JFrame{
         ImageIcon iconAwalDana = new ImageIcon(getClass().getResource("/Kinopedia/model/ImageMetodeBayar/dana.png"));
         Image ambilGambarDana = iconAwalDana.getImage();
         Image gambarDanaFix = ambilGambarDana.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
-        RoundedImageLabel Dana = new RoundedImageLabel(18);
-        Dana.setIcon(new ImageIcon(gambarDanaFix));
-        Dana.setBounds(10, 5, 80, 80);
+        JLabel Dana = new JLabel(new ImageIcon(gambarDanaFix));
+        Dana.setBounds(0, 0, 100, 100);
         panelDana.add(Dana);
-
+        
 //=========================================================================
 
         JPanel panelMandiri = new JPanel();
@@ -117,9 +109,8 @@ public class MetodeBayar extends JFrame{
         ImageIcon iconAwalMandiri = new ImageIcon(getClass().getResource("/Kinopedia/model/ImageMetodeBayar/livin mandiri.png"));
         Image ambilGambarMandiri = iconAwalMandiri.getImage();
         Image gambarMandiriFix = ambilGambarMandiri.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
-        RoundedImageLabel Mandiri = new RoundedImageLabel(18);
-        Mandiri.setIcon(new ImageIcon(gambarMandiriFix));
-        Mandiri.setBounds(10, 5, 80, 80);
+        JLabel Mandiri = new JLabel(new ImageIcon(gambarMandiriFix));
+        Mandiri.setBounds(0, 0, 100, 100);
         panelMandiri.add(Mandiri);
         
         
@@ -141,9 +132,8 @@ public class MetodeBayar extends JFrame{
         ImageIcon iconAwalBCA = new ImageIcon(getClass().getResource("/Kinopedia/model/ImageMetodeBayar/mybca.png"));
         Image ambilGambarBCA = iconAwalBCA.getImage();
         Image gambarBCAFix = ambilGambarBCA.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
-        RoundedImageLabel BCA = new RoundedImageLabel(18);
-        BCA.setIcon(new ImageIcon(gambarBCAFix));
-        BCA.setBounds(10, 5, 80, 80);
+        JLabel BCA = new JLabel(new ImageIcon(gambarBCAFix));
+        BCA.setBounds(0, 0, 100, 100);
         panelBCA.add(BCA);
         
 //=========================================================================
@@ -163,9 +153,8 @@ public class MetodeBayar extends JFrame{
         ImageIcon iconAwalOVO = new ImageIcon(getClass().getResource("/Kinopedia/model/ImageMetodeBayar/ovo.png"));
         Image ambilGambarOVO = iconAwalOVO.getImage();
         Image gambarOVOFix = ambilGambarOVO.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
-        RoundedImageLabel OVO = new RoundedImageLabel(18);
-        OVO.setIcon(new ImageIcon(gambarOVOFix));
-        OVO.setBounds(10, 5, 80, 80);
+        JLabel OVO = new JLabel(new ImageIcon(gambarOVOFix));
+        OVO.setBounds(0, 0, 100, 100);
         panelOVO.add(OVO);
         
         
@@ -187,9 +176,8 @@ public class MetodeBayar extends JFrame{
         ImageIcon iconAwal = new ImageIcon(getClass().getResource("/Kinopedia/model/ImageMetodeBayar/gopay.png"));
         Image ambilGambarGopay = iconAwal.getImage();
         Image gambarGopayFix = ambilGambarGopay.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
-        RoundedImageLabel gopay = new RoundedImageLabel(18);
-        gopay.setIcon(new ImageIcon(gambarGopayFix));
-        gopay.setBounds(10, 5, 80, 80); 
+        JLabel gopay = new JLabel(new ImageIcon(gambarGopayFix));
+        gopay.setBounds(0, 0, 100, 100);
         panelGopay.add(gopay);
         
 //=========================================================================
@@ -200,48 +188,17 @@ public class MetodeBayar extends JFrame{
         textHeader.setForeground(Color.BLACK);
         add(textHeader);
         
-        JPanel backgroundTextHeader = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(getBackground());
-                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
-                g2.dispose();
-                super.paintComponent(g);
-            }
-            
-            @Override
-            protected void paintBorder(Graphics g) {
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(new Color(255, 140, 0));
-                g2.setStroke(new BasicStroke(1)); 
-                g2.drawRoundRect(0, 0, getWidth()-1, getHeight(), 20, 20);
-                g2.dispose();
-            }
-        };
+        JPanel backgroundTextHeader = new JPanel();
         backgroundTextHeader.setBackground(Color.WHITE);
         backgroundTextHeader.setBounds(60, 90, 200, 35);
         backgroundTextHeader.setLayout(null);
-        backgroundTextHeader.setOpaque(false);
+        backgroundTextHeader.setBorder(BorderFactory.createLineBorder(new Color(255, 140, 0), 2));
         add(backgroundTextHeader);
         
-        JPanel backgroundPilihanBayar = new JPanel(){
-            @Override
-            protected void paintComponent(Graphics g) {
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(getBackground());
-                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
-                g2.dispose();
-                super.paintComponent(g);
-            }
-        };
+        JPanel backgroundPilihanBayar = new JPanel();
         backgroundPilihanBayar.setBackground(new Color(255, 140, 0));
         backgroundPilihanBayar.setBounds(40, 110, 372, 290);
         backgroundPilihanBayar.setLayout(null);
-        backgroundPilihanBayar.setOpaque(false);
         add(backgroundPilihanBayar);
         
         ImageIcon iconKinoepedia = new ImageIcon(getClass().getResource("/Kinopedia/model/ImageMetodeBayar/logoKinopediaKecil.png"));
@@ -303,36 +260,9 @@ public class MetodeBayar extends JFrame{
         frame.setVisible(true);
     }
     
-    private static class RoundedImageLabel extends JLabel {
-
-        private int radius;
-
-        public RoundedImageLabel(int radius) {
-            this.radius = radius;
-            setOpaque(false);
-            setHorizontalAlignment(SwingConstants.CENTER);
-        }
-
-        @Override
-        protected void paintComponent(Graphics g) {
-            // 1) copy graphics
-            Graphics2D g2 = (Graphics2D) g.create();
-
-            // 2) make a rounded shape and clip (everything outside becomes hidden)
-            Shape round = new RoundRectangle2D.Float(0, 0, getWidth(), getHeight(), radius, radius);
-            g2.setClip(round);
-
-            // 3) draw the normal JLabel (icon) but clipped
-            super.paintComponent(g2);
-
-            // 4) cleanup
-            g2.dispose();
-        }
-    }
-    
 }
 
-class RoundedBorder implements javax.swing.border.Border {
+class RoundedBorder implements Border {
     private int radius;
     private Color color;
 
@@ -342,15 +272,13 @@ class RoundedBorder implements javax.swing.border.Border {
     }
     @Override
     public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-        Graphics2D g2 = (Graphics2D) g;
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setColor(new Color(255, 140, 0));
-        g2.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
+        g.setColor(color);
+        g.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
     }
 
     @Override
-    public java.awt.Insets getBorderInsets(Component c) {
-        return new java.awt.Insets(radius / 2, radius / 2, radius / 2, radius / 2);
+    public Insets getBorderInsets(Component c) {
+        return new Insets(radius / 2, radius / 2, radius / 2, radius / 2);
     }
 
     @Override
@@ -358,5 +286,3 @@ class RoundedBorder implements javax.swing.border.Border {
         return false;
     }
 }
-
-
