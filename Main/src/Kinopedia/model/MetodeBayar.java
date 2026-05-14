@@ -15,8 +15,7 @@ import java.util.ArrayList;
 
 public class MetodeBayar extends JFrame{
     
-    private String pilihan;
-    private String pilihanPanel;
+    private String pilihanMetodePembayaran;
     
     public MetodeBayar() {
         setTitle("Kinopedia");
@@ -214,18 +213,33 @@ public class MetodeBayar extends JFrame{
                         p.setBorder(null);
                     }
                     
+                    if (jPanel == panelGopay) {
+                        setPilihanMetodePembayaran("Gopay");
+                    }
+                    else if (jPanel == panelOVO) {
+                        setPilihanMetodePembayaran("OVO");
+                    }
+                    else if (jPanel == panelDana) {
+                        setPilihanMetodePembayaran("Dana");
+                    }
+                    else if (jPanel == panelMandiri) {
+                        setPilihanMetodePembayaran("Mandiri");
+                    }
+                    else if (jPanel == panelBCA) {
+                        setPilihanMetodePembayaran("BCA");
+                    }
+                    else if (jPanel == panelPayPal) {
+                        setPilihanMetodePembayaran("PayPal");
+                    }
+                    
                     jPanel.setBorder(BorderFactory.createLineBorder(new Color(100, 100, 100), 2, true));
                 }
             });
         }
     }
 
-    public String getPilihan() {
-        return pilihan;
-    }
-
-    public void setPilihan(String pilihan) {
-        this.pilihan = pilihan;
+    public void setPilihanMetodePembayaran(String pilihanMetodePembayaran) {
+        this.pilihanMetodePembayaran = pilihanMetodePembayaran;
     }
     
     public static void main(String[] args) {
