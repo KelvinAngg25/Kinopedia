@@ -40,9 +40,9 @@ public class AssetManager {
         }
 
         // PREVIEW KARAKTER
-        load("pinguin_idle", "character_prev/pluppy_iddle.png");
-        load("buaya_idle",   "character_prev/boyo_iddle.png");
-        load("bebek_idle",   "character_prev/kwek_iddle.png");
+        load("pinguin_idle", "resources/character_preview/pluppy_iddle.png");
+        load("buaya_idle",   "resources/character_preview/boyo_iddle.png");
+        load("bebek_idle",   "resources/character_preview/kwek_iddle.png");
 
         // PIPA
         load("pipe_top", "pipes/pipe_top.png");
