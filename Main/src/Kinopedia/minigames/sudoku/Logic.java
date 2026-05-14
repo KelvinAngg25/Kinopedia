@@ -43,7 +43,7 @@ public class Logic extends JFrame implements Runnable{
     Random rand = new Random();
     ArrayList<JButton> daftarAngka = new ArrayList<>(); 
     ArrayList<JButton> daftarCell = new ArrayList<>();
-    private DataUser user = new DataUser("", "", ABORT, menit);
+    DataUser user = Kinopedia.Session.getInstance().getCurrentUser();
     public Logic() {
         this.menit = 5;
         this.detik = 0;
