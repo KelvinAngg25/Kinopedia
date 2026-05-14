@@ -36,6 +36,11 @@ public class Logic extends JFrame implements Runnable{
     private JButton angkadiPilih = null;
     private int live;
     private JButton angka,tombolPause;
+    private int p = 0;
+    private int pilihAngka = 0;
+    private int cellKosong = 0;
+    private int dapetKoin = 0;
+    Random rand = new Random();
     ArrayList<JButton> daftarAngka = new ArrayList<>(); 
     ArrayList<JButton> daftarCell = new ArrayList<>();
     private DataUser user = new DataUser("", "", ABORT, menit);
@@ -53,6 +58,7 @@ public class Logic extends JFrame implements Runnable{
         });
         if(live ==0){
             pause=true;
+            user.setKoin(user.getKoin()+dapetKoin);
             gameOver();
         }
         
@@ -62,6 +68,7 @@ public class Logic extends JFrame implements Runnable{
         if(detik == 0){
             if(menit==0){
                 pause =true;
+                user.setKoin(user.getKoin()+dapetKoin);
                 gameOver();
             }else {
                 menit-=1;
@@ -139,13 +146,11 @@ public class Logic extends JFrame implements Runnable{
     }
     
     
-    private int p = 0;
-    private int pilihAngka = 0;
-    private int cellKosong = 0;
-    Random rand = new Random();
+    
     
     public void cekInputan(boolean cek, JButton cell){
         if(cek==true){
+            dapetKoin+=2;
             cell.setText(String.valueOf(pilihAngka));
             cell.setForeground(new Color(0, 0, 180));
             cell.setBackground(Color.GREEN);
@@ -181,6 +186,7 @@ public class Logic extends JFrame implements Runnable{
     public void cekMenang(){
         if(cellKosong<=0){
             pause = true;
+            user.setKoin(user.getKoin()+ dapetKoin + 50);
             gameVictory();
         }
     }
