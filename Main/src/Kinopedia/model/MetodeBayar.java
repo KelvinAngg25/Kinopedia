@@ -6,27 +6,17 @@
  */
 package Kinopedia.model;
 
-/**
- *
- * @author William
- */
-
-import Kinopedia.PilihanBundle.BundleValorant;
-import Kinopedia.PilihanBundle.BundlePUBG;
-import Kinopedia.PilihanBundle.BundleCODM;
-import Kinopedia.PilihanBundle.BundleFF;
-import Kinopedia.PilihanBundle.BundleML;
-import Kinopedia.PilihanBundle.BundleEfootball;
-import Kinopedia.PilihanBundle.BundleSteam;
-import Kinopedia.view.LoginRegister.Login;
-
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.geom.RoundRectangle2D;
 import javax.swing.border.Border;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class MetodeBayar extends JFrame{
+    
+    private String pilihan;
+    private String pilihanPanel;
     
     public MetodeBayar() {
         setTitle("Kinopedia");
@@ -35,15 +25,20 @@ public class MetodeBayar extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
         
-        ImageIcon iconBack = new ImageIcon(getClass().getResource("/Kinopedia/model/ImageMetodeBayar/gopay.png"));
-        Image ambilGambarbtnBack = iconBack.getImage();
-        Image gambarbtnBack = ambilGambarbtnBack.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
-        JLabel btnBack = new JLabel(new ImageIcon(gambarbtnBack));
-        btnBack.setBounds(65, 110, 100, 100);
+        ImageIcon iconBack = new ImageIcon(getClass().getResource("/Kinopedia/model/ImageMetodeBayar/back.png"));
+        JLabel btnBack = new JLabel(iconBack);
+        btnBack.setBounds(35, 1, 100, 100);
         add(btnBack);
         
-        JButton btnMasuk = new JButton("Masuk");
-        btnMasuk.setBounds(40, 400, 370, 45);
+        btnBack.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                dispose();
+            }
+        });
+        
+        JButton btnMasuk = new JButton("Lanjut ke Detail Pembayaran");
+        btnMasuk.setBounds(40, 660, 370, 45);
         btnMasuk.setBackground(new Color(255, 140, 0));
         btnMasuk.setForeground(Color.WHITE);
         btnMasuk.setBorder(new RoundedBorder(15));
@@ -53,116 +48,184 @@ public class MetodeBayar extends JFrame{
         add(btnMasuk);
         
 //=========================================================================
+
+        JPanel panelPayPal = new JPanel();
+        panelPayPal.setLayout(null);
+        panelPayPal.setBackground(new Color(255, 140, 0));
+        panelPayPal.setBounds(290, 260, 100, 120);
+        add(panelPayPal);
         
         JLabel textPayPal = new JLabel("PayPal");
         textPayPal.setFont(new Font("Poppins", Font.BOLD, 14));
-        textPayPal.setBounds(317, 295, 80, 80);
+        textPayPal.setBounds(28, 54, 100, 100);
         textPayPal.setForeground(Color.BLACK);
-        add(textPayPal);
+        panelPayPal.add(textPayPal);
         
         ImageIcon iconAwalPayPal = new ImageIcon(getClass().getResource("/Kinopedia/model/ImageMetodeBayar/paypal.jpg"));
         Image ambilGambarPayPal = iconAwalPayPal.getImage();
         Image gambarPayPalFix = ambilGambarPayPal.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
         JLabel PayPal = new JLabel(new ImageIcon(gambarPayPalFix));
-        PayPal.setBounds(300, 240, 80, 80);
-        add(PayPal);
+        PayPal.setBounds(0, 0, 100, 100);
+        panelPayPal.add(PayPal);
         
 //=========================================================================
+
+        JPanel panelDana = new JPanel();
+        panelDana.setLayout(null);
+        panelDana.setBackground(new Color(255, 140, 0));
+        panelDana.setBounds(178, 260, 100, 120);
+        add(panelDana);
         
         JLabel textDana = new JLabel("Dana");
         textDana.setFont(new Font("Poppins", Font.BOLD, 14));
-        textDana.setBounds(210, 295, 80, 80);
+        textDana.setBounds(33, 54, 100, 100);
         textDana.setForeground(Color.BLACK);
-        add(textDana);
+        panelDana.add(textDana);
         
         ImageIcon iconAwalDana = new ImageIcon(getClass().getResource("/Kinopedia/model/ImageMetodeBayar/dana.png"));
         Image ambilGambarDana = iconAwalDana.getImage();
         Image gambarDanaFix = ambilGambarDana.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
         JLabel Dana = new JLabel(new ImageIcon(gambarDanaFix));
-        Dana.setBounds(188, 240, 80, 80);
-        add(Dana);
+        Dana.setBounds(0, 0, 100, 100);
+        panelDana.add(Dana);
         
 //=========================================================================
+
+        JPanel panelMandiri = new JPanel();
+        panelMandiri.setLayout(null);
+        panelMandiri.setBackground(new Color(255, 140, 0));
+        panelMandiri.setBounds(65, 260, 100, 120);
+        add(panelMandiri);
         
         JLabel textMandiri = new JLabel("Mandiri");
         textMandiri.setFont(new Font("Poppins", Font.BOLD, 14));
-        textMandiri.setBounds(90, 295, 80, 80);
+        textMandiri.setBounds(24, 54, 100, 100);
         textMandiri.setForeground(Color.BLACK);
-        add(textMandiri);
+        panelMandiri.add(textMandiri);
         
         ImageIcon iconAwalMandiri = new ImageIcon(getClass().getResource("/Kinopedia/model/ImageMetodeBayar/livin mandiri.png"));
         Image ambilGambarMandiri = iconAwalMandiri.getImage();
         Image gambarMandiriFix = ambilGambarMandiri.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
         JLabel Mandiri = new JLabel(new ImageIcon(gambarMandiriFix));
-        Mandiri.setBounds(75, 240, 80, 80);
-        add(Mandiri);
+        Mandiri.setBounds(0, 0, 100, 100);
+        panelMandiri.add(Mandiri);
+        
+        
         
 //=========================================================================
         
+        JPanel panelBCA = new JPanel();
+        panelBCA.setLayout(null);
+        panelBCA.setBackground(new Color(255, 140, 0));
+        panelBCA.setBounds(290, 140, 100, 120);
+        add(panelBCA);
+
         JLabel textBCA = new JLabel("BCA");
         textBCA.setFont(new Font("Poppins", Font.BOLD, 14));
-        textBCA.setBounds(325, 173, 80, 80);
+        textBCA.setBounds(35, 53, 100, 100);
         textBCA.setForeground(Color.BLACK);
-        add(textBCA);
+        panelBCA.add(textBCA);
         
         ImageIcon iconAwalBCA = new ImageIcon(getClass().getResource("/Kinopedia/model/ImageMetodeBayar/mybca.png"));
         Image ambilGambarBCA = iconAwalBCA.getImage();
         Image gambarBCAFix = ambilGambarBCA.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
         JLabel BCA = new JLabel(new ImageIcon(gambarBCAFix));
-        BCA.setBounds(300, 120, 80, 80);
-        add(BCA);
+        BCA.setBounds(0, 0, 100, 100);
+        panelBCA.add(BCA);
         
 //=========================================================================
         
+        JPanel panelOVO = new JPanel();
+        panelOVO.setLayout(null);
+        panelOVO.setBackground(new Color(255, 140, 0));
+        panelOVO.setBounds(178, 140, 100, 120);
+        add(panelOVO);
+
         JLabel textOVO = new JLabel("OVO");
         textOVO.setFont(new Font("Poppins", Font.BOLD, 14));
-        textOVO.setBounds(213, 173, 80, 80);
+        textOVO.setBounds(35, 53, 100, 100);
         textOVO.setForeground(Color.BLACK);
-        add(textOVO);
+        panelOVO.add(textOVO);
         
         ImageIcon iconAwalOVO = new ImageIcon(getClass().getResource("/Kinopedia/model/ImageMetodeBayar/ovo.png"));
         Image ambilGambarOVO = iconAwalOVO.getImage();
         Image gambarOVOFix = ambilGambarOVO.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
         JLabel OVO = new JLabel(new ImageIcon(gambarOVOFix));
-        OVO.setBounds(188, 120, 80, 80);
-        add(OVO);
+        OVO.setBounds(0, 0, 100, 100);
+        panelOVO.add(OVO);
+        
+        
         
 //=========================================================================
+
+        JPanel panelGopay = new JPanel();
+        panelGopay.setLayout(null);
+        panelGopay.setBackground(new Color(255, 140, 0));
+        panelGopay.setBounds(65, 140, 100, 120);
+        add(panelGopay);
         
         JLabel textGopay = new JLabel("Gopay");
         textGopay.setFont(new Font("Poppins", Font.BOLD, 14));
-        textGopay.setBounds(92, 173, 80, 80);
+        textGopay.setBounds(29, 53, 100, 100);
         textGopay.setForeground(Color.BLACK);
-        add(textGopay);
+        panelGopay.add(textGopay);
         
         ImageIcon iconAwal = new ImageIcon(getClass().getResource("/Kinopedia/model/ImageMetodeBayar/gopay.png"));
         Image ambilGambarGopay = iconAwal.getImage();
         Image gambarGopayFix = ambilGambarGopay.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
         JLabel gopay = new JLabel(new ImageIcon(gambarGopayFix));
-        gopay.setBounds(65, 110, 100, 100);
-        add(gopay);
+        gopay.setBounds(0, 0, 100, 100);
+        panelGopay.add(gopay);
         
 //=========================================================================
         
         JLabel textHeader = new JLabel("2. Metode Pembayaran");
         textHeader.setFont(new Font("Poppins", Font.BOLD, 16));
-        textHeader.setBounds(73, 60, 200, 35);
+        textHeader.setBounds(73, 90, 200, 35);
         textHeader.setForeground(Color.BLACK);
         add(textHeader);
         
         JPanel backgroundTextHeader = new JPanel();
         backgroundTextHeader.setBackground(Color.WHITE);
-        backgroundTextHeader.setBounds(60, 60, 200, 35);
+        backgroundTextHeader.setBounds(60, 90, 200, 35);
         backgroundTextHeader.setLayout(null);
+        backgroundTextHeader.setBorder(BorderFactory.createLineBorder(new Color(255, 140, 0), 2));
         add(backgroundTextHeader);
         
         JPanel backgroundPilihanBayar = new JPanel();
-        backgroundPilihanBayar.setBackground(Color.ORANGE);
-        backgroundPilihanBayar.setBounds(40, 80, 372, 290);
+        backgroundPilihanBayar.setBackground(new Color(255, 140, 0));
+        backgroundPilihanBayar.setBounds(40, 110, 372, 290);
         backgroundPilihanBayar.setLayout(null);
         add(backgroundPilihanBayar);
-       
         
+        ArrayList<JPanel> daftarSemuaPanel = new ArrayList();
+        daftarSemuaPanel.add(panelOVO);
+        daftarSemuaPanel.add(panelGopay);
+        daftarSemuaPanel.add(panelDana);
+        daftarSemuaPanel.add(panelMandiri);
+        daftarSemuaPanel.add(panelPayPal);
+        daftarSemuaPanel.add(panelBCA);
+        
+        for (JPanel jPanel : daftarSemuaPanel) {
+            jPanel.addMouseListener(new MouseAdapter() { 
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    for (JPanel p : daftarSemuaPanel) {
+                        p.setBorder(null);
+                    }
+                    
+                    jPanel.setBorder(BorderFactory.createLineBorder(new Color(100, 100, 100), 2, true));
+                }
+            });
+        }
+    }
+
+    public String getPilihan() {
+        return pilihan;
+    }
+
+    public void setPilihan(String pilihan) {
+        this.pilihan = pilihan;
     }
     
     public static void main(String[] args) {
