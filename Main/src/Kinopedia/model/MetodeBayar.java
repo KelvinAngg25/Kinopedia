@@ -197,6 +197,11 @@ public class MetodeBayar extends JFrame{
         backgroundPilihanBayar.setLayout(null);
         add(backgroundPilihanBayar);
         
+        ImageIcon iconKinoepedia = new ImageIcon(getClass().getResource("/Kinopedia/model/ImageMetodeBayar/logoKinopediaKecil.png"));
+        JLabel iconKinopediaKecil = new JLabel(iconKinoepedia);
+        iconKinopediaKecil.setBounds(178, 700, 100, 100);
+        add(iconKinopediaKecil);
+        
         ArrayList<JPanel> daftarSemuaPanel = new ArrayList();
         daftarSemuaPanel.add(panelOVO);
         daftarSemuaPanel.add(panelGopay);
