@@ -40,9 +40,9 @@ public class AssetManager {
         }
 
         // PREVIEW KARAKTER
-        load("pinguin_idle", "resources/character_preview/pluppy_iddle.png");
-        load("buaya_idle",   "resources/character_preview/boyo_iddle.png");
-        load("bebek_idle",   "resources/character_preview/kwek_iddle.png");
+        load("pinguin_idle", "character_preview/pluppy_iddle.png");
+        load("buaya_idle",   "character_preview/boyo_iddle.png");
+        load("bebek_idle",   "character_preview/kwek_iddle.png");
 
         // PIPA
         load("pipe_top", "pipes/pipe_top.png");
@@ -68,7 +68,7 @@ public class AssetManager {
 
     private static void load(String key, String filePath) {
         // PERBAIKAN UTAMA: path yang benar tanpa typo
-        String fullPath = "/Kinopedia/minigames/FlappyWild/resources/" + filePath;
+        String fullPath = "/Kinopedia/minigames/FllapyWild/resources/" + filePath;
         try {
             InputStream is = AssetManager.class.getResourceAsStream(fullPath);
 

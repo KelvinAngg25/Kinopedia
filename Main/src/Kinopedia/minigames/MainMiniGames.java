@@ -10,6 +10,9 @@ package Kinopedia.minigames;
  * @author William
  */
 
+import Kinopedia.DataUser;
+import Kinopedia.Main;
+import Kinopedia.Session;
 import Kinopedia.model.Buyer;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -33,7 +36,8 @@ public class MainMiniGames extends JFrame {
 //    private final JFrame backTo;
 
     public MainMiniGames() {
-
+        DataUser userLogin = Session.getInstance().getCurrentUser();
+        
         setTitle("Kinopedia");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(470, 844);
@@ -59,31 +63,70 @@ public class MainMiniGames extends JFrame {
         top.add(backBtn, BorderLayout.WEST);
         root.add(top, BorderLayout.NORTH);
 
-        // ===== CONTENT (NO SCROLL) =====
+        JLabel koinLabel = new JLabel("Koin: " + userLogin.getKoin());
+        koinLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
+        koinLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        
+        JLabel kreditLabel = new JLabel("Kredit: " + userLogin.getKredit());
+        kreditLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
+        kreditLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        
         JPanel content = new JPanel();
         content.setBackground(Color.WHITE);
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
 
-        // less left padding => more left sided
         content.setBorder(new EmptyBorder(10, 0, 10, 0));
         root.add(content, BorderLayout.CENTER);
-        
-//        koinLabel = new JLabel("Koin: " + buyer.getKoin());
-//        koinLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
-//        content.add(koinLabel);
-
-        
+        content.add(koinLabel);
+        content.add(Box.createVerticalStrut(5));
+        content.add(kreditLabel);
         content.add(Box.createVerticalStrut(10));
+        content.add(Box.createVerticalStrut(20));
         content.add(iconRow(new String[]{"Flappy Wild", "DinoRun", "Sudoku"}));
         
+        
+        JButton btnTukarKoin = new JButton("Tukar Koin") {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(getBackground());
+                g2.fillRoundRect(-1, -1, getWidth() + 2, getHeight() + 2, 30, 30);
+                g2.dispose();
+                super.paintComponent(g);
+            }
+        };
+        btnTukarKoin.setFont(new Font("SansSerif", Font.BOLD, 14));
+        btnTukarKoin.setMargin(new Insets(0, 0, 0, 0));
+        btnTukarKoin.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        btnTukarKoin.setBackground(new Color(255, 140, 0));
+        btnTukarKoin.setForeground(Color.BLACK);
+        btnTukarKoin.setBorder(new RoundedBorder(20)); 
+        btnTukarKoin.setOpaque(false);
+        btnTukarKoin.setContentAreaFilled(false);
+        btnTukarKoin.setFocusPainted(false);
+        btnTukarKoin.setFocusable(false); 
+        btnTukarKoin.setAlignmentX(Component.LEFT_ALIGNMENT);
+        btnTukarKoin.addActionListener(e -> {
+            System.out.println("Bisa");
+        });
         // ===== FOOTER LOGO (CENTERED) =====
         JPanel footer = new JPanel(new BorderLayout());
+        footer.setLayout(new BoxLayout(footer, BoxLayout.Y_AXIS));
+        footer.setPreferredSize(new Dimension(Integer.MAX_VALUE, 120));
         footer.setBackground(Color.WHITE);
         footer.setBorder(new EmptyBorder(10, 0, 0, 0));
+        
+        btnTukarKoin.setMaximumSize(new Dimension(Integer.MAX_VALUE, 45));
+        btnTukarKoin.setAlignmentX(Component.CENTER_ALIGNMENT);
+        footer.add(btnTukarKoin);
+
+        footer.add(Box.createVerticalStrut(10));
 
         ImageIcon logoImg = loadIcon("LogoKinopedia.png", 50, 50);
         JLabel logoLabel = (logoImg != null) ? new JLabel(logoImg) : new JLabel("Kinopedia");
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT); 
 
         footer.add(logoLabel, BorderLayout.CENTER);
         root.add(footer, BorderLayout.SOUTH);
@@ -222,6 +265,33 @@ public class MainMiniGames extends JFrame {
             // 4) cleanup
             g2.dispose();
         }
+    }
+    
+}
+
+class RoundedBorder implements javax.swing.border.Border {
+    private int radius;
+
+    public RoundedBorder(int radius) {
+        this.radius = radius;
+    }
+
+    @Override
+    public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setColor(new Color(255, 140, 0));
+        g2.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
+    }
+
+    @Override
+    public java.awt.Insets getBorderInsets(Component c) {
+        return new java.awt.Insets(radius / 2, radius / 2, radius / 2, radius / 2);
+    }
+
+    @Override
+    public boolean isBorderOpaque() {
+        return false;
     }
 }
 

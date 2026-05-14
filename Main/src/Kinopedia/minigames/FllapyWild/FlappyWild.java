@@ -405,7 +405,7 @@ public class FlappyWild extends JPanel implements KeyListener, MouseListener {
     // Overlay saat PAUSE
     private void drawPauseOverlay(Graphics2D g2) {
         g2.setColor(new Color(0, 0, 0, 110));
-        g2.fillRect(0, 0, GameWindow.WIDTH, GameWindow.HEIGHT);
+        g2.fillRect(2, 2, GameWindow.WIDTH, GameWindow.HEIGHT);
 
         int pw = 420, ph = 230;
         int px = (GameWindow.WIDTH - pw) / 2;
