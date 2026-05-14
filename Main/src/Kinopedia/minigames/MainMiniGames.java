@@ -66,10 +66,12 @@ public class MainMiniGames extends JFrame {
         JLabel koinLabel = new JLabel("Koin: " + userLogin.getKoin());
         koinLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
         koinLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        koinLabel.setBorder(BorderFactory.createEmptyBorder(20, 15, 0, 0)); 
         
         JLabel kreditLabel = new JLabel("Kredit: " + userLogin.getKredit());
         kreditLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
         kreditLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        kreditLabel.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 0)); 
         
         JPanel content = new JPanel();
         content.setBackground(Color.WHITE);

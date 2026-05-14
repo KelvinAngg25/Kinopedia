@@ -73,7 +73,7 @@ public class Login extends JFrame {
         
         JLabel userLabel = new JLabel("USERNAME");
         userLabel.setFont(new Font("Poppins", Font.PLAIN, 10));
-        userLabel.setBounds(50, 230, 200, 20);
+        userLabel.setBounds(60, 230, 200, 20);
         add(userLabel);
         
         JTextField inputUser = new JTextField(20) {
@@ -108,7 +108,7 @@ public class Login extends JFrame {
         
         JLabel passLabel = new JLabel("PASSWORD");
         passLabel.setFont(new Font("Poppins", Font.PLAIN, 10));
-        passLabel.setBounds(50, 300, 200, 20);
+        passLabel.setBounds(60, 300, 200, 20);
         add(passLabel);
         
         JTextField inputPass = new JTextField(20) {
