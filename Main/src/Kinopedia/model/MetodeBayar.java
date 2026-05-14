@@ -1,9 +1,3 @@
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Kinopedia.model;
 
 import Kinopedia.minigames.MainMiniGames;
@@ -52,7 +46,7 @@ public class MetodeBayar extends JFrame{
         btnMasuk.setBounds(40, 660, 370, 45);
         btnMasuk.setBackground(new Color(255, 140, 0));
         btnMasuk.setForeground(Color.BLACK);
-        btnMasuk.setBorder(new RoundedBorder(20));
+        btnMasuk.setBorder(new RoundedBorder(20, new Color(255, 140, 0)));
         btnMasuk.setFont(new Font("Arial", Font.BOLD, 14));
         btnMasuk.setMargin(new Insets(0, 0, 0, 0));
         btnMasuk.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
@@ -296,6 +290,10 @@ public class MetodeBayar extends JFrame{
         }
     }
 
+    public String getPilihanMetodePembayaran() {
+        return pilihanMetodePembayaran;
+    }
+
     public void setPilihanMetodePembayaran(String pilihanMetodePembayaran) {
         this.pilihanMetodePembayaran = pilihanMetodePembayaran;
     }
@@ -336,11 +334,12 @@ public class MetodeBayar extends JFrame{
 
 class RoundedBorder implements javax.swing.border.Border {
     private int radius;
+    private Color color;
 
-    public RoundedBorder(int radius) {
+    public RoundedBorder(int radius, Color color) {
         this.radius = radius;
+        this.color = color;
     }
-
     @Override
     public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
         Graphics2D g2 = (Graphics2D) g;
