@@ -35,7 +35,7 @@ public class BundleML extends JFrame {
         Color ORANGE = new Color(0xFF8C1A);
 
         currencyIcon = loadIcon("/Kinopedia/model/IMAGESS/Diamond.png", 18, 18);
-        logoFooter   = loadIcon("/Kinopedia/model/IMAGESS/LogoKinopedia.png", 70, 70);
+        logoFooter   = loadIcon("/Kinopedia/model/IMAGESS/LogoKinopedia.png", 50, 50);
 
         JPanel root = new JPanel(new BorderLayout());
         root.setBackground(Color.WHITE);
@@ -130,14 +130,14 @@ public class BundleML extends JFrame {
         grid.setOpaque(false);
         orangeBox.add(grid, BorderLayout.CENTER);
 
-        addCard(grid, "10 "   + currencyName, "Rp 5.000");
-        addCard(grid, "50 "   + currencyName, "Rp 22.000");
-        addCard(grid, "75 "   + currencyName, "Rp 32.000");
-        addCard(grid, "100 "  + currencyName, "Rp 49.000");
-        addCard(grid, "200 "  + currencyName, "Rp 80.000");
-        addCard(grid, "400 "  + currencyName, "Rp 149.000");
-        addCard(grid, "1000 " + currencyName, "Rp 267.000");
-        addCard(grid, "2500 " + currencyName, "Rp 525.000");
+        addCard(grid, "5 "   + currencyName, "Rp 1.400");
+        addCard(grid, "28 "   + currencyName, "Rp 7.600");
+        addCard(grid, "85 "   + currencyName, "Rp 22.200");
+        addCard(grid, "240 "  + currencyName, "Rp 61.700");
+        addCard(grid, "560 "  + currencyName, "Rp 142.500");
+        addCard(grid, "875 "  + currencyName, "Rp 218.400");
+        addCard(grid, "2010 " + currencyName, "Rp 475.000");
+        addCard(grid, "4830 " + currencyName, "Rp 1.140.000");
 
         content.add(orangeBox);
         content.add(Box.createVerticalStrut(10));

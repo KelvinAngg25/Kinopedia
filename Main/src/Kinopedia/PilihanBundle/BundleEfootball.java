@@ -35,7 +35,7 @@ public class BundleEfootball extends JFrame {
         Color ORANGE = new Color(0xFF8C1A);
 
         currencyIcon = loadIcon("/Kinopedia/model/IMAGESS/efootballgoldss.png", 18, 18);
-        logoFooter   = loadIcon("/Kinopedia/model/IMAGESS/LogoKinopedia.png", 70, 70);
+        logoFooter   = loadIcon("/Kinopedia/model/IMAGESS/LogoKinopedia.png", 50, 50);
 
         JPanel root = new JPanel(new BorderLayout());
         root.setBackground(Color.WHITE);
@@ -130,14 +130,14 @@ public class BundleEfootball extends JFrame {
         grid.setOpaque(false);
         orangeBox.add(grid, BorderLayout.CENTER);
 
-        addCard(grid, "10 "   + currencyName, "Rp 5.000");
-        addCard(grid, "50 "   + currencyName, "Rp 22.000");
-        addCard(grid, "75 "   + currencyName, "Rp 32.000");
-        addCard(grid, "100 "  + currencyName, "Rp 49.000");
-        addCard(grid, "200 "  + currencyName, "Rp 80.000");
-        addCard(grid, "400 "  + currencyName, "Rp 149.000");
-        addCard(grid, "1000 " + currencyName, "Rp 267.000");
-        addCard(grid, "2500 " + currencyName, "Rp 525.000");
+        addCard(grid, "137 "   + currencyName, "Rp 16.200");
+        addCard(grid, "578 "   + currencyName, "Rp 66.700");
+        addCard(grid, "1092 "   + currencyName, "Rp 124.300");
+        addCard(grid, "2237 "  + currencyName, "Rp 253.000");
+        addCard(grid, "3413 "  + currencyName, "Rp 378.300");
+        addCard(grid, "5985 "  + currencyName, "Rp 630.600");
+        addCard(grid, "13440 " + currencyName, "Rp 1.351.200");
+        addCard(grid, "32200 " + currencyName, "Rp 3.153.100");
 
         content.add(orangeBox);
         content.add(Box.createVerticalStrut(10));

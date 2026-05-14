@@ -3,21 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Kinopedia.minigames.sudoku;
-
-import javax.swing.SwingUtilities;
-
+package Kinopedia.minigames.FllapyWild;
 
 /**
  *
- * @author William
+ * @author Fabiola
  */
-public class View{
+
+import javax.swing.SwingUtilities;
+
+public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            Logic c = new Logic();
-            c.menuGame();
-            c.setVisible(true);
+            GameWindow window = new GameWindow();
+            window.setVisible(true);
         });
     }
 }

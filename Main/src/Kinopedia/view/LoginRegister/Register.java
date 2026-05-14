@@ -120,7 +120,7 @@ public class Register extends JFrame {
             }
             else {
                 dispose();
-                Buyer frame = new Buyer(username);
+                Buyer frame = new Buyer();
                 frame.setVisible(true);
             } 
         }); 

@@ -134,7 +134,7 @@ public class Login extends JFrame {
             else {
 //                if (username.equals("will") && pass.equals("123")) {
                 dispose();
-                Buyer frame = new Buyer(username);
+                Buyer frame = new Buyer();
                 frame.setVisible(true);
 //                }
             }

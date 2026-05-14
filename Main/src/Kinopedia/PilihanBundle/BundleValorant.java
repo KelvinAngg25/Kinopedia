@@ -36,7 +36,7 @@ public class BundleValorant extends JFrame {
 
         // load icons
         currencyIcon = loadIcon("/Kinopedia/model/IMAGESS/Valorant-pointss.png", 18, 18);
-        logoFooter   = loadIcon("/Kinopedia/model/IMAGESS/LogoKinopedia.png", 70, 70);
+        logoFooter   = loadIcon("/Kinopedia/model/IMAGESS/LogoKinopedia.png", 50, 50);
 
         // root
         JPanel root = new JPanel(new BorderLayout());
@@ -138,14 +138,14 @@ public class BundleValorant extends JFrame {
         grid.setOpaque(false);
         orangeBox.add(grid, BorderLayout.CENTER);
 
-        addCard(grid, "10 " + currencyName, "Rp 5.000");
-        addCard(grid, "50 " + currencyName, "Rp 22.000");
-        addCard(grid, "75 " + currencyName, "Rp 32.000");
-        addCard(grid, "100 " + currencyName, "Rp 49.000");
-        addCard(grid, "200 " + currencyName, "Rp 80.000");
-        addCard(grid, "400 " + currencyName, "Rp 149.000");
-        addCard(grid, "1000 " + currencyName, "Rp 267.000");
-        addCard(grid, "2500 " + currencyName, "Rp 525.000");
+        addCard(grid, "475 " + currencyName, "Rp 60.000");
+        addCard(grid, "1000 " + currencyName, "Rp 120.000");
+        addCard(grid, "1500 " + currencyName, "Rp 180.000");
+        addCard(grid, "2050 " + currencyName, "Rp 235.000");
+        addCard(grid, "3650 " + currencyName, "Rp 400.000");
+        addCard(grid, "5350 " + currencyName, "Rp 580.000");
+        addCard(grid, "11000 " + currencyName, "Rp 1.200.000");
+        addCard(grid, "20000 " + currencyName, "Rp 2.000.000");
 
         content.add(orangeBox);
         content.add(Box.createVerticalStrut(10));

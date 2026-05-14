@@ -35,7 +35,7 @@ public class BundleSteam extends JFrame {
         Color ORANGE = new Color(0xFF8C1A);
 
         currencyIcon = loadIcon("/Kinopedia/model/IMAGESS/Steam-credits.png", 18, 18);
-        logoFooter   = loadIcon("/Kinopedia/model/IMAGESS/LogoKinopedia.png", 70, 70);
+        logoFooter   = loadIcon("/Kinopedia/model/IMAGESS/LogoKinopedia.png", 50, 50);
 
         JPanel root = new JPanel(new BorderLayout());
         root.setBackground(Color.WHITE);
@@ -130,14 +130,14 @@ public class BundleSteam extends JFrame {
         grid.setOpaque(false);
         orangeBox.add(grid, BorderLayout.CENTER);
 
-        addCard(grid, "10 " + currencyName, "Rp 5.000");
-        addCard(grid, "50 " + currencyName, "Rp 22.000");
-        addCard(grid, "75 " + currencyName, "Rp 32.000");
-        addCard(grid, "100 " + currencyName, "Rp 49.000");
-        addCard(grid, "200 " + currencyName, "Rp 80.000");
-        addCard(grid, "400 " + currencyName, "Rp 149.000");
-        addCard(grid, "1000 " + currencyName, "Rp 267.000");
-        addCard(grid, "2500 " + currencyName, "Rp 525.000");
+        addCard(grid, "12.000 " + currencyName, "Rp 22.000");
+        addCard(grid, "45.000 " + currencyName, "Rp 54.000");
+        addCard(grid, "60.000 " + currencyName, "Rp 68.000");
+        addCard(grid, "90.000 " + currencyName, "Rp 97.000");
+        addCard(grid, "120.000 " + currencyName, "Rp 126.000");
+        addCard(grid, "250.000 " + currencyName, "Rp 255.000");
+        addCard(grid, "400.000 " + currencyName, "Rp 404.000");
+        addCard(grid, "600.000 " + currencyName, "Rp 603.000");
 
         content.add(orangeBox);
         content.add(Box.createVerticalStrut(10));
