@@ -5,9 +5,20 @@
  */
 package Kinopedia.view.LoginRegister;
 
+import Kinopedia.DataTransaksi;
+import Kinopedia.DataUser;
+import static Kinopedia.Main.dataTransaksi;
+import static Kinopedia.Main.dataUser;
+import Kinopedia.Session;
 import Kinopedia.model.*;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Insets;
+import java.awt.RenderingHints;
+import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -41,7 +52,7 @@ public class Register extends JFrame {
         backgroundErrorMessage.setVisible(true);
     }
     
-    public Register () {
+    public Register(ArrayList<DataTransaksi> dataTransaksi ,ArrayList<DataUser> dataUser) {
         setTitle("Kinopedia");
         setSize(470, 844);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -55,10 +66,34 @@ public class Register extends JFrame {
         userLabel.setBounds(50, 230, 200, 20);
         add(userLabel);
         
-        JTextField inputUser = new JTextField(20);
+        JTextField inputUser = new JTextField(20) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(getBackground());
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15); // ✅ Background ikut radius
+                g2.dispose();
+                super.paintComponent(g);
+            }
+
+            @Override
+            protected void paintBorder(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(new Color(255, 140, 0)); // ✅ Warna border oranye
+                g2.setStroke(new BasicStroke(1));
+                g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 15, 15);
+                g2.dispose();
+            }
+        };
+        inputUser.setBorder(BorderFactory.createCompoundBorder(
+            inputUser.getBorder(),                           
+            BorderFactory.createEmptyBorder(0, 10, 0, 10)
+        ));
+        inputUser.setOpaque(false);
+        inputUser.setBackground(new Color(200, 200, 200));
         inputUser.setBounds(50, 250, 350, 45);
-        inputUser.setBorder(new RoundedBorder(15));
-        inputUser.setBackground(new Color(200, 200, 200)); // Warna abu-abu
         add(inputUser);
         
         JLabel passLabel = new JLabel("PASSWORD");
@@ -66,19 +101,57 @@ public class Register extends JFrame {
         passLabel.setBounds(50, 300, 200, 20);
         add(passLabel);
         
-        JTextField inputPass = new JTextField(20);
+        JTextField inputPass = new JTextField(20) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(getBackground());
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15); // ✅ Background ikut radius
+                g2.dispose();
+                super.paintComponent(g);
+            }
+
+            @Override
+            protected void paintBorder(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(new Color(255, 140, 0)); // ✅ Warna border oranye
+                g2.setStroke(new BasicStroke(1));
+                g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 15, 15);
+                g2.dispose();
+            }
+        };
+        inputPass.setBorder(BorderFactory.createCompoundBorder(
+            inputUser.getBorder(),                           
+            BorderFactory.createEmptyBorder(0, 0, 0, 0)
+        ));
+        inputPass.setOpaque(false);
+        inputPass.setBackground(new Color(200, 200, 200));
         inputPass.setBounds(50, 320, 350, 45);
-        inputPass.setBorder(new RoundedBorder(15));
-        inputPass.setBackground(new Color(200, 200, 200)); // Warna abu-abu
         add(inputPass);
         
-        JButton btnDaftar = new JButton("Daftar");
+        JButton btnDaftar = new JButton("Daftar") {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(getBackground());
+                g2.fillRoundRect(-1, -1, getWidth() + 2, getHeight() + 2, 30, 30);
+                g2.dispose();
+                super.paintComponent(g);
+            }
+        };
         btnDaftar.setBounds(50, 400, 350, 45);
         btnDaftar.setBackground(new Color(255, 140, 0)); // oranye
         btnDaftar.setForeground(Color.WHITE);
-        btnDaftar.setBorder(new RoundedBorder(15));
+        btnDaftar.setBorder(new RoundedBorder(20));
         btnDaftar.setFont(new Font("Arial", Font.BOLD, 14));
-        btnDaftar.setBorder(BorderFactory.createEmptyBorder());
+        btnDaftar.setMargin(new Insets(0, 0, 0, 0));
+        btnDaftar.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        btnDaftar.setOpaque(false);
+        btnDaftar.setContentAreaFilled(false);
+        btnDaftar.setFocusable(false); 
         btnDaftar.setFocusPainted(false);
         add(btnDaftar);
         
@@ -119,15 +192,29 @@ public class Register extends JFrame {
                 CetakError("Masih ada inputan yang kosong", "Tolong Pastikan inputan terisi semua!");
             }
             else {
-                dispose();
-                Buyer frame = new Buyer();
-                frame.setVisible(true);
+                boolean userDitemukan = false;
+                for (int i = 0; i < dataUser.size(); i++) {
+                    if (username.equals(dataUser.get(i).getNama())) {
+                        userDitemukan = true;
+                        CetakError("Username Sudah Terdaftar", "Silahkan untuk Melakukan Login ke Akun Tersebut!");
+                        break;
+                    }
+                }
+                if (!userDitemukan) {
+                    if (!userDitemukan) {
+                        dataUser.add(new DataUser(username, pass, 0, 0));
+                        Session.getInstance().login(dataUser.get(dataUser.size()-1));
+                        dispose();
+                        Buyer frame = new Buyer();
+                        frame.setVisible(true);
+                    }
+                }
             } 
         }); 
         
         pindahKeUser.addMouseListener(new java.awt.event.MouseAdapter(){
             public void mouseClicked (java.awt.event.MouseEvent e) {
-                new Login();
+                new Login(dataTransaksi,dataUser);
                 dispose();
             }
         });
@@ -136,7 +223,7 @@ public class Register extends JFrame {
     }
 
     public static void main(String[] args) {
-        new Register();
+        new Register(dataTransaksi,dataUser);
     }
     
 }

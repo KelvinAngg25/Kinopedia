@@ -5,14 +5,16 @@
  */
 package Kinopedia.minigames.sudoku;
 
+import Kinopedia.DataUser;
 import javax.swing.SwingUtilities;
 
 
 /**
  *
- * @author William
+ * @author William.l
  */
 public class View{
+    
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             Logic c = new Logic();

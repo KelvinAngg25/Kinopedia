@@ -121,24 +121,4 @@ public class DataTransaksi {
         this.nominal = nominal;
     }
     
-    public static void loadSemuaTransaksi(ArrayList<DataTransaksi> dataTransaksi) {
-        File folder = new File("save/DataTransaksi");
-        File[] files = folder.listFiles();
-
-        if (files != null){
-            for (File file : files) {
-                try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-                    String baris;
-                    while ((baris = br.readLine()) != null) {
-                        String[] data = baris.split(",");
-                        dataTransaksi.add(new DataTransaksi(data[0],data[1], data[2], data[3], data[4], data[5], data[6], Integer.parseInt(data[7]), Boolean.parseBoolean(data[8]), data[9], data[10]));
-                    }
-                    br.close();
-                    System.out.println("Berhasil! ");
-                } catch (IOException e) {
-                    System.out.println("Gagal baca: " + file.getName());
-                }
-            }
-        } 
-    }
 }
