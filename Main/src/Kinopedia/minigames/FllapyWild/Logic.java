@@ -27,8 +27,8 @@ public class Logic {
     private int height = 60;
 
     // Konstanta fisika
-    private static final float GRAVITY    = 0.58f;
-    private static final float JUMP_FORCE = -13.0f;
+    private static final float GRAVITY    = 0.5f;
+    private static final float JUMP_FORCE = -10.0f;
     private static final float MAX_FALL   = 14.0f;
 
     // Nama karakter: "PLUPPY", "BOYO", atau "KWEK"
@@ -37,12 +37,10 @@ public class Logic {
     // Rotasi visual karakter
     private float angle = 0;
 
-    // Animasi kepak sayap
-    private int wingFrame   = 0; // Frame saat ini (0, 1, 2)
-    private int wingCounter = 0; // Counter untuk ganti frame
-
     // Kunci aset untuk tiap frame animasi
-    private String[] frameKeys; // Misal: ["pluppy_1", "pluppy_2", "pluppy_3"]
+    // frameKeys[0] = frame saat naik/jump (_1)
+    // frameKeys[1] = frame saat jatuh (_2)
+    private String[] frameKeys;
 
     public Logic(float x, float y, String characterName) {
         this.x             = x;
@@ -53,9 +51,8 @@ public class Logic {
         // Siapkan nama kunci aset berdasarkan nama karakter
         String prefix = characterName.toLowerCase();
         frameKeys = new String[]{
-            prefix + "_1",
-            prefix + "_2",
-            prefix + "_3"
+            prefix + "_1",  // frame 0: saat naik / jump
+            prefix + "_2"   // frame 1: saat jatuh
         };
     }
 
@@ -63,21 +60,20 @@ public class Logic {
     public void update() {
         // Gravitasi menarik karakter ke bawah
         velocityY += GRAVITY;
-        if (velocityY > MAX_FALL) velocityY = MAX_FALL;
+        if (velocityY > MAX_FALL) {
+            velocityY = MAX_FALL;
+        }
 
         // Gerakkan karakter
         y += velocityY;
 
         // Rotasi visual: miring ke atas saat naik, ke bawah saat jatuh
         angle = velocityY * 3.2f;
-        if (angle >  65) angle =  65;
-        if (angle < -25) angle = -25;
-
-        // Ganti frame animasi setiap 7 frame
-        wingCounter++;
-        if (wingCounter >= 7) {
-            wingFrame   = (wingFrame + 1) % 3;
-            wingCounter = 0;
+        if (angle > 65) {
+            angle = 65;
+        }
+        if (angle < -25) {
+            angle = -25;
         }
     }
 
@@ -99,8 +95,15 @@ public class Logic {
         double cy = y + height / 2.0;
         g2.rotate(Math.toRadians(angle), cx, cy);
 
-        // Pilih frame animasi yang tepat
-        String currentFrameKey = frameKeys[wingFrame];
+        // Pilih frame animasi berdasarkan arah gerakan:
+        // velocityY < 0 → karakter sedang naik → pakai _1
+        // velocityY >= 0 → karakter sedang jatuh → pakai _2
+        String currentFrameKey;
+        if (velocityY < 0) {
+            currentFrameKey = frameKeys[0]; // _1: naik / jump
+        } else {
+            currentFrameKey = frameKeys[1]; // _2: jatuh
+        }
 
         if (AssetManager.has(currentFrameKey)) {
             // ===== Gambar dari aset PNG =====
@@ -131,47 +134,96 @@ public class Logic {
         g2.setColor(new Color(0, 0, 0, 40));
         g2.fillOval(cx - 25, cy + 22, 50, 12);
 
-        // Animasi sayap fallback
-        int wingOffset = (wingFrame == 0) ? -6 : (wingFrame == 1) ? 0 : 6;
+        // Animasi sayap fallback: ke atas saat naik, ke bawah saat jatuh
+        int wingOffset;
+        if (velocityY < 0) {
+            wingOffset = -6; // sayap ke atas saat naik
+        } else {
+            wingOffset = 6;  // sayap ke bawah saat jatuh
+        }
 
-        switch (characterName) {
-            case "PLUPPY":
-                g2.setColor(Color.BLACK);         g2.fillOval(cx-28, cy-26, 56, 54);
-                g2.setColor(Color.WHITE);          g2.fillOval(cx-14, cy-10, 28, 36);
-                g2.setColor(new Color(255,165,0));
-                g2.fillPolygon(new int[]{cx-8,cx+8,cx+15}, new int[]{cy-14,cy-14,cy-6}, 3);
-                g2.setColor(Color.BLACK);
-                g2.fillOval(cx-42, cy-6+wingOffset, 16, 26);
-                g2.fillOval(cx+26, cy-6-wingOffset, 16, 26);
-                g2.setColor(Color.WHITE); g2.fillOval(cx-16,cy-24,12,12);
-                g2.setColor(Color.BLACK); g2.fillOval(cx-13,cy-21, 7, 7);
-                g2.setColor(Color.WHITE); g2.fillOval(cx+4, cy-24,12,12);
-                g2.setColor(Color.BLACK); g2.fillOval(cx+7, cy-21, 7, 7);
-                break;
-            case "BOYO":
-                g2.setColor(new Color(80,160,230));  g2.fillOval(cx-27, cy-24, 54, 52);
-                g2.setColor(new Color(180,220,255));  g2.fillOval(cx-13,  cy-8, 26, 34);
-                g2.setColor(new Color(60,130,200));
-                g2.fillOval(cx-42, cy-8+wingOffset, 16, 24);
-                g2.fillOval(cx+26, cy-8-wingOffset, 16, 24);
-                g2.setColor(Color.WHITE); g2.fillOval(cx-15,cy-22,12,12);
-                g2.setColor(Color.BLACK); g2.fillOval(cx-12,cy-19, 7, 7);
-                g2.setColor(Color.WHITE); g2.fillOval(cx+3, cy-22,12,12);
-                g2.setColor(Color.BLACK); g2.fillOval(cx+6, cy-19, 7, 7);
-                break;
-            case "KWEK":
-                g2.setColor(new Color(255,210,50)); g2.fillOval(cx-26, cy-22, 52, 50);
-                g2.setColor(new Color(255,235,150)); g2.fillOval(cx-13,  cy-6, 26, 32);
-                g2.setColor(new Color(230,175,0));
-                g2.fillOval(cx-40, cy-6+wingOffset, 16, 26);
-                g2.fillOval(cx+24, cy-6-wingOffset, 16, 26);
-                g2.setColor(new Color(255,130,0));
-                g2.fillPolygon(new int[]{cx-9,cx+9,cx+16}, new int[]{cy-10,cy-10,cy-4}, 3);
-                g2.setColor(Color.WHITE); g2.fillOval(cx-14,cy-20,12,12);
-                g2.setColor(Color.BLACK); g2.fillOval(cx-11,cy-17, 7, 7);
-                g2.setColor(Color.WHITE); g2.fillOval(cx+2, cy-20,12,12);
-                g2.setColor(Color.BLACK); g2.fillOval(cx+5, cy-17, 7, 7);
-                break;
+        if (characterName.equals("PLUPPY")) {
+            g2.setColor(Color.BLACK);
+            g2.fillOval(cx - 28, cy - 26, 56, 54);
+
+            g2.setColor(Color.WHITE);
+            g2.fillOval(cx - 14, cy - 10, 28, 36);
+
+            g2.setColor(new Color(255, 165, 0));
+            g2.fillPolygon(
+                new int[]{cx - 8, cx + 8, cx + 15},
+                new int[]{cy - 14, cy - 14, cy - 6},
+                3
+            );
+
+            g2.setColor(Color.BLACK);
+            g2.fillOval(cx - 42, cy - 6 + wingOffset, 16, 26);
+            g2.fillOval(cx + 26, cy - 6 - wingOffset, 16, 26);
+
+            g2.setColor(Color.WHITE);
+            g2.fillOval(cx - 16, cy - 24, 12, 12);
+
+            g2.setColor(Color.BLACK);
+            g2.fillOval(cx - 13, cy - 21, 7, 7);
+
+            g2.setColor(Color.WHITE);
+            g2.fillOval(cx + 4, cy - 24, 12, 12);
+
+            g2.setColor(Color.BLACK);
+            g2.fillOval(cx + 7, cy - 21, 7, 7);
+
+        } else if (characterName.equals("BOYO")) {
+            g2.setColor(new Color(80, 160, 230));
+            g2.fillOval(cx - 27, cy - 24, 54, 52);
+
+            g2.setColor(new Color(180, 220, 255));
+            g2.fillOval(cx - 13, cy - 8, 26, 34);
+
+            g2.setColor(new Color(60, 130, 200));
+            g2.fillOval(cx - 42, cy - 8 + wingOffset, 16, 24);
+            g2.fillOval(cx + 26, cy - 8 - wingOffset, 16, 24);
+
+            g2.setColor(Color.WHITE);
+            g2.fillOval(cx - 15, cy - 22, 12, 12);
+
+            g2.setColor(Color.BLACK);
+            g2.fillOval(cx - 12, cy - 19, 7, 7);
+
+            g2.setColor(Color.WHITE);
+            g2.fillOval(cx + 3, cy - 22, 12, 12);
+
+            g2.setColor(Color.BLACK);
+            g2.fillOval(cx + 6, cy - 19, 7, 7);
+
+        } else if (characterName.equals("KWEK")) {
+            g2.setColor(new Color(255, 210, 50));
+            g2.fillOval(cx - 26, cy - 22, 52, 50);
+
+            g2.setColor(new Color(255, 235, 150));
+            g2.fillOval(cx - 13, cy - 6, 26, 32);
+
+            g2.setColor(new Color(230, 175, 0));
+            g2.fillOval(cx - 40, cy - 6 + wingOffset, 16, 26);
+            g2.fillOval(cx + 24, cy - 6 - wingOffset, 16, 26);
+
+            g2.setColor(new Color(255, 130, 0));
+            g2.fillPolygon(
+                new int[]{cx - 9, cx + 9, cx + 16},
+                new int[]{cy - 10, cy - 10, cy - 4},
+                3
+            );
+
+            g2.setColor(Color.WHITE);
+            g2.fillOval(cx - 14, cy - 20, 12, 12);
+
+            g2.setColor(Color.BLACK);
+            g2.fillOval(cx - 11, cy - 17, 7, 7);
+
+            g2.setColor(Color.WHITE);
+            g2.fillOval(cx + 2, cy - 20, 12, 12);
+
+            g2.setColor(Color.BLACK);
+            g2.fillOval(cx + 5, cy - 17, 7, 7);
         }
     }
 

@@ -18,6 +18,7 @@ public class Pipe {
  
     private float x;
     private int   pipeWidth = 90;
+    BufferedImage imgTop = AssetManager.get("pipe_top");
  
     // gapY = posisi Y TENGAH celah antara dua pipa
     private int gapY;
@@ -60,8 +61,11 @@ public class Pipe {
             // Aset pipe_top.png harus punya kepala di bagian bawah
             g2.drawImage(
                 AssetManager.get("pipe_bottom"),
-                px, 0,                    // Posisi tujuan (x, y)
-                pipeWidth, topPipeBottom, // Ukuran tujuan
+                px, topPipeBottom,                    // Posisi tujuan (x, y)
+                px + pipeWidth, 0,
+                0, 0,
+                imgTop.getWidth(), imgTop.getHeight(),
+//                pipeWidth, topPipeBottom, // Ukuran tujuan
                 null
             );
  
@@ -134,10 +138,18 @@ public class Pipe {
         int topPipeBottom = gapY - gapSize / 2;
         int bottomPipeTop = gapY + gapSize / 2;
  
-        Rectangle topRect    = new Rectangle((int)x + 5, 0, pipeWidth - 10, topPipeBottom);
+        Rectangle topRect    = new Rectangle((int)x + 5, -2000, pipeWidth - 10, topPipeBottom + 2000);
         Rectangle bottomRect = new Rectangle((int)x + 5, bottomPipeTop, pipeWidth - 10, GameWindow.HEIGHT);
+        
+        if (birdHitbox.intersects(topRect)) {
+            return true;
+        }  else if (birdHitbox.intersects(bottomRect)) {
+            return true;
+        } else {
+            return false;
+        }
  
-        return birdHitbox.intersects(topRect) || birdHitbox.intersects(bottomRect);
+//        return birdHitbox.intersects(topRect) || birdHitbox.intersects(bottomRect);
     }
  
     // Apakah pipa sudah di luar layar?

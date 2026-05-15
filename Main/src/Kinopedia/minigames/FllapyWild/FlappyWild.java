@@ -251,6 +251,10 @@ public class FlappyWild extends JPanel implements KeyListener, MouseListener {
             triggerGameOver();
         }
         // Cegah karakter keluar atas layar
+//        if (bird.getY() < 0) {
+//            triggerGameOver();
+//            return;
+//        }
         if (bird.getY() < -bird.getHeight()) bird.setY(-bird.getHeight() + 1);
     }
 
@@ -314,8 +318,8 @@ public class FlappyWild extends JPanel implements KeyListener, MouseListener {
             g2.drawImage(AssetManager.get("sky"), 0, 0, GameWindow.WIDTH, GameWindow.HEIGHT, null);
         } else {
             GradientPaint gp = new GradientPaint(
-                0, 0, new Color(100, 180, 240),
-                0, GameWindow.HEIGHT, new Color(180, 220, 255)
+                0, 0, new Color(140, 200, 240), // atas
+                0, GameWindow.HEIGHT, new Color(180, 230, 255) // bawah
             );
             g2.setPaint(gp);
             g2.fillRect(0, 0, GameWindow.WIDTH, GameWindow.HEIGHT);
