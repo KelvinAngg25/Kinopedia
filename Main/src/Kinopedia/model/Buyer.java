@@ -13,7 +13,7 @@ import Kinopedia.DataTransaksi;
 import Kinopedia.DataUser;
 import Kinopedia.Main;
 import Kinopedia.Session;
-import Kinopedia.view.History;
+import Kinopedia.History;
 import Kinopedia.view.LoginRegister.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -26,7 +26,6 @@ public class Buyer extends JFrame {
     public Buyer() {
         DataUser userLogin = Session.getInstance().getCurrentUser();
         System.out.println(userLogin.getNama());
-        
         
         setTitle("Kinopedia | Halaman Utama ");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -65,39 +64,36 @@ public class Buyer extends JFrame {
         root.add(Box.createVerticalStrut(80));
         root.add(menuButton("Top Up", this::onTopUp));
         root.add(Box.createVerticalStrut(14));
- 
-        root.add(createMenuButton("Mini Games", ORANGE, this::onMiniGames));
+        root.add(menuButton("Mini Games", this::onMiniGames));
         root.add(Box.createVerticalStrut(14));
- 
-        root.add(createMenuButton("Riwayat Pembelian", ORANGE, this::onRiwayatPembelian));
+        root.add(menuButton("Riwayat Pembelian", this::onRiwayatPembelian));
         root.add(Box.createVerticalStrut(14));
- 
-        root.add(createMenuButton("Log Out", ORANGE, this::onLogout));
- 
-        // Supaya konten tetap di atas, ada sisa ruang di bawah
+        root.add(menuButton("Log Out", this::onLogout));
+        root.add(Box.createVerticalGlue());
         root.add(Box.createVerticalGlue());
         add(root);
         
         setLocationRelativeTo(null);
     }
- 
-    // Bikin tombol menu biar konsisten dan gampang dibaca
-    private JButton createMenuButton(String text, Color orange, java.awt.event.ActionListener listener) {
-        JButton btn = new JButton(text);
+
+    private JButton menuButton(String text, java.awt.event.ActionListener listener) {
+        RoundedButton btn = new RoundedButton(text, 18);
         btn.setAlignmentX(Component.CENTER_ALIGNMENT);
- 
-        btn.setBackground(orange);
+
+        btn.setBackground(new Color(0xFF8C1A));
         btn.setForeground(Color.BLACK);
         btn.setFont(new Font("SansSerif", Font.BOLD, 16));
- 
+
         btn.setFocusPainted(false);
-        btn.setOpaque(true);
- 
+        btn.setBorderPainted(false);
+        btn.setContentAreaFilled(false);
+        btn.setOpaque(false);
+
         Dimension size = new Dimension(260, 48);
         btn.setPreferredSize(size);
         btn.setMaximumSize(size);
         btn.setMinimumSize(size);
- 
+
         btn.addActionListener(listener);
         return btn;
     }
@@ -106,7 +102,7 @@ public class Buyer extends JFrame {
         dispose();
         new Game(this).setVisible(true);
     }
- 
+
     private void onMiniGames(ActionEvent e) {
         dispose();
         new Kinopedia.minigames.MainMiniGames().setVisible(true);
@@ -128,7 +124,7 @@ public class Buyer extends JFrame {
             frame.setVisible(true);
         }
     }
- 
+
     public static void main(String[] args) {
         Buyer frame = new Buyer();
         frame.setVisible(true);
