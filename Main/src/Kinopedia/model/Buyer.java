@@ -13,7 +13,7 @@ import Kinopedia.DataTransaksi;
 import Kinopedia.DataUser;
 import Kinopedia.Main;
 import Kinopedia.Session;
-import Kinopedia.view.History;
+import Kinopedia.History;
 import Kinopedia.view.LoginRegister.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -26,7 +26,6 @@ public class Buyer extends JFrame {
     public Buyer() {
         DataUser userLogin = Session.getInstance().getCurrentUser();
         System.out.println(userLogin.getNama());
-        
         
         setTitle("Kinopedia | Halaman Utama ");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
