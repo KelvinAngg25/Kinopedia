@@ -27,7 +27,6 @@ public class Buyer extends JFrame {
         DataUser userLogin = Session.getInstance().getCurrentUser();
         System.out.println(userLogin.getNama());
         
-        
         setTitle("Kinopedia | Halaman Utama ");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(470, 844);

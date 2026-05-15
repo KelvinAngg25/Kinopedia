@@ -61,7 +61,6 @@ public class Login extends JFrame {
     }
     
     public Login(ArrayList<DataTransaksi> dataTransaksi ,ArrayList<DataUser> dataUser) {
-        System.out.println(dataUser.size());
         
         setTitle("Kinopedia");
         setSize(470, 844);

@@ -22,6 +22,7 @@ import java.util.ArrayList;
 public class Main {
     public static ArrayList<DataTransaksi> dataTransaksi = new ArrayList<DataTransaksi>();
     public static ArrayList<DataUser> dataUser = new ArrayList<DataUser>();
+    public static ArrayList<DataAkun> dataAkun = new ArrayList<DataAkun>();
     public static DataUser admin; // yg dipake hanya idx 0-2, 0 utk user admin, 1 utk pass admin, 2 utk saldo admin.
     /**
      * @param args the command line arguments
@@ -47,12 +48,13 @@ public class Main {
                         dataTransaksi.add(new DataTransaksi(data[0],data[1], data[2], data[3], data[4], data[5], data[6], Integer.parseInt(data[7]), Boolean.parseBoolean(data[8]), data[9], data[10]));
                     }
                     br.close();
-                    System.out.println("Berhasil! ");
+                    
                 } catch (IOException e) {
                     System.out.println("Gagal baca: " + file.getName());
                 }
             }
         } 
+        System.out.println("Total Data Transaksi : " + dataTransaksi.size());
         
         folder = new File("save/DataUser");
         files = folder.listFiles();
@@ -80,12 +82,33 @@ public class Main {
                             dataUser.add(new DataUser(data[0], data[1], Integer.parseInt(data[2]), Integer.parseInt(data[3])));
                         }
                         br.close();
+                        
                     } catch (IOException e) {
                         System.out.println("Gagal baca: " + file.getName());
                     }
                 }
             }
+            System.out.println("Total Data User : " + dataUser.size());
         }
+        
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("save/DataAkun.txt"));
+            String baris;
+            System.out.println();
+            while ((baris = br.readLine()) != null) {
+                String[] data = baris.split(",");
+                String idAkun = data[0];
+                String namaAkun = data[1];
+                String jenisGame = data[2];
+                dataAkun.add(new DataAkun(idAkun, namaAkun, jenisGame));
+            }
+            System.out.println("Berhasil Memuat data DataAkun.txt");
+            br.close();
+            
+        } catch (IOException e) {
+            System.out.println("  Gagal membaca data DataAkun.txt!");
+        }
+        System.out.println("Total Data Akun : " + dataAkun.size());
     }
     
     public static void saveSemuaData(ArrayList<DataTransaksi> dataTransaksi,ArrayList<DataUser> dataUser, DataUser admin) {
@@ -96,11 +119,12 @@ public class Main {
                 fw.write(dataTransaksi.get(i).getIdTransaksi() + "," + dataTransaksi.get(i).getTanggal() + ","+ dataTransaksi.get(i).getWaktu() + ","+ dataTransaksi.get(i).getUsername() + ","+ dataTransaksi.get(i).getIdGame() + ","+ dataTransaksi.get(i).getJenisGame() + ","+ dataTransaksi.get(i).getPembayaran() +  ","+ dataTransaksi.get(i).getNominal() +  "," + dataTransaksi.get(i).isKonfirmasi() + "," + dataTransaksi.get(i).getTanggalKonfirmasi() + "," + dataTransaksi.get(i).getWaktuKonfirmasi() +  "\n");
                 System.out.println("  Menyimpan "+ i + ".txt...   OK");
                 fw.close();
-
+                
             } catch (IOException e) {
                 System.out.println("  Gagal menyimpan "+ i +".txt!");
             }
         }
+        System.out.println("Total Data Transaksi : " + dataTransaksi.size());
         
         
         for (int i = 0; i < dataUser.size(); i++) {
@@ -114,6 +138,7 @@ public class Main {
                 System.out.println("  Gagal menyimpan "+ dataUser.get(i).getNama() +".txt!");
             }
         }
+        System.out.println("Total Data User : " + dataUser.size());
         
         try {
             String namaFile = "save/DataUser/Admin.txt";
@@ -124,5 +149,6 @@ public class Main {
         } catch (IOException e) {
             System.out.println("  Gagal menyimpan Admin.txt!");
         }
+        System.out.println("Saldo Admin : " + admin.getKoin());
     }
 }
