@@ -9,49 +9,61 @@ package Kinopedia.model;
  *
  * @author William
  */
+import Kinopedia.DataTransaksi;
+import Kinopedia.DataUser;
+import Kinopedia.Main;
+import Kinopedia.Session;
+import Kinopedia.view.History;
+import Kinopedia.view.LoginRegister.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.net.URL;
- 
+import java.awt.geom.RoundRectangle2D;
+import java.util.ArrayList;
+
 public class Buyer extends JFrame {
- 
-    // Sesuaikan jika path resource kamu berbeda
-    private static String LOGO_PATH = "/Kinopedia/model/IMAGESS/LogoKinopedia.png";
- 
     public Buyer() {
-        setTitle("Halaman Utama (Buyer)");
-        setSize(470, 844);
-        setLocationRelativeTo(null);
+        DataUser userLogin = Session.getInstance().getCurrentUser();
+        System.out.println(userLogin.getNama());
+        
+        
+        setTitle("Kinopedia | Halaman Utama ");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
- 
-        Color ORANGE = new Color(0xFF8C1A);
- 
-        // Panel utama
+        setSize(470, 844);
+        
+        JPanel logoPanel = new JPanel();
+        logoPanel.setBackground(Color.WHITE);
+        logoPanel.setLayout(new BoxLayout(logoPanel, BoxLayout.Y_AXIS));
+        logoPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
+        logoPanel.add(Box.createVerticalStrut(30));
+
+        ImageIcon icon = new ImageIcon(getClass().getResource("IMAGESS/LogoKinopedia.png"));
+        Image scaledImage = icon.getImage().getScaledInstance(
+            170, 170, 
+            Image.SCALE_SMOOTH
+        );
+        JLabel logoKinopedia = new JLabel (new ImageIcon(scaledImage));
+        logoKinopedia.setAlignmentX(Component.CENTER_ALIGNMENT);
+        logoPanel.add(logoKinopedia);
+        
+        
+        
+        JLabel titleLabel = new JLabel("Kinopedia");
+        titleLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
+        titleLabel.setForeground(Color.BLACK);
+        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        logoPanel.add(titleLabel);
+        
+    
         JPanel root = new JPanel();
         root.setBackground(Color.WHITE);
         root.setBorder(new EmptyBorder(35, 40, 35, 40));
         root.setLayout(new BoxLayout(root, BoxLayout.Y_AXIS));
-        setContentPane(root);
- 
-        // ===== Logo =====
-        JLabel logoLabel = new JLabel();
-        logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
- 
-        ImageIcon logoIcon = loadIcon(LOGO_PATH, 260, 260);
-        if (logoIcon != null) {
-            logoLabel.setIcon(logoIcon);
-        } else {
-            logoLabel.setText("LOGO NOT FOUND");
-            logoLabel.setForeground(Color.RED);
-        }
- 
-        root.add(logoLabel);
-        root.add(Box.createVerticalStrut(35));
- 
-        // ===== Tombol Menu =====
-        root.add(createMenuButton("Top Up", ORANGE, this::onTopUp));
+        root.add(logoPanel);
+        root.add(Box.createVerticalStrut(80));
+        root.add(menuButton("Top Up", this::onTopUp));
         root.add(Box.createVerticalStrut(14));
  
         root.add(createMenuButton("Mini Games", ORANGE, this::onMiniGames));
@@ -64,17 +76,9 @@ public class Buyer extends JFrame {
  
         // Supaya konten tetap di atas, ada sisa ruang di bawah
         root.add(Box.createVerticalGlue());
-    }
- 
-    // Load gambar dari resources + resize
-    private ImageIcon loadIcon(String path, int w, int h) {
-        URL url = getClass().getResource(path);
-        if (url == null) {
-            System.out.println("Icon not found: " + path);
-            return null;
-        }
-        Image img = new ImageIcon(url).getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
-        return new ImageIcon(img);
+        add(root);
+        
+        setLocationRelativeTo(null);
     }
  
     // Bikin tombol menu biar konsisten dan gampang dibaca
@@ -97,31 +101,74 @@ public class Buyer extends JFrame {
         btn.addActionListener(listener);
         return btn;
     }
- 
-    // ===== Action tombol =====
- 
-    private void onTopUp(ActionEvent e) {
-        // Buka halaman Game, lalu sembunyikan halaman Buyer
+
+    public void onTopUp(ActionEvent e) {
+        dispose();
         new Game(this).setVisible(true);
-        setVisible(false);
     }
  
     private void onMiniGames(ActionEvent e) {
-        JOptionPane.showMessageDialog(this, "you clicked Mini Games !!");
+        dispose();
+        new Kinopedia.minigames.MainMiniGames().setVisible(true);
     }
- 
-    private void onRiwayatPembelian(ActionEvent e) {
-        JOptionPane.showMessageDialog(this, "Riwayat Pembelian clicked");
+
+    public void onRiwayatPembelian(ActionEvent e) {
+        dispose();
+        History frame = new History();
+        frame.setVisible(true);
     }
- 
-    private void onLogout(ActionEvent e) {
+
+    public void onLogout(ActionEvent e) {
         int confirm = JOptionPane.showConfirmDialog(this, "Log out?", "Confirm", JOptionPane.YES_NO_OPTION);
         if (confirm == JOptionPane.YES_OPTION) {
+            Main.saveSemuaData(Main.dataTransaksi, Main.dataUser, Main.admin);
+            Session.getInstance().logout();
             dispose();
+            Login frame = new Login(Main.dataTransaksi,Main.dataUser);
+            frame.setVisible(true);
         }
     }
  
     public static void main(String[] args) {
-        new Buyer().setVisible(true);
+        Buyer frame = new Buyer();
+        frame.setVisible(true);
+    }
+
+    static class RoundedButton extends JButton {
+
+        private final int radius;
+        private Shape shape;
+
+        RoundedButton(String text, int radius) {
+            super(text);
+            this.radius = radius;
+            setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            setMargin(new Insets(10, 18, 10, 18));
+        }
+
+        @Override
+        public void paintComponent(Graphics g) {
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            g2.setColor(getModel().isArmed() ? getBackground().darker() : getBackground());
+            g2.fillRoundRect(0, 0, getWidth(), getHeight(), radius, radius);
+
+            FontMetrics fm = g2.getFontMetrics();
+            int x = (getWidth() - fm.stringWidth(getText())) / 2;
+            int y = (getHeight() - fm.getHeight()) / 2 + fm.getAscent();
+
+            g2.setColor(getForeground());
+            g2.drawString(getText(), x, y);
+            g2.dispose();
+        }
+
+        @Override
+        public boolean contains(int x, int y) {
+            if (shape == null || !shape.getBounds().equals(getBounds())) {
+                shape = new RoundRectangle2D.Float(0, 0, getWidth(), getHeight(), radius, radius);
+            }
+            return shape.contains(x, y);
+        }
     }
 }

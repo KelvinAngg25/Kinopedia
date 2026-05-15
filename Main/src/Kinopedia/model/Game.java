@@ -23,8 +23,20 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class Game extends JFrame {
+    
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            JFrame dummyBack = new JFrame();
+            dummyBack.setSize(470, 844);
+            dummyBack.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            dummyBack.setVisible(true);
 
-    private JFrame backTo;
+            new Game(dummyBack).setVisible(true);
+            dummyBack.setVisible(false);
+        });
+    }
+
+    private final JFrame backTo;
 
     public Game(JFrame backTo) {
         this.backTo = backTo;
@@ -82,7 +94,7 @@ public class Game extends JFrame {
         footer.setBackground(Color.WHITE);
         footer.setBorder(new EmptyBorder(8, 0, 0, 0));
 
-        ImageIcon logoImg = loadIcon("LogoKinopedia.png", 80, 80);
+        ImageIcon logoImg = loadIcon("LogoKinopedia.png", 50, 50);
         JLabel logoLabel = (logoImg != null) ? new JLabel(logoImg) : new JLabel("Kinopedia");
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -99,8 +111,8 @@ public class Game extends JFrame {
         return label;
     }
 
-    private JPanel makeIconRow(String[] names) {
-        JPanel row = new JPanel(new FlowLayout(FlowLayout.LEFT, 4, 0));
+    private JPanel iconRow(String[] names) {
+        JPanel row = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         row.setBackground(Color.WHITE);
         row.setAlignmentX(Component.LEFT_ALIGNMENT);
         row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 110));
@@ -143,11 +155,14 @@ public class Game extends JFrame {
             }
         });
 
-        JPanel iconWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        iconWrapper.setBackground(Color.WHITE);
-        iconWrapper.setMaximumSize(new Dimension(100, 70));
-        iconWrapper.setPreferredSize(new Dimension(100, 70));
-        iconWrapper.add(iconLabel);
+        String fileName = "";
+        if (name.equals("Valorant")) fileName = "Valorantt.png";
+        if (name.equals("PUBG Mobile")) fileName = "PUBG.png";
+        if (name.equals("CODM")) fileName = "CODMmobile.jpg";
+        if (name.equals("Free Fire")) fileName = "FreeFire.jpg";
+        if (name.equals("eFootball")) fileName = "efootball.jpg";
+        if (name.equals("Mobile Legend")) fileName = "ML.png";
+        if (name.equals("Steam")) fileName = "Steam.png";
 
         JLabel textLabel = new JLabel(name, SwingConstants.CENTER);
         textLabel.setFont(new Font("SansSerif", Font.PLAIN, 11));

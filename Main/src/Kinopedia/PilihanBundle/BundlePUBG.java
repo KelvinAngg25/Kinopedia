@@ -35,13 +35,13 @@ public class BundlePUBG extends JFrame {
         Color ORANGE = new Color(0xFF8C1A);
 
         // load icons
-        currencyIcon = loadIcon("/Kinopedia/model/IMAGESS/UC-PUBGs.png", 22, 22);
-        logoFooter   = loadIcon("/Kinopedia/model/IMAGESS/LogoKinopedia.png", 70, 70);
+        currencyIcon = loadIcon("/Kinopedia/model/IMAGESS/UC-PUBGs.png", 18, 18);
+        logoFooter   = loadIcon("/Kinopedia/model/IMAGESS/LogoKinopedia.png", 50, 50);
 
         // root
         JPanel root = new JPanel(new BorderLayout());
         root.setBackground(Color.WHITE);
-        root.setBorder(new EmptyBorder(20, 20, 20, 20));
+        root.setBorder(new EmptyBorder(18, 18, 18, 18));
         setContentPane(root);
 
         // top bar
@@ -65,9 +65,7 @@ public class BundlePUBG extends JFrame {
         JPanel content = new JPanel();
         content.setBackground(Color.WHITE);
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
-        content.setBorder(new EmptyBorder(10, 0, 0, 0));
-        
-        root.add(content, BorderLayout.CENTER);
+        content.setBorder(new EmptyBorder(8, 12, 0, 12));
 
 //        JScrollPane scroll = new JScrollPane(content);
 //        scroll.setBorder(null);
@@ -85,14 +83,13 @@ public class BundlePUBG extends JFrame {
         content.add(Box.createVerticalStrut(6));
 
         JTextField idField = new JTextField("225180606 (2554)");
-        idField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 44));
+        idField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
         idField.setBorder(BorderFactory.createCompoundBorder(
                 new LineBorder(ORANGE, 2, true),
-                new EmptyBorder(6, 10, 6, 10)
+                new EmptyBorder(8, 12, 8, 12)
         ));
         idField.setAlignmentX(Component.LEFT_ALIGNMENT);
         content.add(idField);
-
         content.add(Box.createVerticalStrut(10));
 
         // ACCOUNT NAME
@@ -101,62 +98,58 @@ public class BundlePUBG extends JFrame {
         accLabel.setForeground(Color.DARK_GRAY);
         accLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         content.add(accLabel);
-
         content.add(Box.createVerticalStrut(6));
 
         JTextField accNameField = new JTextField("KelvinAngjaya123");
         accNameField.setEditable(false);
         accNameField.setBackground(new Color(0xD9D9D9));
-        accNameField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 44));
-        accNameField.setAlignmentX(Component.LEFT_ALIGNMENT);
+        accNameField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
         accNameField.setBorder(BorderFactory.createCompoundBorder(
                 new LineBorder(ORANGE, 2, true),
-                new EmptyBorder(6, 10, 6, 10)
+                new EmptyBorder(8, 12, 8, 12)
         ));
-        accNameField.setHorizontalAlignment(JTextField.LEFT);
         accNameField.setAlignmentX(Component.LEFT_ALIGNMENT);
         content.add(accNameField);
-
-        content.add(Box.createVerticalStrut(14));
+        content.add(Box.createVerticalStrut(12));
 
         // tag "1. Bundling"
         JPanel tagPanel = new JPanel(new BorderLayout());
         tagPanel.setBackground(Color.WHITE);
         tagPanel.setBorder(BorderFactory.createCompoundBorder(
                 new LineBorder(ORANGE, 2, true),
-                new EmptyBorder(8, 10, 8, 10)
+                new EmptyBorder(6, 10, 6, 10)
         ));
-        tagPanel.setMaximumSize(new Dimension(220, 48));
+        tagPanel.setMaximumSize(new Dimension(160, 32));
         tagPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         JLabel tagText = new JLabel("1. Bundling", SwingConstants.CENTER);
-        tagText.setFont(new Font("SansSerif", Font.BOLD, 20));
+        tagText.setFont(new Font("SansSerif", Font.BOLD, 12));
         tagPanel.add(tagText, BorderLayout.CENTER);
 
         content.add(tagPanel);
-        content.add(Box.createVerticalStrut(10));
+        content.add(Box.createVerticalStrut(8));
 
         // orange box + grid
         JPanel orangeBox = new JPanel(new BorderLayout());
         orangeBox.setBackground(ORANGE);
-        orangeBox.setBorder(new EmptyBorder(14, 14, 14, 14));
+        orangeBox.setBorder(new EmptyBorder(10, 10, 10, 10));
         orangeBox.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        JPanel grid = new JPanel(new GridLayout(0, 2, 12, 12));
+        JPanel grid = new JPanel(new GridLayout(0, 2, 8, 8));
         grid.setOpaque(false);
         orangeBox.add(grid, BorderLayout.CENTER);
 
-        addCard(grid, "10 " + currencyName, "Rp 5.000");
-        addCard(grid, "50 " + currencyName, "Rp 22.000");
-        addCard(grid, "75 " + currencyName, "Rp 32.000");
-        addCard(grid, "100 " + currencyName, "Rp 49.000");
-        addCard(grid, "200 " + currencyName, "Rp 80.000");
-        addCard(grid, "400 " + currencyName, "Rp 149.000");
-        addCard(grid, "1000 " + currencyName, "Rp 267.000");
-        addCard(grid, "2500 " + currencyName, "Rp 525.000");
+        addCard(grid, "60 " + currencyName, "Rp 17.200");
+        addCard(grid, "325 " + currencyName, "Rp 82.500");
+        addCard(grid, "821 " + currencyName, "Rp 211.000");
+        addCard(grid, "1800 " + currencyName, "Rp 400.000");
+        addCard(grid, "3850 " + currencyName, "Rp 795.000");
+        addCard(grid, "8100 " + currencyName, "Rp 1.580.000");
+        addCard(grid, "16200 " + currencyName, "Rp 3.000.000");
+        addCard(grid, "40500 " + currencyName, "Rp 7.900.000");
 
         content.add(orangeBox);
-        content.add(Box.createVerticalStrut(18));
+        content.add(Box.createVerticalStrut(10));
 
         // footer fixed
         JPanel footer = new JPanel();
@@ -168,19 +161,19 @@ public class BundlePUBG extends JFrame {
         JButton payBtn = new JButton("Pilih Metode Pembayaran");
         payBtn.setBackground(ORANGE);
         payBtn.setForeground(Color.BLACK);
-        payBtn.setFont(new Font("SansSerif", Font.BOLD, 16));
+        payBtn.setFont(new Font("SansSerif", Font.BOLD, 13));
         payBtn.setFocusPainted(false);
         payBtn.setOpaque(true);
-        payBtn.setBorder(BorderFactory.createEmptyBorder(12, 14, 12, 14));
+        payBtn.setBorder(BorderFactory.createEmptyBorder(10, 12, 10, 12));
 
         JPanel payWrap = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         payWrap.setBackground(Color.WHITE);
         payWrap.add(payBtn);
         footer.add(payWrap);
 
-        footer.add(Box.createVerticalStrut(14)); // jarak logo
+        footer.add(Box.createVerticalStrut(14));
 
-        JLabel logoLabel = (logoFooter != null) ? new JLabel(logoFooter) : new JLabel("Kinopedia");
+        JLabel logoLabel = (logoFooter != null) ? new JLabel(logoFooter) : new JLabel("Logo");
         logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         footer.add(logoLabel);
     }
@@ -191,8 +184,7 @@ public class BundlePUBG extends JFrame {
             System.out.println("Icon not found: " + path);
             return null;
         }
-        ImageIcon icon = new ImageIcon(url);
-        Image img = icon.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
+        Image img = new ImageIcon(url).getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
         return new ImageIcon(img);
     }
 
@@ -200,23 +192,23 @@ public class BundlePUBG extends JFrame {
         JPanel card = new JPanel();
         card.setBackground(Color.WHITE);
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
-        card.setBorder(new EmptyBorder(10, 12, 10, 12));
+        card.setBorder(new EmptyBorder(6, 8, 6, 8));
 
         JLabel iconLabel = (currencyIcon != null) ? new JLabel(currencyIcon) : new JLabel("?");
         iconLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         JLabel t = new JLabel(title);
-        t.setFont(new Font("SansSerif", Font.BOLD, 12));
+        t.setFont(new Font("SansSerif", Font.BOLD, 10));
         t.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         JLabel p = new JLabel(price);
-        p.setFont(new Font("SansSerif", Font.PLAIN, 12));
+        p.setFont(new Font("SansSerif", Font.PLAIN, 10));
         p.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         card.add(iconLabel);
-        card.add(Box.createVerticalStrut(6));
-        card.add(t);
         card.add(Box.createVerticalStrut(2));
+        card.add(t);
+        card.add(Box.createVerticalStrut(1));
         card.add(p);
 
         grid.add(card);

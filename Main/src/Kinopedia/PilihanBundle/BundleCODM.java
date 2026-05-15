@@ -36,7 +36,7 @@ public class BundleCODM extends JFrame {
 
         // load icons
         currencyIcon = loadIcon("/Kinopedia/model/IMAGESS/CPs-CODM.png", 18, 18);
-        logoFooter   = loadIcon("/Kinopedia/model/IMAGESS/LogoKinopedia.png", 70, 70);
+        logoFooter   = loadIcon("/Kinopedia/model/IMAGESS/LogoKinopedia.png", 50, 50);
 
         // root
         JPanel root = new JPanel(new BorderLayout());
@@ -138,14 +138,14 @@ public class BundleCODM extends JFrame {
         grid.setOpaque(false);
         orangeBox.add(grid, BorderLayout.CENTER);
 
-        addCard(grid, "10 "   + currencyName, "Rp 5.000");
-        addCard(grid, "50 "   + currencyName, "Rp 22.000");
-        addCard(grid, "75 "   + currencyName, "Rp 32.000");
-        addCard(grid, "100 "  + currencyName, "Rp 49.000");
-        addCard(grid, "200 "  + currencyName, "Rp 80.000");
-        addCard(grid, "400 "  + currencyName, "Rp 149.000");
-        addCard(grid, "1000 " + currencyName, "Rp 267.000");
-        addCard(grid, "2500 " + currencyName, "Rp 525.000");
+        addCard(grid, "321 "   + currencyName, "Rp 45.200");
+        addCard(grid, "800 "   + currencyName, "Rp 108.100");
+        addCard(grid, "1373 "   + currencyName, "Rp 180.100");
+        addCard(grid, "2060 "  + currencyName, "Rp 270.200");
+        addCard(grid, "3564 "  + currencyName, "Rp 450.500");
+        addCard(grid, "5650 "  + currencyName, "Rp 658.600");
+        addCard(grid, "15200 " + currencyName, "Rp 1.803.000");
+        addCard(grid, "32150 " + currencyName, "Rp 4.504.500");
 
         content.add(orangeBox);
         content.add(Box.createVerticalStrut(10));

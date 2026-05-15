@@ -5,17 +5,21 @@
  */
 package Kinopedia.minigames.sudoku;
 
+import Kinopedia.DataUser;
 import javax.swing.SwingUtilities;
 
 
 /**
  *
- * @author William
+ * @author William.l
  */
 public class View{
+    
     public static void main(String[] args) {
-        Logic c = new Logic(5, 1, false);
-        c.menuGame();
-        c.setVisible(true);
+        SwingUtilities.invokeLater(() -> {
+            Logic c = new Logic();
+            c.menuGame();
+            c.setVisible(true);
+        });
     }
 }
