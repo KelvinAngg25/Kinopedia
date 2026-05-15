@@ -21,6 +21,7 @@ import Kinopedia.PilihanBundle.BundleSteam;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.geom.RoundRectangle2D;
 
 public class Game extends JFrame {
     
@@ -42,10 +43,10 @@ public class Game extends JFrame {
         this.backTo = backTo;
 
         setTitle("Kinopedia");
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(470, 844);
         setResizable(false);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         JPanel root = new JPanel(new BorderLayout());
         root.setBackground(Color.WHITE);
@@ -57,8 +58,8 @@ public class Game extends JFrame {
         backBtn.setFocusPainted(false);
         backBtn.setBorderPainted(false);
         backBtn.setContentAreaFilled(false);
-        backBtn.setFont(new Font("SansSerif", Font.PLAIN, 16));
         backBtn.setHorizontalAlignment(SwingConstants.LEFT);
+        backBtn.setFont(new Font("SansSerif", Font.PLAIN, 16));
         backBtn.addActionListener(e -> goBack());
 
         JPanel top = new JPanel(new BorderLayout());
@@ -66,33 +67,35 @@ public class Game extends JFrame {
         top.add(backBtn, BorderLayout.WEST);
         root.add(top, BorderLayout.NORTH);
 
-        // ===== CONTENT =====
+        // ===== CONTENT (NO SCROLL) =====
         JPanel content = new JPanel();
         content.setBackground(Color.WHITE);
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
-        content.setBorder(new EmptyBorder(5, 0, 5, 0));
+
+        // less left padding => more left sided
+        content.setBorder(new EmptyBorder(10, 0, 10, 0));
         root.add(content, BorderLayout.CENTER);
 
-        content.add(makeTitle("First Person Shooter (FPS)"));
-         content.add(Box.createVerticalStrut(20));
-        content.add(makeIconRow(new String[]{"Valorant", "PUBG Mobile", "CODM", "Free Fire"}));
+        content.add(sectionTitle("First Person Shooter (FPS)"));
+        content.add(Box.createVerticalStrut(10));
+        content.add(iconRow(new String[]{"Valorant", "PUBG Mobile", "CODM", "Free Fire"}));
 
-        content.add(Box.createVerticalStrut(8));
-        content.add(makeTitle("Mobile Arena"));
-        content.add(makeIconRow(new String[]{"Mobile Legend"}));
+        content.add(Box.createVerticalStrut(14));
+        content.add(sectionTitle("Mobile Arena"));
+        content.add(iconRow(new String[]{"Mobile Legend"}));
 
-        content.add(Box.createVerticalStrut(8));
-        content.add(makeTitle("Sports"));
-        content.add(makeIconRow(new String[]{"eFootball"}));
+        content.add(Box.createVerticalStrut(14));
+        content.add(sectionTitle("Sports"));
+        content.add(iconRow(new String[]{"eFootball"}));
 
-        content.add(Box.createVerticalStrut(8));
-        content.add(makeTitle("Application"));
-        content.add(makeIconRow(new String[]{"Steam"}));
+        content.add(Box.createVerticalStrut(14));
+        content.add(sectionTitle("Application"));
+        content.add(iconRow(new String[]{"Steam"}));
 
-        // ===== FOOTER LOGO =====
+        // ===== FOOTER LOGO (CENTERED) =====
         JPanel footer = new JPanel(new BorderLayout());
         footer.setBackground(Color.WHITE);
-        footer.setBorder(new EmptyBorder(8, 0, 0, 0));
+        footer.setBorder(new EmptyBorder(10, 0, 0, 0));
 
         ImageIcon logoImg = loadIcon("LogoKinopedia.png", 50, 50);
         JLabel logoLabel = (logoImg != null) ? new JLabel(logoImg) : new JLabel("Kinopedia");
@@ -102,12 +105,16 @@ public class Game extends JFrame {
         root.add(footer, BorderLayout.SOUTH);
     }
 
-    private JLabel makeTitle(String text) {
+    private JLabel sectionTitle(String text) {
         JLabel label = new JLabel(text);
-        label.setFont(new Font("SansSerif", Font.BOLD, 16));
+        label.setFont(new Font("SansSerif", Font.BOLD, 18));
+        label.setHorizontalAlignment(SwingConstants.LEFT);
         label.setAlignmentX(Component.LEFT_ALIGNMENT);
-        label.setBorder(new EmptyBorder(6, 0, 4, 0));
-        label.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
+
+        // remove left padding so it sits more left
+        label.setBorder(new EmptyBorder(10, 0, 6, 0));
+
+        label.setMaximumSize(new Dimension(Integer.MAX_VALUE, label.getPreferredSize().height));
         return label;
     }
 
@@ -115,41 +122,31 @@ public class Game extends JFrame {
         JPanel row = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         row.setBackground(Color.WHITE);
         row.setAlignmentX(Component.LEFT_ALIGNMENT);
-        row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 110));
-        row.setPreferredSize(new Dimension(430, 110));
+        row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 120));
 
-        for (String name : names) {
-            row.add(makeIconCard(name));
-        }
+        for (String n : names) row.add(iconCard(n));
         return row;
     }
-    private JPanel makeIconCard(String name) {
+
+    private JPanel iconCard(String name) {
         JPanel card = new JPanel();
         card.setBackground(Color.WHITE);
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
-        card.setPreferredSize(new Dimension(100, 105));
-        card.setMaximumSize(new Dimension(100, 105));
-        card.setMinimumSize(new Dimension(100, 105));
 
-        String fileName = getFileName(name);
-        ImageIcon img = loadIcon(fileName, 70, 70);
+        card.setPreferredSize(new Dimension(92, 108));
+        card.setMinimumSize(new Dimension(92, 108));
+        card.setMaximumSize(new Dimension(92, 108));
 
-        JLabel iconLabel = new JLabel();
-        iconLabel.setPreferredSize(new Dimension(70, 70));
-        iconLabel.setMaximumSize(new Dimension(70, 70));
-        iconLabel.setMinimumSize(new Dimension(70, 70));
-        iconLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        JLabel icon = new RoundedImageLabel(18);
+        icon.setPreferredSize(new Dimension(70, 70));
+        icon.setMinimumSize(new Dimension(70, 70));
+        icon.setMaximumSize(new Dimension(70, 70));
+        icon.setHorizontalAlignment(SwingConstants.CENTER);
+        icon.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        if (img != null) {
-            iconLabel.setIcon(img);
-        } else {
-            iconLabel.setOpaque(true);
-            iconLabel.setBackground(new Color(230, 230, 230));
-            iconLabel.setText("NO IMG");
-        }
-
-        iconLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        iconLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+        icon.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        icon.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
                 openBundlePage(name);
             }
@@ -164,52 +161,67 @@ public class Game extends JFrame {
         if (name.equals("Mobile Legend")) fileName = "ML.png";
         if (name.equals("Steam")) fileName = "Steam.png";
 
-        JLabel textLabel = new JLabel(name, SwingConstants.CENTER);
-        textLabel.setFont(new Font("SansSerif", Font.PLAIN, 11));
-        textLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        textLabel.setMaximumSize(new Dimension(100, 18));
-        textLabel.setPreferredSize(new Dimension(100, 18));
+        ImageIcon img = loadIcon(fileName, 70, 70);
+        if (img != null) {
+            icon.setIcon(img);
+            icon.setOpaque(false);
+            icon.setText(null);
+        } else {
+            icon.setOpaque(true);
+            icon.setBackground(new Color(230, 230, 230));
+            icon.setText("NO IMG");
+        }
 
-        card.add(iconWrapper);
-        card.add(Box.createVerticalStrut(4));
-        card.add(textLabel);
+        JLabel text = new JLabel(name);
+        text.setFont(new Font("SansSerif", Font.PLAIN, 11));
+        text.setHorizontalAlignment(SwingConstants.CENTER);
+        text.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        card.add(icon);
+        card.add(Box.createVerticalStrut(6));
+        card.add(text);
 
         return card;
-    }
-
-    private String getFileName(String name) {
-        if (name.equals("Valorant")) return "Valorantt.png";
-        if (name.equals("PUBG Mobile")) return "PUBG.png";
-        if (name.equals("CODM")) return "CODMmobile.jpg";
-        if (name.equals("Free Fire")) return "FreeFire.jpg";
-        if (name.equals("Mobile Legend")) return "ML.png";
-        if (name.equals("eFootball")) return "efootball.png";
-        if (name.equals("Steam")) return "Steam.png";
-
-        System.out.println("Game tidak dikenali: " + name);
-        return "";
     }
 
     private void openBundlePage(String name) {
         if (name.equals("Valorant")) {
             new BundleValorant(this).setVisible(true);
             setVisible(false);
-        } else if (name.equals("PUBG Mobile")) {
+            return;
+        }
+
+        if (name.equals("PUBG Mobile")) {
             new BundlePUBG(this).setVisible(true);
             setVisible(false);
-        } else if (name.equals("CODM")) {
+            return;
+        }
+
+        if (name.equals("CODM")) {
             new BundleCODM(this).setVisible(true);
             setVisible(false);
-        } else if (name.equals("Free Fire")) {
+            return;
+        }
+
+        if (name.equals("Free Fire")) {
             new BundleFF(this).setVisible(true);
             setVisible(false);
-        } else if (name.equals("Mobile Legend")) {
+            return;
+        }
+
+        if (name.equals("Mobile Legend")) {
             new BundleML(this).setVisible(true);
             setVisible(false);
-        } else if (name.equals("eFootball")) {
+            return;
+        }
+
+        if (name.equals("eFootball")) {
             new BundleEfootball(this).setVisible(true);
             setVisible(false);
-        } else if (name.equals("Steam")) {
+            return;
+        }
+
+        if (name.equals("Steam")) {
             new BundleSteam(this).setVisible(true);
             setVisible(false);
         }
@@ -227,12 +239,33 @@ public class Game extends JFrame {
 
     private void goBack() {
         dispose();
-        if (backTo != null) {
-            backTo.setVisible(true);
-        }
+        backTo.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new Game(null).setVisible(true));
+    private static class RoundedImageLabel extends JLabel {
+
+        private int radius;
+
+        public RoundedImageLabel(int radius) {
+            this.radius = radius;
+            setOpaque(false);
+            setHorizontalAlignment(SwingConstants.CENTER);
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            // 1) copy graphics
+            Graphics2D g2 = (Graphics2D) g.create();
+
+            // 2) make a rounded shape and clip (everything outside becomes hidden)
+            Shape round = new RoundRectangle2D.Float(0, 0, getWidth(), getHeight(), radius, radius);
+            g2.setClip(round);
+
+            // 3) draw the normal JLabel (icon) but clipped
+            super.paintComponent(g2);
+
+            // 4) cleanup
+            g2.dispose();
+        }
     }
 }
