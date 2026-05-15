@@ -1,4 +1,5 @@
 package Kinopedia.model;
+import Kinopedia.HalamanConfirmation;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -37,6 +38,14 @@ public class DetailPembayaran extends JFrame{
         btnMasuk.setBorder(BorderFactory.createEmptyBorder());
         btnMasuk.setFocusPainted(false);
         add(btnMasuk);
+        
+        btnMasuk.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                dispose();
+                new HalamanConfirmation("Kembali ke Halaman Awal", true, "Pembayaran Sukses", "Silahkan menunggu konfirmasi penjual", "Buyer").setVisible(true);
+            }
+        });
         
         ImageIcon iconKinoepedia = new ImageIcon(getClass().getResource("/Kinopedia/model/ImageMetodeBayar/logoKinopediaKecil.png"));
         JLabel iconKinopediaKecil = new JLabel(iconKinoepedia);
