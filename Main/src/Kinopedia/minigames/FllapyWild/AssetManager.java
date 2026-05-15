@@ -29,20 +29,15 @@ public class AssetManager {
 
         System.out.println("Memuat aset game...");
 
-        // BACKGROUND
-//        load("sky",    "background/sky.jpg");
-        // load("ground", "background/ground.png");
-
         // KARAKTER — hanya 2 frame per karakter
-        // frame _1 = dipakai saat naik/jump
-        // frame _2 = dipakai saat jatuh
+        // frame _1 = naik/jump
+        // frame _2 = jatuh
         for (String name : new String[]{"pluppy", "boyo", "kwek"}) {
             load(name + "_1", "character/" + name + "_1.png");
             load(name + "_2", "character/" + name + "_2.png");
         }
 
         // PREVIEW KARAKTER di halaman menu
-        // ===== PERBAIKAN: nama file di resource adalah *_iddle.png (dua d) =====
         load("pluppy_idle", "character_preview/pluppy_iddle.png");
         load("boyo_idle",   "character_preview/boyo_iddle.png");
         load("kwek_idle",   "character_preview/kwek_iddle.png");
@@ -63,7 +58,6 @@ public class AssetManager {
         load("panel_victory",  "ui/panel_victory.png");
 
         // AWAN
-        // ===== PERBAIKAN: key "cloud" harus cocok dengan yang dicari di FlappyWild & MainPanel =====
         load("cloud", "clouds/cloud.png");
 
         loaded = true;

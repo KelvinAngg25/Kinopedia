@@ -61,11 +61,10 @@ public class Pipe {
             // Aset pipe_top.png harus punya kepala di bagian bawah
             g2.drawImage(
                 AssetManager.get("pipe_bottom"),
-                px, topPipeBottom,                    // Posisi tujuan (x, y)
+                px, topPipeBottom,
                 px + pipeWidth, 0,
                 0, 0,
                 imgTop.getWidth(), imgTop.getHeight(),
-//                pipeWidth, topPipeBottom, // Ukuran tujuan
                 null
             );
  
@@ -148,9 +147,7 @@ public class Pipe {
         } else {
             return false;
         }
- 
-//        return birdHitbox.intersects(topRect) || birdHitbox.intersects(bottomRect);
-    }
+     }
  
     // Apakah pipa sudah di luar layar?
     public boolean isOffScreen() {

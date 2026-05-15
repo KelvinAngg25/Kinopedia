@@ -227,7 +227,7 @@ public class Logic {
         }
     }
 
-    // Hitbox untuk deteksi tabrakan (diperkecil 10px agar lebih adil)
+    // Hitbox untuk deteksi tabrakan
     public Rectangle getHitbox() {
         return new Rectangle((int)x + 10, (int)y + 10, width - 20, height - 20);
     }

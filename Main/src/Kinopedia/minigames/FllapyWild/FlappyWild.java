@@ -250,11 +250,8 @@ public class FlappyWild extends JPanel implements KeyListener, MouseListener {
         if (bird.getY() + bird.getHeight() > GameWindow.HEIGHT - 80) {
             triggerGameOver();
         }
+        
         // Cegah karakter keluar atas layar
-//        if (bird.getY() < 0) {
-//            triggerGameOver();
-//            return;
-//        }
         if (bird.getY() < -bird.getHeight()) bird.setY(-bird.getHeight() + 1);
     }
 
