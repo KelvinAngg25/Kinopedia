@@ -10,6 +10,7 @@ package Kinopedia.minigames.FllapyWild;
  * @author Fabiola
  */
 
+import Kinopedia.Session;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FlappyWild extends JPanel implements KeyListener, MouseListener {
-
+    Kinopedia.DataUser user = Session.getInstance().getCurrentUser();
     private GameWindow gameWindow;
     private String     selectedCharacter;
 
