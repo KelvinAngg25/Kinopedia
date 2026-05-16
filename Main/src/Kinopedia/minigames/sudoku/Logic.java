@@ -27,7 +27,7 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 public class Logic extends JFrame implements Runnable{
-    String p2;
+    String p3;
     private int menit,detik;
     boolean pause;
     private View view;
