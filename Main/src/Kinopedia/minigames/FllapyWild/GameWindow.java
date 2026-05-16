@@ -13,7 +13,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GameWindow extends JFrame {
-
+    
     // Ukuran layar game
     public static final int WIDTH  = 470;
     public static final int HEIGHT = 844;
