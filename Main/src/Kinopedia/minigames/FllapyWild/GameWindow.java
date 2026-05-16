@@ -13,7 +13,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GameWindow extends JFrame {
-
+    
     // Ukuran layar game
     public static final int WIDTH  = 470;
     public static final int HEIGHT = 844;
@@ -29,7 +29,6 @@ public class GameWindow extends JFrame {
     public GameWindow() {
         AssetManager.loadAll();
         setTitle("Flappy Wild");
-//        setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setLocationRelativeTo(null); // Tampilkan di tengah layar
