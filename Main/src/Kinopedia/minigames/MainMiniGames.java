@@ -219,9 +219,9 @@ public class MainMiniGames extends JFrame {
         }
 
         if (name.equals("Sudoku")) {
-            Kinopedia.minigames.sudoku.Logic frame = new Kinopedia.minigames.sudoku.Logic();
-            frame.menuGame();
-            frame.setVisible(true);
+//            Kinopedia.minigames.sudoku.Logic frame = new Kinopedia.minigames.sudoku.Logic();
+//            frame.menuGame();
+//            frame.setVisible(true);
 
         }
         dispose();

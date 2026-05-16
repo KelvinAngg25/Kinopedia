@@ -34,11 +34,11 @@ public class MainPanel extends JPanel {
         setPreferredSize(new Dimension(GameWindow.WIDTH, GameWindow.HEIGHT));
 
         // Hitung posisi kartu
-        int cardW    = 120, cardH = 150;
-        int gap      = 15;
-        int totalW   = 3 * cardW + 2 * gap;
-        int startX   = (GameWindow.WIDTH - totalW) / 2;
-        int cardY    = 435;
+        int cardW  = 120, cardH = 150;
+        int gap    = 15;
+        int totalW = 3 * cardW + 2 * gap;
+        int startX = (GameWindow.WIDTH - totalW) / 2;
+        int cardY  = 435;
         for (int i = 0; i < 3; i++) {
             cardBounds[i] = new Rectangle(startX + i * (cardW + gap), cardY, cardW, cardH);
         }
@@ -47,7 +47,9 @@ public class MainPanel extends JPanel {
         animationTimer = new Timer(30, e -> {
             for (int i = 0; i < cloudX.length; i++) {
                 cloudX[i] += 0.5f;
-                if (cloudX[i] > GameWindow.WIDTH + 100) cloudX[i] = -150;
+                if (cloudX[i] > GameWindow.WIDTH + 100) {
+                    cloudX[i] = -150;
+                }
             }
             repaint();
         });
@@ -81,7 +83,7 @@ public class MainPanel extends JPanel {
         btnExit.addActionListener(e -> exit());
         add(btnExit);
     }
-    
+
     private void exit() {
         new Kinopedia.minigames.MainMiniGames().setVisible(true);
         gameWindow.dispose();
@@ -102,16 +104,18 @@ public class MainPanel extends JPanel {
                 g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
                 g2.setColor(bgColor.darker());
                 g2.setStroke(new BasicStroke(4));
-                g2.drawRoundRect(2, 2, getWidth()-4, getHeight()-4, 20, 20);
+                g2.drawRoundRect(2, 2, getWidth() - 4, getHeight() - 4, 20, 20);
                 g2.setColor(textColor);
                 g2.setFont(new Font("Arial Black", Font.BOLD, 28));
                 FontMetrics fm = g2.getFontMetrics();
                 g2.drawString(text,
-                    (getWidth() - fm.stringWidth(text)) / 2,
+                    (getWidth()  - fm.stringWidth(text)) / 2,
                     (getHeight() + fm.getAscent() - fm.getDescent()) / 2);
                 g2.dispose();
             }
-            @Override protected void paintBorder(Graphics g) {}
+
+            @Override
+            protected void paintBorder(Graphics g) {}
         };
         btn.setContentAreaFilled(false);
         btn.setBorderPainted(false);
@@ -128,8 +132,8 @@ public class MainPanel extends JPanel {
 
         // Background langit
         GradientPaint skyGrad = new GradientPaint(
-            0, 0, new Color(135, 206, 250),
-            0, GameWindow.HEIGHT, new Color(200, 235, 255));
+            0, 0, new Color(140, 200, 240), // atas
+            0, GameWindow.HEIGHT, new Color(180, 230, 255)); // bawah
         g2.setPaint(skyGrad);
         g2.fillRect(0, 0, GameWindow.WIDTH, GameWindow.HEIGHT);
 
@@ -141,8 +145,8 @@ public class MainPanel extends JPanel {
 
         // Judul
         g2.setFont(new Font("Arial Black", Font.BOLD, 72));
-        drawOutlineText(g2, "FLAPPY", 30, 180, new Color(255, 165, 0), Color.BLACK);
-        drawOutlineText(g2, "WILD",  130, 260, new Color(220,  50, 50), Color.BLACK);
+        drawOutlineText(g2, "FLAPPY", 70,  180, new Color(255, 165,  0), Color.BLACK);
+        drawOutlineText(g2, "WILD",  125,  265, new Color(220,  50, 50), Color.BLACK);
 
         // Teks pilih karakter
         g2.setFont(new Font("Arial Black", Font.BOLD, 22));
@@ -160,9 +164,9 @@ public class MainPanel extends JPanel {
     }
 
     private void drawCard(Graphics2D g2, int i) {
-        Rectangle r     = cardBounds[i];
-        String    name  = characterNames[i];
-        boolean   sel   = name.equals(selectedCharacter);
+        Rectangle r    = cardBounds[i];
+        String    name = characterNames[i];
+        boolean   sel  = name.equals(selectedCharacter);
 
         // Background kartu
         if (sel) {
@@ -170,20 +174,27 @@ public class MainPanel extends JPanel {
             g2.fillRoundRect(r.x, r.y, r.width, r.height, 20, 20);
             g2.setColor(new Color(255, 140, 0));
             g2.setStroke(new BasicStroke(4));
-            g2.drawRoundRect(r.x+2, r.y+2, r.width-4, r.height-4, 20, 20);
+            g2.drawRoundRect(r.x + 2, r.y + 2, r.width - 4, r.height - 4, 20, 20);
         } else {
             g2.setColor(new Color(220, 220, 220, 230));
             g2.fillRoundRect(r.x, r.y, r.width, r.height, 20, 20);
             g2.setColor(new Color(180, 180, 180));
             g2.setStroke(new BasicStroke(2));
-            g2.drawRoundRect(r.x+1, r.y+1, r.width-2, r.height-2, 20, 20);
+            g2.drawRoundRect(r.x + 1, r.y + 1, r.width - 2, r.height - 2, 20, 20);
         }
 
-        // Gambar preview karakter (aset atau fallback)
-        String previewKey = name.equals("BOYO")   ? "buaya_idle"   :
-                            name.equals("PLUPPY") ? "pinguin_idle" :
-                                                    "bebek_idle";
-        int imgPad = 10;
+        // ===== PERBAIKAN: key aset harus cocok dengan yang di-load AssetManager =====
+        // AssetManager.loadAll() menggunakan key: "pluppy_idle", "boyo_idle", "kwek_idle"
+        String previewKey;
+        if (name.equals("BOYO")) {
+            previewKey = "boyo_idle";
+        } else if (name.equals("PLUPPY")) {
+            previewKey = "pluppy_idle";
+        } else {
+            previewKey = "kwek_idle";
+        }
+
+        int imgPad  = 10;
         int imgSize = r.width - imgPad * 2;
         int imgY    = r.y + imgPad;
 
@@ -192,12 +203,16 @@ public class MainPanel extends JPanel {
                 r.x + imgPad, imgY, imgSize, imgSize, null);
         } else {
             // Fallback: gambar sederhana sesuai karakter
-            drawCharacterFallback(g2, name, r.x + r.width/2, imgY + imgSize/2, imgSize/2);
+            drawCharacterFallback(g2, name, r.x + r.width / 2, imgY + imgSize / 2, imgSize / 2);
         }
 
         // Nama karakter
         g2.setFont(new Font("Arial Black", Font.BOLD, 13));
-        g2.setColor(sel ? new Color(100, 60, 0) : new Color(60, 60, 60));
+        if (sel) {
+            g2.setColor(new Color(100, 60, 0));
+        } else {
+            g2.setColor(new Color(60, 60, 60));
+        }
         FontMetrics fm = g2.getFontMetrics();
         g2.drawString(name,
             r.x + (r.width - fm.stringWidth(name)) / 2,
@@ -205,42 +220,66 @@ public class MainPanel extends JPanel {
     }
 
     private void drawCharacterFallback(Graphics2D g2, String name, int cx, int cy, int r) {
-        switch (name) {
-            case "PLUPPY":
-                g2.setColor(Color.BLACK);      g2.fillOval(cx-r, cy-r, r*2, r*2);
-                g2.setColor(Color.WHITE);       g2.fillOval(cx-r/2, cy-r/3, r, r+r/3);
-                g2.setColor(new Color(255,165,0));
-                g2.fillPolygon(new int[]{cx-r/4,cx+r/4,cx+r/2},
-                               new int[]{cy-r/3,cy-r/3,cy-r/6}, 3);
-                break;
-            case "BOYO":
-                g2.setColor(new Color(80,160,230)); g2.fillOval(cx-r, cy-r, r*2, r*2);
-                g2.setColor(new Color(180,220,255)); g2.fillOval(cx-r/2, cy-r/3, r, r+r/3);
-                break;
-            case "KWEK":
-                g2.setColor(new Color(255,210,50)); g2.fillOval(cx-r, cy-r, r*2, r*2);
-                g2.setColor(new Color(255,130,0));
-                g2.fillPolygon(new int[]{cx-r/4,cx+r/4,cx+r/2},
-                               new int[]{cy-r/3,cy-r/3,cy-r/6}, 3);
-                break;
+        if (name.equals("PLUPPY")) {
+            g2.setColor(Color.BLACK);
+            g2.fillOval(cx - r, cy - r, r * 2, r * 2);
+
+            g2.setColor(Color.WHITE);
+            g2.fillOval(cx - r / 2, cy - r / 3, r, r + r / 3);
+
+            g2.setColor(new Color(255, 165, 0));
+            g2.fillPolygon(
+                new int[]{cx - r / 4, cx + r / 4, cx + r / 2},
+                new int[]{cy - r / 3, cy - r / 3, cy - r / 6},
+                3
+            );
+
+        } else if (name.equals("BOYO")) {
+            g2.setColor(new Color(80, 160, 230));
+            g2.fillOval(cx - r, cy - r, r * 2, r * 2);
+
+            g2.setColor(new Color(180, 220, 255));
+            g2.fillOval(cx - r / 2, cy - r / 3, r, r + r / 3);
+
+        } else if (name.equals("KWEK")) {
+            g2.setColor(new Color(255, 210, 50));
+            g2.fillOval(cx - r, cy - r, r * 2, r * 2);
+
+            g2.setColor(new Color(255, 130, 0));
+            g2.fillPolygon(
+                new int[]{cx - r / 4, cx + r / 4, cx + r / 2},
+                new int[]{cy - r / 3, cy - r / 3, cy - r / 6},
+                3
+            );
         }
     }
 
     private void drawClouds(Graphics2D g2) {
-        g2.setColor(new Color(255, 255, 255, 200));
+        // ===== PERBAIKAN: cek aset cloud dengan key "cloud" (sesuai AssetManager) =====
         for (int i = 0; i < cloudX.length; i++) {
-            int x = (int) cloudX[i], y = (int) cloudY[i];
-            g2.fillOval(x, y, 120, 60);
-            g2.fillOval(x+30, y-30, 90, 60);
-            g2.fillOval(x+70, y, 80, 50);
+            int x = (int) cloudX[i];
+            int y = (int) cloudY[i];
+
+            if (AssetManager.has("cloud")) {
+                g2.drawImage(AssetManager.get("cloud"), x, y, 150, 80, null);
+            } else {
+                g2.setColor(new Color(255, 255, 255, 200));
+                g2.fillOval(x,        y,      120, 60);
+                g2.fillOval(x + 30,   y - 30,  90, 60);
+                g2.fillOval(x + 70,   y,       80, 50);
+            }
         }
     }
 
     private void drawOutlineText(Graphics2D g2, String text, int x, int y, Color fill, Color outline) {
         g2.setColor(outline);
-        for (int dx = -4; dx <= 4; dx++)
-            for (int dy = -4; dy <= 4; dy++)
-                if (dx != 0 || dy != 0) g2.drawString(text, x+dx, y+dy);
+        for (int dx = -4; dx <= 4; dx++) {
+            for (int dy = -4; dy <= 4; dy++) {
+                if (dx != 0 || dy != 0) {
+                    g2.drawString(text, x + dx, y + dy);
+                }
+            }
+        }
         g2.setColor(fill);
         g2.drawString(text, x, y);
     }
