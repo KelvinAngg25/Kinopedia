@@ -29,7 +29,6 @@ public class GameWindow extends JFrame {
     public GameWindow() {
         AssetManager.loadAll();
         setTitle("Flappy Wild");
-//        setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setLocationRelativeTo(null); // Tampilkan di tengah layar
