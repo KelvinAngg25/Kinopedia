@@ -1,11 +1,21 @@
 package Kinopedia.model;
+import Kinopedia.DataTransaksi;
 import Kinopedia.HalamanConfirmation;
+import Kinopedia.Main;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.border.Border;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class DetailPembayaran extends JFrame{
     
@@ -55,6 +65,60 @@ public class DetailPembayaran extends JFrame{
         btnMasuk.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+//              Untuk load ke-arrayList dari transaksi barusan!
+
+                String invoice;
+                boolean ketemu;
+
+                do {
+                    ketemu = false;
+                    int angkaRandom = (int)(Math.random() * 90000000) + 10000000;
+                    invoice = "INV-" + angkaRandom;
+                    
+                    for (DataTransaksi dt  : Main.dataTransaksi) {
+                        if (dt.getIdTransaksi().equals(invoice)) {
+                            ketemu = true;
+                            break;
+                        }
+                    }
+
+                    File folder = new File("save/DataTransaksi");
+                    File[] files = folder.listFiles();
+
+                    if (files != null){
+                        for (File file : files) {
+                            
+                            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+                                String baris;
+                                while ((baris = br.readLine()) != null) {
+                                    String[] data = baris.split(",");
+                                    if (data[0].equals(invoice)) {
+                                        ketemu = true;
+                                        break;
+                                    }
+                                }
+                                br.close();
+
+                            } catch (IOException f) {}
+                            
+                            if (ketemu) {
+                                break;
+                            }
+                        }
+                    } 
+                    
+                } while (ketemu);
+                
+                
+                LocalDate tanggal = LocalDate.now();
+                DateTimeFormatter formatTanggal = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                String tanggalSekarang = tanggal.format(formatTanggal);
+
+                LocalTime waktu = LocalTime.now();
+                DateTimeFormatter formatWaktu = DateTimeFormatter.ofPattern("HH:mm");
+                String waktuSekarang = waktu.format(formatWaktu);
+                
+                Main.dataTransaksi.add(new DataTransaksi(invoice, tanggalSekarang, waktuSekarang, username, idGame, pilihanGame, jenisPembayaran, totalHargaBundle, usernameGame, false, "", ""));
                 dispose();
                 new HalamanConfirmation("Kembali ke Halaman Awal", true, "Pembayaran Sukses", "Silahkan menunggu konfirmasi penjual", "Buyer",  new Color(255, 140, 0)).setVisible(true);
             }
