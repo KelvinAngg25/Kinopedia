@@ -10,7 +10,6 @@ import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
 
 public class MetodeBayar extends JFrame{
-    
     private String pilihanMetodePembayaran;
     
     public MetodeBayar(String usernameGame, String idGame, int totalHargaBundle, String pilihanGame, String username) {

@@ -55,7 +55,7 @@ public class DetailPembayaran extends JFrame{
         btnMasuk.setContentAreaFilled(false);
         btnMasuk.setBounds(40, 660, 370, 45);
         btnMasuk.setBackground(new Color(255, 140, 0));
-        btnMasuk.setForeground(Color.WHITE);
+        btnMasuk.setForeground(Color.BLACK);
         btnMasuk.setBorder(new RoundedBorder(15, new Color(255, 140, 0)));
         btnMasuk.setFont(new Font("Arial", Font.BOLD, 14));
         btnMasuk.setBorder(BorderFactory.createEmptyBorder());
