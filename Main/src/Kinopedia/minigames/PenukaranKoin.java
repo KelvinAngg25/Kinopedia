@@ -5,6 +5,7 @@
  */
 package Kinopedia.minigames;
 import Kinopedia.DataAkun;
+import Kinopedia.HalamanConfirmation;
 import Kinopedia.Session;
 import Kinopedia.Main;
 import Kinopedia.model.DetailPembayaran;
@@ -87,7 +88,7 @@ public class PenukaranKoin extends JFrame {
         index++;
         bundle.add(new Bundle("Coin","Efootball", index, 324,"137"));
         index++;
-        bundle.add(new Bundle("","Steam", index, 440,"12.000"));
+        bundle.add(new Bundle("Steam","Steam", index, 440,"12.000"));
         index++;
         bundle.add(new Bundle("Diamonds","ML", index, 560,"2.850"));
         
@@ -190,10 +191,30 @@ public class PenukaranKoin extends JFrame {
             }
             bgBundle1.setLayout(null);
             bgBundle1.setOpaque(false);
-            
-            Image currencyImg = new ImageIcon(getClass().getResource("/Kinopedia/model/IMAGESS/Diamond.png")).getImage().getScaledInstance(35,35,Image.SCALE_SMOOTH);
+            Image currencyImg = null;
+            if(bundle.get(i).getCurrencyName().equals("UC")){
+                currencyImg = new ImageIcon(getClass().getResource("/Kinopedia/model/IMAGESS/UC-PUBGs.png")).getImage().getScaledInstance(35,35,Image.SCALE_SMOOTH);
+            }else if(bundle.get(i).getCurrencyName().equals("VP")){
+                currencyImg = new ImageIcon(getClass().getResource("/Kinopedia/model/IMAGESS/Valorant-pointss.png")).getImage().getScaledInstance(60,35,Image.SCALE_SMOOTH);
+            }else if(bundle.get(i).getCurrencyName().equals("CP")){
+                currencyImg = new ImageIcon(getClass().getResource("/Kinopedia/model/IMAGESS/CPs-CODM.png")).getImage().getScaledInstance(40,40,Image.SCALE_SMOOTH);
+            }else if(bundle.get(i).getCurrencyName().equals("Coin")){
+                currencyImg = new ImageIcon(getClass().getResource("/Kinopedia/model/IMAGESS/efootballgolds.png")).getImage().getScaledInstance(30,30,Image.SCALE_SMOOTH);
+            }else if(bundle.get(i).getCurrencyName().equals("Steam")){
+                currencyImg = new ImageIcon(getClass().getResource("/Kinopedia/model/IMAGESS/Steam-credits.png")).getImage().getScaledInstance(50,35,Image.SCALE_SMOOTH);
+            }else{
+                currencyImg = new ImageIcon(getClass().getResource("/Kinopedia/model/IMAGESS/Diamond.png")).getImage().getScaledInstance(35,35,Image.SCALE_SMOOTH);
+            }
             JLabel iconCurrency = new JLabel(new ImageIcon(currencyImg));
-            iconCurrency.setBounds(10, 10, 35, 35);
+            if(bundle.get(i).getCurrencyName().equals("Steam")){
+                iconCurrency.setBounds(17, 10, 35, 35);
+            }else if(bundle.get(i).getCurrencyName().equals("Coin")){
+                iconCurrency.setBounds(15, 10, 35, 35);
+            }else if(bundle.get(i).getCurrencyName().equals("CP")){
+                iconCurrency.setBounds(15, 13, 35, 35);
+            }else{
+                iconCurrency.setBounds(10, 10, 35, 35);
+            }
             bgBundle1.add(iconCurrency);
             
             JLabel judulBundle = new JLabel (bundle.get(i).getJumlah()+" "+bundle.get(i).getCurrencyName()+" ("+bundle.get(i).getNamaGame()+")");
@@ -201,12 +222,35 @@ public class PenukaranKoin extends JFrame {
             judulBundle.setBounds(15, 35, 170, 40);
             bgBundle1.add(judulBundle);
             
+            String harga = ""+bundle.get(i).getHarga()+" Koin";
+            JLabel hargaBundle = new JLabel (harga);
+            hargaBundle.setFont(new Font("Arial", Font.BOLD, 15));
+            hargaBundle.setBounds(15, 55, 170, 40);
+            bgBundle1.add(hargaBundle);
+            
             bgBundle1.setBounds(x,y,180,100);
             bgBundle1.addMouseListener(bundleClick);
             
             bgBundle.add(bgBundle1);
         }
         
+        JButton btnTukar = new JButton ("Tukar");
+        btnTukar.setBounds(35, 730, 400, 45);
+        btnTukar.setFont(new Font("Arial", Font.BOLD, 20));
+        btnTukar.setFocusPainted(false);
+        btnTukar.setBorderPainted(false);
+        btnTukar.setBackground(ORANGE);
+        btnTukar.addActionListener(e -> {
+             dispose();
+            if(user.getKoin()>= diPilih.getHarga()){
+                user.setKoin(user.getKoin()-diPilih.getHarga());
+                new HalamanConfirmation("Kembali ke Halaman Minigames", true, "Penukaran Sukses", "", "Coin",  new Color(255, 140, 0)).setVisible(true);
+            }else{
+                new HalamanConfirmation("Kembali ke Halaman Minigames", false, "Penukaran Gagal", "Cek koin anda terlebih dahulu", "Coin",  new Color(255, 140, 0)).setVisible(true);
+            }
+        });
+        
+        add(btnTukar);
         add(bgBundle);
         
         
