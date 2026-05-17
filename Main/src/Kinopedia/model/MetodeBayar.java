@@ -66,7 +66,18 @@ public class MetodeBayar extends JFrame{
         
 //=========================================================================
 
-        JPanel panelPayPal = new JPanel();
+        JPanel panelPayPal = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(getBackground());
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+                g2.dispose();
+                super.paintComponent(g);
+            }
+        };
+        panelPayPal.setOpaque(false);
         panelPayPal.setLayout(null);
         panelPayPal.setBackground(new Color(255, 140, 0));
         panelPayPal.setBounds(290, 260, 100, 120);
@@ -88,7 +99,18 @@ public class MetodeBayar extends JFrame{
         
 //=========================================================================
 
-        JPanel panelDana = new JPanel();
+        JPanel panelDana = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(getBackground());
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+                g2.dispose();
+                super.paintComponent(g);
+            }
+        };
+        panelDana.setOpaque(false);
         panelDana.setLayout(null);
         panelDana.setBackground(new Color(255, 140, 0));
         panelDana.setBounds(178, 260, 100, 120);
@@ -110,7 +132,18 @@ public class MetodeBayar extends JFrame{
 
 //=========================================================================
 
-        JPanel panelMandiri = new JPanel();
+        JPanel panelMandiri = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(getBackground());
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+                g2.dispose();
+                super.paintComponent(g);
+            }
+        };
+        panelMandiri.setOpaque(false);
         panelMandiri.setLayout(null);
         panelMandiri.setBackground(new Color(255, 140, 0));
         panelMandiri.setBounds(65, 260, 100, 120);
@@ -134,7 +167,18 @@ public class MetodeBayar extends JFrame{
         
 //=========================================================================
         
-        JPanel panelBCA = new JPanel();
+        JPanel panelBCA = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(getBackground());
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+                g2.dispose();
+                super.paintComponent(g);
+            }
+        };
+        panelBCA.setOpaque(false);
         panelBCA.setLayout(null);
         panelBCA.setBackground(new Color(255, 140, 0));
         panelBCA.setBounds(290, 140, 100, 120);
@@ -156,7 +200,18 @@ public class MetodeBayar extends JFrame{
         
 //=========================================================================
         
-        JPanel panelOVO = new JPanel();
+        JPanel panelOVO = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(getBackground());
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+                g2.dispose();
+                super.paintComponent(g);
+            }
+        };
+        panelOVO.setOpaque(false);
         panelOVO.setLayout(null);
         panelOVO.setBackground(new Color(255, 140, 0));
         panelOVO.setBounds(178, 140, 100, 120);
@@ -180,7 +235,18 @@ public class MetodeBayar extends JFrame{
         
 //=========================================================================
 
-        JPanel panelGopay = new JPanel();
+        JPanel panelGopay = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(getBackground());
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+                g2.dispose();
+                super.paintComponent(g);
+            }
+        };
+        panelGopay.setOpaque(false);
         panelGopay.setLayout(null);
         panelGopay.setBackground(new Color(255, 140, 0));
         panelGopay.setBounds(65, 140, 100, 120);
@@ -267,10 +333,10 @@ public class MetodeBayar extends JFrame{
         
         for (JPanel jPanel : daftarSemuaPanel) {
             jPanel.addMouseListener(new MouseAdapter() { 
-                @Override
                 public void mouseClicked(MouseEvent e) {
                     for (JPanel p : daftarSemuaPanel) {
-                        p.setBorder(null);
+                        p.setBackground(new Color(255, 140, 0));
+                        p.repaint();
                     }
                     
                     if (jPanel == panelGopay) {
@@ -292,10 +358,13 @@ public class MetodeBayar extends JFrame{
                         setPilihanMetodePembayaran("PayPal");
                     }
                     
-                    jPanel.setBorder(BorderFactory.createLineBorder(new Color(100, 100, 100), 2, true));
+                    jPanel.setBackground(new Color(180, 180, 180));
+                    jPanel.setOpaque(false);
                 }
             });
         }
+        
+        
     }
 
     public String getPilihanMetodePembayaran() {

@@ -42,6 +42,7 @@ public class DetailPembayaran extends JFrame{
             } 
         };
         btnMasuk.setOpaque(false);
+        btnMasuk.setContentAreaFilled(false);
         btnMasuk.setBounds(40, 660, 370, 45);
         btnMasuk.setBackground(new Color(255, 140, 0));
         btnMasuk.setForeground(Color.WHITE);

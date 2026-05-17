@@ -249,6 +249,7 @@ public class DetailTransaksiSeller extends JFrame{
             } 
         };
         btnKonfirmasi.setOpaque(false);
+        btnKonfirmasi.setContentAreaFilled(false);
         btnKonfirmasi.setBounds(45, 670, 370, 45);
         btnKonfirmasi.setBackground(new Color(68, 98, 128));
         btnKonfirmasi.setForeground(Color.WHITE);

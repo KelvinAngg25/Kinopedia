@@ -68,6 +68,7 @@ public class HalamanConfirmation extends JFrame{
             } 
         };
         btnExit.setOpaque(false);
+        btnExit.setContentAreaFilled(false);
         btnExit.setBounds(40, 660, 370, 45);
         btnExit.setBackground(color);
         btnExit.setForeground(Color.WHITE);
