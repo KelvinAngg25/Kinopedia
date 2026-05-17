@@ -55,7 +55,20 @@ public class HalamanConfirmation extends JFrame{
         subHeaderText.setHorizontalAlignment(JLabel.CENTER);
         add(subHeaderText);
         
-        JButton btnExit = new JButton(isiTeksButton);
+        final Color warna2 = color;
+        JButton btnExit = new JButton(isiTeksButton){
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(warna2);
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+                g2.dispose();
+                super.paintComponent(g);
+            } 
+        };
+        btnExit.setOpaque(false);
+        btnExit.setContentAreaFilled(false);
         btnExit.setBounds(40, 660, 370, 45);
         btnExit.setBackground(color);
         btnExit.setForeground(Color.WHITE);

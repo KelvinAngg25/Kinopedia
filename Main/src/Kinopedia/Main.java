@@ -35,7 +35,7 @@ public class Main {
         loadSemuaData(dataTransaksi,dataUser);
 //        new DetailTransaksiSeller(Main.dataTransaksi.get(1).isKonfirmasi(), Main.dataTransaksi.get(1).getIdTransaksi(), Main.dataTransaksi.get(1).getTanggal(), Main.dataTransaksi.get(1).getIdGame(), Main.dataTransaksi.get(1).getNamaAkun(), Main.dataTransaksi.get(1).getJenisGame(), Main.dataTransaksi.get(1).getPembayaran(), Main.dataTransaksi.get(1).getNominal()).setVisible(true);
 //        new DetailTransaksiSeller(Main.dataTransaksi.get(0).isKonfirmasi(), Main.dataTransaksi.get(0).getIdTransaksi(), Main.dataTransaksi.get(0).getTanggal(), Main.dataTransaksi.get(0).getIdGame(), Main.dataTransaksi.get(0).getNamaAkun(), Main.dataTransaksi.get(0).getJenisGame(), Main.dataTransaksi.get(0).getPembayaran(), Main.dataTransaksi.get(0).getNominal()).setVisible(true);
-//        new Login(dataTransaksi,dataUser);
+        new Login(dataTransaksi,dataUser);
     }
     
     public static void loadSemuaData(ArrayList<DataTransaksi> dataTransaksi,ArrayList<DataUser> dataUser) {
