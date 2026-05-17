@@ -22,7 +22,7 @@ import java.awt.event.MouseEvent;
  */
 public class HalamanConfirmation extends JFrame{
     
-    public HalamanConfirmation(String isiTeksButton, boolean statusKonfirmasi, String header, String subHeader, String halamanTerakhir) {
+    public HalamanConfirmation(String isiTeksButton, boolean statusKonfirmasi, String header, String subHeader, String halamanTerakhir, Color color) {
         String letakGambar = "";
         
         setTitle("Kinopedia");
@@ -55,9 +55,9 @@ public class HalamanConfirmation extends JFrame{
         subHeaderText.setHorizontalAlignment(JLabel.CENTER);
         add(subHeaderText);
         
-        JButton btnExit = new JButton("Kembali ke Halaman Awal");
+        JButton btnExit = new JButton(isiTeksButton);
         btnExit.setBounds(40, 660, 370, 45);
-        btnExit.setBackground(new Color(255, 140, 0));
+        btnExit.setBackground(color);
         btnExit.setForeground(Color.WHITE);
         btnExit.setBorder(new RoundedBorder(15));
         btnExit.setFont(new Font("Arial", Font.BOLD, 14));
@@ -87,10 +87,6 @@ public class HalamanConfirmation extends JFrame{
         JLabel iconKinopediaKecil = new JLabel(iconKinoepedia);
         iconKinopediaKecil.setBounds(178, 700, 100, 100);
         add(iconKinopediaKecil);
-    }
-    
-    public static void main(String[] args) {
-        new HalamanConfirmation("", true, "Pembayaran Sukses", "Silahkan menunggu konfirmasi penjual", "Buyer").setVisible(true);
     }
 }
 
