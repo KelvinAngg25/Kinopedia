@@ -5,8 +5,13 @@
  */
 package Kinopedia.model;
 
+import Kinopedia.Main;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
@@ -52,8 +57,19 @@ public class DetailTransaksi extends JFrame{
         } else {
             color = new Color(80, 180, 80);
         }
+        final Color warna = color;
         
-        JPanel panelAtas = new JPanel();
+        
+        JPanel panelAtas = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(warna);
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20); // ← 20 sesuaikan dengan radius border kamu
+                g2.dispose();
+            }
+        };
         panelAtas.setBackground(color);
         panelAtas.setBounds(45, 80, 372, 220);
         panelAtas.setLayout(null);
@@ -99,16 +115,36 @@ public class DetailTransaksi extends JFrame{
         detailPembayaran.setFont(new Font("Poppins", Font.BOLD, 18));
         add(detailPembayaran);
         
-        JPanel borderPilihanBayar = new JPanel();
+        JPanel borderPilihanBayar = new JPanel() {
+             @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(Color.WHITE);
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20); // ← 20 sesuaikan dengan radius border kamu
+                g2.dispose();
+            }
+        };
         borderPilihanBayar.setLayout(null);
         borderPilihanBayar.setBorder(new RoundedBorder(20, color));
         borderPilihanBayar.setBounds(45, 350, 372, 350);
-        borderPilihanBayar.setOpaque(true);
+        borderPilihanBayar.setOpaque(false);
         borderPilihanBayar.setBackground(Color.WHITE);
         add(borderPilihanBayar);
-
-        JPanel backgroundPilihanBayar = new JPanel();
-        backgroundPilihanBayar.setBackground(color);
+        
+        
+        JPanel backgroundPilihanBayar = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(warna);
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+                g2.fillRect(0, getHeight() - 20, getWidth(), 20);
+                g2.dispose();
+            }
+        };
+        backgroundPilihanBayar.setOpaque(false);
         backgroundPilihanBayar.setBounds(0, 0, 372, 275); 
         backgroundPilihanBayar.setLayout(null);
         borderPilihanBayar.add(backgroundPilihanBayar); 
@@ -196,7 +232,7 @@ public class DetailTransaksi extends JFrame{
     }
         
     public static void main(String[] args) {
-        new DetailTransaksi(false, "#INV-20240521", "21-05-2025 | 14:30", "KelvinANgajay123", "AWDAWD", "Valorant", "OVO", 100000).setVisible(true);
+        new DetailTransaksi(Main.dataTransaksi.get(1).isKonfirmasi(), Main.dataTransaksi.get(1).getIdTransaksi(), Main.dataTransaksi.get(1).getTanggal(), Main.dataTransaksi.get(1).getUsername(), Main.dataTransaksi.get(1).getUsername(), Main.dataTransaksi.get(1).getJenisGame(), Main.dataTransaksi.get(1).getPembayaran(), 100000).setVisible(true);
     }
         
 }
