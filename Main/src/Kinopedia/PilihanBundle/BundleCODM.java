@@ -10,6 +10,7 @@ package Kinopedia.PilihanBundle;
  * @author Victus
  */
 
+import Kinopedia.Main;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -23,10 +24,16 @@ public class BundleCODM extends JFrame {
     private JFrame menuSebelumnya;
     private ImageIcon ikonMataUang;
     private ImageIcon logoBawah;
-    
-    // === VARIABEL UNTUK FITUR KLIK ===
+
     private ArrayList<PanelBulat> daftarSemuaKartu = new ArrayList<>();
     private String bundleTerpilih = "";
+
+    // === KOMPONEN INPUT ===
+    private PanelBulat bungkusId;
+    private PanelBulat bungkusNama;
+    private PanelBulat kotakOranye;
+    private JTextField kolomId;
+    private JTextField kolomNama;
 
     public BundleCODM(JFrame menuSebelumnya) {
         this.menuSebelumnya = menuSebelumnya;
@@ -39,8 +46,8 @@ public class BundleCODM extends JFrame {
 
         Color warnaOranye = new Color(0xFF8C1A);
         Color warnaAbuAbu = new Color(0xBDBDBD);
+        Color warnaMerah = new Color(0xFF3B30);
 
-        // Memuat ikon CP CODM dan Logo Kinopedia
         ikonMataUang = muatGambar("/Kinopedia/model/IMAGESS/CPs-CODM.png", 25, 25);
         logoBawah = muatGambar("/Kinopedia/model/IMAGESS/LogoKinopedia.png", 50, 50);
 
@@ -58,7 +65,7 @@ public class BundleCODM extends JFrame {
         tombolKembali.setContentAreaFilled(false);
         tombolKembali.setFont(new Font("SansSerif", Font.PLAIN, 15));
         tombolKembali.setHorizontalAlignment(SwingConstants.LEFT);
-        
+
         tombolKembali.addActionListener(e -> {
             dispose();
             if (this.menuSebelumnya != null) {
@@ -72,19 +79,14 @@ public class BundleCODM extends JFrame {
         barAtas.add(tombolKembali, BorderLayout.WEST);
         panelAkar.add(barAtas, BorderLayout.NORTH);
 
+        // --- Bagian Tengah ---
         JPanel panelIsi = new JPanel();
         panelIsi.setBackground(Color.WHITE);
         panelIsi.setLayout(new BoxLayout(panelIsi, BoxLayout.Y_AXIS));
-        // Padding 36 agar UI memendek ke tengah, selaras dengan Kotak Oranye
-        panelIsi.setBorder(new EmptyBorder(8, 36, 0, 36));
-
-//        JScrollPane guliran = new JScrollPane(panelIsi);
-//        guliran.setBorder(null);
-//        guliran.getViewport().setBackground(Color.WHITE);
-//        guliran.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        panelIsi.setBorder(new EmptyBorder(8, 30, 0, 30));
         panelAkar.add(panelIsi, BorderLayout.CENTER);
 
-        // --- Label & Input ID Game ---
+        // --- Label & Input NUMBER ID ---
         JLabel teksId = new JLabel("NUMBER ID");
         teksId.setFont(new Font("SansSerif", Font.BOLD, 11));
         teksId.setForeground(Color.DARK_GRAY);
@@ -92,22 +94,22 @@ public class BundleCODM extends JFrame {
         panelIsi.add(teksId);
         panelIsi.add(Box.createVerticalStrut(4));
 
-        PanelBulat bungkusId = new PanelBulat(20, Color.WHITE, warnaOranye, 1);
+        bungkusId = new PanelBulat(20, Color.WHITE, warnaOranye, 1);
         bungkusId.setLayout(new BorderLayout());
-        bungkusId.setBorder(new EmptyBorder(8, 20, 8, 20));
+        bungkusId.setBorder(new EmptyBorder(8, 15, 8, 15));
         bungkusId.setMaximumSize(new Dimension(9999, 45));
         bungkusId.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        JTextField kolomId = new JTextField("");
+        kolomId = new JTextField("");
         kolomId.setFont(new Font("SansSerif", Font.PLAIN, 14));
-        kolomId.setOpaque(false); 
+        kolomId.setOpaque(false);
         kolomId.setBorder(null);
         bungkusId.add(kolomId, BorderLayout.CENTER);
-        
+
         panelIsi.add(bungkusId);
         panelIsi.add(Box.createVerticalStrut(14));
 
-        // --- Label & Input Nama Akun ---
+        // --- Label & Input ACCOUNT NAME ---
         JLabel teksAkun = new JLabel("ACCOUNT NAME");
         teksAkun.setFont(new Font("SansSerif", Font.BOLD, 11));
         teksAkun.setForeground(Color.DARK_GRAY);
@@ -115,21 +117,32 @@ public class BundleCODM extends JFrame {
         panelIsi.add(teksAkun);
         panelIsi.add(Box.createVerticalStrut(8));
 
-        PanelBulat bungkusNama = new PanelBulat(20, warnaAbuAbu, warnaOranye, 1);
+        bungkusNama = new PanelBulat(20, warnaAbuAbu, warnaOranye, 1);
         bungkusNama.setLayout(new BorderLayout());
         bungkusNama.setBorder(new EmptyBorder(8, 15, 8, 15));
         bungkusNama.setMaximumSize(new Dimension(9999, 45));
         bungkusNama.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        JTextField kolomNama = new JTextField("");
+        kolomNama = new JTextField("");
         kolomNama.setEditable(false);
         kolomNama.setFont(new Font("SansSerif", Font.PLAIN, 14));
-        kolomNama.setOpaque(false); 
+        kolomNama.setOpaque(false);
         kolomNama.setBorder(null);
         bungkusNama.add(kolomNama, BorderLayout.CENTER);
-        
+
         panelIsi.add(bungkusNama);
         panelIsi.add(Box.createVerticalStrut(20));
+
+        // === VALIDASI ID SAAT USER SELESAI MENGETIK ===
+        kolomId.addActionListener(e -> {
+            cekIdAkun(warnaOranye, warnaMerah);
+        });
+
+        kolomId.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent e) {
+                cekIdAkun(warnaOranye, warnaMerah);
+            }
+        });
 
         // --- AREA BUNDLE ---
         JPanel areaBundle = new JPanel();
@@ -137,7 +150,6 @@ public class BundleCODM extends JFrame {
         areaBundle.setBackground(Color.WHITE);
         areaBundle.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        // Label "1. Bundling" (Bentuk Pil)
         JLabel teksLabel = new JLabel("1. Bundling");
         teksLabel.setFont(new Font("SansSerif", Font.BOLD, 14));
 
@@ -148,54 +160,48 @@ public class BundleCODM extends JFrame {
 
         JPanel tempatLabel = new JPanel();
         tempatLabel.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 0));
-        tempatLabel.setOpaque(false); 
+        tempatLabel.setOpaque(false);
         tempatLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         tempatLabel.setMaximumSize(new Dimension(9999, 45));
         tempatLabel.add(pilBundling);
 
         areaBundle.add(tempatLabel);
-        areaBundle.add(Box.createVerticalStrut(-20)); // Efek overlap seperti di Figma
+        areaBundle.add(Box.createVerticalStrut(-20));
 
-        // Grid Kartu 4 Baris 2 Kolom
         JPanel panelGrid = new JPanel();
-        panelGrid.setLayout(new GridLayout(4, 2, 10, 10)); 
+        panelGrid.setLayout(new GridLayout(4, 2, 10, 10));
         panelGrid.setOpaque(false);
 
-        // Memasukkan daftar harga khusus CODM
         String nama = " CP";
-        buatKartu(panelGrid, "31" + nama, "Rp 5.000");
-        buatKartu(panelGrid, "62" + nama, "Rp 10.000");
-        buatKartu(panelGrid, "127" + nama, "Rp 20.000");
-        buatKartu(panelGrid, "317" + nama, "Rp 50.000");
-        buatKartu(panelGrid, "634" + nama, "Rp 100.000");
-        buatKartu(panelGrid, "1373" + nama, "Rp 200.000");
-        buatKartu(panelGrid, "2059" + nama, "Rp 300.000");
-        buatKartu(panelGrid, "3564" + nama, "Rp 500.000");
+        buatKartu(panelGrid, "321" + nama,   "Rp 45.200");
+        buatKartu(panelGrid, "800" + nama,   "Rp 108.100");
+        buatKartu(panelGrid, "1373" + nama,  "Rp 180.100");
+        buatKartu(panelGrid, "2060" + nama,  "Rp 270.200");
+        buatKartu(panelGrid, "3564" + nama,  "Rp 450.500");
+        buatKartu(panelGrid, "5650" + nama, "Rp 658.600");
+        buatKartu(panelGrid, "15200" + nama, "Rp 1.803.000");
+        buatKartu(panelGrid, "32150" + nama, "Rp 4.504.500");
 
-        // Kotak Oranye Besar
-        PanelBulat kotakOranye = new PanelBulat(25, warnaOranye, null, 0);
+        kotakOranye = new PanelBulat(25, warnaOranye, null, 0);
         kotakOranye.setLayout(new BorderLayout());
         kotakOranye.setBorder(new EmptyBorder(30, 10, 20, 10));
         kotakOranye.setAlignmentX(Component.LEFT_ALIGNMENT);
-        
         kotakOranye.add(panelGrid, BorderLayout.CENTER);
         areaBundle.add(kotakOranye);
 
         panelIsi.add(areaBundle);
         panelIsi.add(Box.createVerticalStrut(20));
 
-        // --- PANEL BAWAH (FIXED FOOTER) ---
+        // --- Panel Bawah ---
         JPanel panelBawah = new JPanel();
         panelBawah.setBackground(Color.WHITE);
         panelBawah.setLayout(new BoxLayout(panelBawah, BoxLayout.Y_AXIS));
-        // Padding 36 di kiri dan kanan agar ukuran tombol sama persis
         panelBawah.setBorder(new EmptyBorder(10, 30, 0, 30));
         panelAkar.add(panelBawah, BorderLayout.SOUTH);
 
-        // Tombol Pilih Metode Pembayaran
         PanelBulat bungkusTombolBayar = new PanelBulat(15, warnaOranye, null, 0);
         bungkusTombolBayar.setLayout(new BorderLayout());
-        bungkusTombolBayar.setMaximumSize(new Dimension(9999, 50)); 
+        bungkusTombolBayar.setMaximumSize(new Dimension(9999, 50));
         bungkusTombolBayar.setAlignmentX(Component.LEFT_ALIGNMENT);
         bungkusTombolBayar.setBorder(new EmptyBorder(14, 0, 14, 0));
 
@@ -204,10 +210,38 @@ public class BundleCODM extends JFrame {
         teksTombolBayar.setForeground(Color.BLACK);
         bungkusTombolBayar.add(teksTombolBayar, BorderLayout.CENTER);
 
+        // === LOGIKA TOMBOL PILIH METODE PEMBAYARAN ===
+        bungkusTombolBayar.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+
+                // Cek apakah kolom nama sudah terisi dan bukan pesan error
+                boolean akunSudahTerisi = !kolomNama.getText().isEmpty()
+                        && !kolomNama.getText().equals("Akun Tidak Ditemukan");
+
+                // Cek apakah user sudah memilih bundle
+                boolean bundleSudahDipilih = !bundleTerpilih.isEmpty();
+
+                // Jika akun belum terisi, border ID jadi merah
+                if (!akunSudahTerisi) {
+                    bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+                }
+
+                // Jika bundle belum dipilih, border kotak oranye jadi merah
+                if (!bundleSudahDipilih) {
+                    kotakOranye.ubahTampilan(warnaMerah, null, 0);
+                }
+
+                // Jika keduanya sudah benar, lanjut ke halaman pembayaran
+                if (akunSudahTerisi && bundleSudahDipilih) {
+                    System.out.println("Lanjut ke pembayaran: " + bundleTerpilih);
+                    // TODO: Buka halaman MetodeBayar di sini
+                }
+            }
+        });
+
         panelBawah.add(bungkusTombolBayar);
         panelBawah.add(Box.createVerticalStrut(14));
 
-        // Area Logo Kinopedia
         JPanel panelLogo = new JPanel();
         panelLogo.setLayout(new FlowLayout(FlowLayout.CENTER));
         panelLogo.setBackground(Color.WHITE);
@@ -217,30 +251,83 @@ public class BundleCODM extends JFrame {
         if (this.logoBawah != null) {
             labelLogo = new JLabel(this.logoBawah);
         }
-        
         panelLogo.add(labelLogo);
         panelBawah.add(panelLogo);
     }
 
+    // === METHOD: CEK ID AKUN CODM ===
+    // Format CODM: tepat 10 angka. Contoh: 1345678935
+    private void cekIdAkun(Color warnaOranye, Color warnaMerah) {
+        String inputId = kolomId.getText().trim();
+
+        // Langkah 1: Cek apakah panjangnya tepat 10 karakter
+        boolean panjangBenar = inputId.length() == 10;
+
+        // Langkah 2: Cek apakah semua karakternya adalah angka
+        boolean semuaAngka = true;
+        for (int i = 0; i < inputId.length(); i++) {
+            if (!Character.isDigit(inputId.charAt(i))) {
+                semuaAngka = false;
+            }
+        }
+
+        // Format benar hanya jika keduanya terpenuhi
+        boolean formatBenar = panjangBenar && semuaAngka;
+
+        if (!formatBenar) {
+            // Format salah — border merah, kolom nama dikosongkan
+            bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+            kolomNama.setText("");
+            kolomNama.setForeground(Color.BLACK);
+            return;
+        }
+
+        // Format benar — cari ID di Main.dataAkun
+        boolean akunDitemukan = false;
+
+        for (int i = 0; i < Main.dataAkun.size(); i++) {
+            String idDiDatabase   = Main.dataAkun.get(i).getIdAkun();
+            String namaDiDatabase = Main.dataAkun.get(i).getNamaAkun();
+            String gameDiDatabase = Main.dataAkun.get(i).getJenisGame();
+
+            // Cocokkan ID dan pastikan jenisGame-nya "codm"
+            boolean idSama    = idDiDatabase.equals(inputId);
+            boolean gameSama  = gameDiDatabase.equals("codm");
+
+            if (idSama && gameSama) {
+                kolomNama.setText(namaDiDatabase);
+                kolomNama.setForeground(Color.BLACK);
+                bungkusId.ubahTampilan(Color.WHITE, warnaOranye, 1);
+                akunDitemukan = true;
+                break;
+            }
+        }
+
+        if (!akunDitemukan) {
+            // ID tidak ada di database
+            kolomNama.setText("Akun Tidak Ditemukan");
+            kolomNama.setForeground(warnaMerah);
+            bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+        }
+    }
+
     public void buatKartu(JPanel grid, String judul, String harga) {
-        // Mode Awal: Background PUTIH murni, tanpa border
         PanelBulat kartu = new PanelBulat(15, Color.WHITE, null, 0);
         kartu.setLayout(new BoxLayout(kartu, BoxLayout.Y_AXIS));
-        // Padding kiri 16 agar tulisan dan ikon bergeser rapi ke sebelah kanan
-        kartu.setBorder(new EmptyBorder(8, 16, 8, 4)); 
+        kartu.setBorder(new EmptyBorder(8, 16, 8, 4));
 
         JLabel gambarIkon = new JLabel("?");
         if (this.ikonMataUang != null) {
             gambarIkon = new JLabel(this.ikonMataUang);
         }
-        gambarIkon.setAlignmentX(Component.LEFT_ALIGNMENT); 
+        gambarIkon.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         JLabel teksJudul = new JLabel(judul);
-        teksJudul.setFont(new Font("SansSerif", Font.BOLD, 15)); 
+        teksJudul.setFont(new Font("SansSerif", Font.BOLD, 15));
         teksJudul.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         JLabel teksHarga = new JLabel(harga);
-        teksHarga.setFont(new Font("SansSerif", Font.PLAIN, 18)); 
+        teksHarga.setFont(new Font("SansSerif", Font.PLAIN, 18));
         teksHarga.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         kartu.add(gambarIkon);
@@ -252,17 +339,14 @@ public class BundleCODM extends JFrame {
         grid.add(kartu);
         daftarSemuaKartu.add(kartu);
 
-        // Fitur seleksi kartu (MENGUBAH BACKGROUND SAAT DIKLIK)
         kartu.addMouseListener(new MouseAdapter() {
-            @Override
             public void mouseClicked(MouseEvent e) {
-                // 1. Reset semua kartu ke background putih tanpa border
+                // Reset semua kartu ke putih
                 for (PanelBulat k : daftarSemuaKartu) {
-                    k.ubahTampilan(Color.WHITE, null, 0); 
+                    k.ubahTampilan(Color.WHITE, null, 0);
                 }
-                // 2. Ubah kartu yang diklik menjadi abu-abu terang (termasuk diberi border tipis agar lebih tegas)
-                kartu.ubahTampilan(new Color(220, 220, 220), new Color(150, 150, 150), 2); 
-                
+                // Tandai kartu yang dipilih dengan warna abu-abu
+                kartu.ubahTampilan(new Color(220, 220, 220), new Color(150, 150, 150), 2);
                 bundleTerpilih = judul;
                 System.out.println("User memilih: " + bundleTerpilih);
             }
@@ -279,58 +363,59 @@ public class BundleCODM extends JFrame {
         Image gambarPas = gambar.getScaledInstance(lebar, tinggi, Image.SCALE_SMOOTH);
         return new ImageIcon(gambarPas);
     }
-}
-
-// --- KELAS PANEL CUSTOM UNTUK MEMBUAT SUDUT MEMBULAT (ROUNDED CORNER) ---
-class PanelBulat extends JPanel {
     
-    private int radiusLengkungan;
-    private Color warnaLatar;
-    private Color warnaGaris;
-    private int tebalGaris;
+    // --- KELAS PANEL CUSTOM UNTUK MEMBUAT SUDUT MEMBULAT (ROUNDED CORNER) ---
+    class PanelBulat extends JPanel {
 
-    public PanelBulat(int radius, Color warnaLatar, Color warnaGaris, int tebalGaris) {
-        super();
-        this.radiusLengkungan = radius;
-        this.warnaLatar = warnaLatar;
-        this.warnaGaris = warnaGaris;
-        this.tebalGaris = tebalGaris;
-        setOpaque(false);
-    }
-    
-    // METHOD BARU: Mengubah Warna Latar Belakang DAN Garis sekaligus
-    public void ubahTampilan(Color warnaLatarBaru, Color warnaGarisBaru, int tebalGarisBaru) {
-        this.warnaLatar = warnaLatarBaru;
-        this.warnaGaris = warnaGarisBaru;
-        this.tebalGaris = tebalGarisBaru;
-        repaint(); 
-    }
+        private int radiusLengkungan;
+        private Color warnaLatar;
+        private Color warnaGaris;
+        private int tebalGaris;
 
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        
-        Graphics2D g2 = (Graphics2D) g.create();
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-        // Render Latar Belakang (Dapat berubah warna sekarang)
-        if (this.warnaLatar != null) {
-            g2.setColor(this.warnaLatar);
-            g2.fillRoundRect(1, 1, getWidth() - 2, getHeight() - 2, this.radiusLengkungan, this.radiusLengkungan);
+        public PanelBulat(int radius, Color warnaLatar, Color warnaGaris, int tebalGaris) {
+            super();
+            this.radiusLengkungan = radius;
+            this.warnaLatar = warnaLatar;
+            this.warnaGaris = warnaGaris;
+            this.tebalGaris = tebalGaris;
+            setOpaque(false);
         }
 
-        // Render Garis/Border
-        if (this.warnaGaris != null && this.tebalGaris > 0) {
-            g2.setColor(this.warnaGaris);
-            g2.setStroke(new BasicStroke(this.tebalGaris));
-            
-            int jarak = this.tebalGaris / 2;
-            int lebarGambar = getWidth() - this.tebalGaris - 1;
-            int tinggiGambar = getHeight() - this.tebalGaris - 1;
-            
-            g2.drawRoundRect(jarak, jarak, lebarGambar, tinggiGambar, this.radiusLengkungan, this.radiusLengkungan);
+        // METHOD BARU: Mengubah Warna Latar Belakang DAN Garis sekaligus
+        public void ubahTampilan(Color warnaLatarBaru, Color warnaGarisBaru, int tebalGarisBaru) {
+            this.warnaLatar = warnaLatarBaru;
+            this.warnaGaris = warnaGarisBaru;
+            this.tebalGaris = tebalGarisBaru;
+            repaint();
         }
-        
-        g2.dispose();
+
+        @Override
+        public void paintComponent(Graphics g) {
+            super.paintComponent(g);
+
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            // Calculate a single set of coordinates so the fill and border align perfectly
+            int posisiX = this.tebalGaris / 2;
+            int posisiY = this.tebalGaris / 2;
+            int lebarPanel = getWidth() - this.tebalGaris - 1;
+            int tinggiPanel = getHeight() - this.tebalGaris - 1;
+
+            // Render Latar Belakang
+            if (this.warnaLatar != null) {
+                g2.setColor(this.warnaLatar);
+                g2.fillRoundRect(posisiX, posisiY, lebarPanel, tinggiPanel, this.radiusLengkungan, this.radiusLengkungan);
+            }
+
+            // Render Garis/Border
+            if (this.warnaGaris != null && this.tebalGaris > 0) {
+                g2.setColor(this.warnaGaris);
+                g2.setStroke(new BasicStroke(this.tebalGaris));
+                g2.drawRoundRect(posisiX, posisiY, lebarPanel, tinggiPanel, this.radiusLengkungan, this.radiusLengkungan);
+            }
+
+            g2.dispose();
+        }
     }
 }

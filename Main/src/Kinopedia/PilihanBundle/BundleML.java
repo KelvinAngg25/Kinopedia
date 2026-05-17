@@ -10,6 +10,7 @@ package Kinopedia.PilihanBundle;
  * @author Victus
  */
 
+import Kinopedia.Main;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -23,10 +24,16 @@ public class BundleML extends JFrame {
     private JFrame menuSebelumnya;
     private ImageIcon ikonMataUang;
     private ImageIcon logoBawah;
-    
-    // === VARIABEL UNTUK FITUR KLIK ===
+
     private ArrayList<PanelBulat> daftarSemuaKartu = new ArrayList<>();
     private String bundleTerpilih = "";
+
+    // === KOMPONEN INPUT ===
+    private PanelBulat bungkusId;
+    private PanelBulat bungkusNama;
+    private PanelBulat kotakOranye;
+    private JTextField kolomId;
+    private JTextField kolomNama;
 
     public BundleML(JFrame menuSebelumnya) {
         this.menuSebelumnya = menuSebelumnya;
@@ -39,8 +46,8 @@ public class BundleML extends JFrame {
 
         Color warnaOranye = new Color(0xFF8C1A);
         Color warnaAbuAbu = new Color(0xBDBDBD);
+        Color warnaMerah = new Color(0xFF3B30);
 
-        // Memuat ikon Diamond ML dan Logo Kinopedia
         ikonMataUang = muatGambar("/Kinopedia/model/IMAGESS/Diamond.png", 25, 25);
         logoBawah = muatGambar("/Kinopedia/model/IMAGESS/LogoKinopedia.png", 50, 50);
 
@@ -58,7 +65,7 @@ public class BundleML extends JFrame {
         tombolKembali.setContentAreaFilled(false);
         tombolKembali.setFont(new Font("SansSerif", Font.PLAIN, 15));
         tombolKembali.setHorizontalAlignment(SwingConstants.LEFT);
-        
+
         tombolKembali.addActionListener(e -> {
             dispose();
             if (this.menuSebelumnya != null) {
@@ -72,20 +79,14 @@ public class BundleML extends JFrame {
         barAtas.add(tombolKembali, BorderLayout.WEST);
         panelAkar.add(barAtas, BorderLayout.NORTH);
 
-        // --- Bagian Tengah (Scrollable Content) ---
+        // --- Bagian Tengah ---
         JPanel panelIsi = new JPanel();
         panelIsi.setBackground(Color.WHITE);
         panelIsi.setLayout(new BoxLayout(panelIsi, BoxLayout.Y_AXIS));
-        // Padding luar 36 agar UI simetris dan aman dari lengkungan layar HP
         panelIsi.setBorder(new EmptyBorder(8, 30, 0, 30));
-
-//        JScrollPane guliran = new JScrollPane(panelIsi);
-//        guliran.setBorder(null);
-//        guliran.getViewport().setBackground(Color.WHITE);
-//        guliran.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         panelAkar.add(panelIsi, BorderLayout.CENTER);
 
-        // --- Label & Input ID Game ---
+        // --- Label & Input NUMBER ID ---
         JLabel teksId = new JLabel("NUMBER ID");
         teksId.setFont(new Font("SansSerif", Font.BOLD, 11));
         teksId.setForeground(Color.DARK_GRAY);
@@ -93,22 +94,22 @@ public class BundleML extends JFrame {
         panelIsi.add(teksId);
         panelIsi.add(Box.createVerticalStrut(4));
 
-        PanelBulat bungkusId = new PanelBulat(20, Color.WHITE, warnaOranye, 1);
+        bungkusId = new PanelBulat(20, Color.WHITE, warnaOranye, 1);
         bungkusId.setLayout(new BorderLayout());
         bungkusId.setBorder(new EmptyBorder(8, 15, 8, 15));
         bungkusId.setMaximumSize(new Dimension(9999, 45));
         bungkusId.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        JTextField kolomId = new JTextField("");
+        kolomId = new JTextField("");
         kolomId.setFont(new Font("SansSerif", Font.PLAIN, 14));
-        kolomId.setOpaque(false); 
+        kolomId.setOpaque(false);
         kolomId.setBorder(null);
         bungkusId.add(kolomId, BorderLayout.CENTER);
-        
+
         panelIsi.add(bungkusId);
         panelIsi.add(Box.createVerticalStrut(14));
 
-        // --- Label & Input Nama Akun ---
+        // --- Label & Input ACCOUNT NAME ---
         JLabel teksAkun = new JLabel("ACCOUNT NAME");
         teksAkun.setFont(new Font("SansSerif", Font.BOLD, 11));
         teksAkun.setForeground(Color.DARK_GRAY);
@@ -116,21 +117,32 @@ public class BundleML extends JFrame {
         panelIsi.add(teksAkun);
         panelIsi.add(Box.createVerticalStrut(8));
 
-        PanelBulat bungkusNama = new PanelBulat(20, warnaAbuAbu, warnaOranye, 1);
+        bungkusNama = new PanelBulat(20, warnaAbuAbu, warnaOranye, 1);
         bungkusNama.setLayout(new BorderLayout());
         bungkusNama.setBorder(new EmptyBorder(8, 15, 8, 15));
         bungkusNama.setMaximumSize(new Dimension(9999, 45));
         bungkusNama.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        JTextField kolomNama = new JTextField("");
+        kolomNama = new JTextField("");
         kolomNama.setEditable(false);
         kolomNama.setFont(new Font("SansSerif", Font.PLAIN, 14));
-        kolomNama.setOpaque(false); 
+        kolomNama.setOpaque(false);
         kolomNama.setBorder(null);
         bungkusNama.add(kolomNama, BorderLayout.CENTER);
-        
+
         panelIsi.add(bungkusNama);
         panelIsi.add(Box.createVerticalStrut(20));
+
+        // === VALIDASI ID SAAT USER SELESAI MENGETIK ===
+        kolomId.addActionListener(e -> {
+            cekIdAkun(warnaOranye, warnaMerah);
+        });
+
+        kolomId.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent e) {
+                cekIdAkun(warnaOranye, warnaMerah);
+            }
+        });
 
         // --- AREA BUNDLE ---
         JPanel areaBundle = new JPanel();
@@ -138,7 +150,6 @@ public class BundleML extends JFrame {
         areaBundle.setBackground(Color.WHITE);
         areaBundle.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        // Label "1. Bundling" (Bentuk Pil)
         JLabel teksLabel = new JLabel("1. Bundling");
         teksLabel.setFont(new Font("SansSerif", Font.BOLD, 14));
 
@@ -149,54 +160,48 @@ public class BundleML extends JFrame {
 
         JPanel tempatLabel = new JPanel();
         tempatLabel.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 0));
-        tempatLabel.setOpaque(false); 
+        tempatLabel.setOpaque(false);
         tempatLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         tempatLabel.setMaximumSize(new Dimension(9999, 45));
         tempatLabel.add(pilBundling);
 
         areaBundle.add(tempatLabel);
-        areaBundle.add(Box.createVerticalStrut(-20)); // Efek overlap seperti di Figma
+        areaBundle.add(Box.createVerticalStrut(-20));
 
-        // Grid Kartu 4 Baris 2 Kolom
         JPanel panelGrid = new JPanel();
-        panelGrid.setLayout(new GridLayout(4, 2, 10, 10)); 
+        panelGrid.setLayout(new GridLayout(4, 2, 10, 10));
         panelGrid.setOpaque(false);
 
-        // Memasukkan daftar harga khusus Diamonds Mobile Legends
         String nama = " Diamonds";
-        buatKartu(panelGrid, "5" + nama, "Rp 1.400");
-        buatKartu(panelGrid, "28" + nama, "Rp 7.600");
-        buatKartu(panelGrid, "85" + nama, "Rp 22.200");
-        buatKartu(panelGrid, "240" + nama, "Rp 61.700");
-        buatKartu(panelGrid, "560" + nama, "Rp 142.500");
-        buatKartu(panelGrid, "875" + nama, "Rp 218.400");
+        buatKartu(panelGrid, "5" + nama,    "Rp 1.400");
+        buatKartu(panelGrid, "28" + nama,   "Rp 7.600");
+        buatKartu(panelGrid, "85" + nama,   "Rp 22.200");
+        buatKartu(panelGrid, "240" + nama,  "Rp 61.700");
+        buatKartu(panelGrid, "560" + nama,  "Rp 142.500");
+        buatKartu(panelGrid, "875" + nama,  "Rp 218.400");
         buatKartu(panelGrid, "2010" + nama, "Rp 475.000");
         buatKartu(panelGrid, "4830" + nama, "Rp 1.140.000");
 
-        // Kotak Oranye Besar
-        PanelBulat kotakOranye = new PanelBulat(25, warnaOranye, null, 0);
+        kotakOranye = new PanelBulat(25, warnaOranye, null, 0);
         kotakOranye.setLayout(new BorderLayout());
         kotakOranye.setBorder(new EmptyBorder(30, 10, 20, 10));
         kotakOranye.setAlignmentX(Component.LEFT_ALIGNMENT);
-        
         kotakOranye.add(panelGrid, BorderLayout.CENTER);
         areaBundle.add(kotakOranye);
 
         panelIsi.add(areaBundle);
         panelIsi.add(Box.createVerticalStrut(20));
 
-        // --- PANEL BAWAH (FIXED FOOTER) ---
+        // --- Panel Bawah ---
         JPanel panelBawah = new JPanel();
         panelBawah.setBackground(Color.WHITE);
         panelBawah.setLayout(new BoxLayout(panelBawah, BoxLayout.Y_AXIS));
-        // Padding kiri kanan 36 agar sejajar dengan Kotak Oranye
-        panelBawah.setBorder(new EmptyBorder(10, 36, 0, 36));
+        panelBawah.setBorder(new EmptyBorder(10, 30, 0, 30));
         panelAkar.add(panelBawah, BorderLayout.SOUTH);
 
-        // Tombol Pilih Metode Pembayaran
         PanelBulat bungkusTombolBayar = new PanelBulat(15, warnaOranye, null, 0);
         bungkusTombolBayar.setLayout(new BorderLayout());
-        bungkusTombolBayar.setMaximumSize(new Dimension(9999, 50)); 
+        bungkusTombolBayar.setMaximumSize(new Dimension(9999, 50));
         bungkusTombolBayar.setAlignmentX(Component.LEFT_ALIGNMENT);
         bungkusTombolBayar.setBorder(new EmptyBorder(14, 0, 14, 0));
 
@@ -205,10 +210,29 @@ public class BundleML extends JFrame {
         teksTombolBayar.setForeground(Color.BLACK);
         bungkusTombolBayar.add(teksTombolBayar, BorderLayout.CENTER);
 
+        // === LOGIKA TOMBOL PILIH METODE PEMBAYARAN ===
+        bungkusTombolBayar.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                boolean akunSudahTerisi = !kolomNama.getText().isEmpty()
+                        && !kolomNama.getText().equals("Akun Tidak Ditemukan");
+                boolean bundleSudahDipilih = !bundleTerpilih.isEmpty();
+
+                if (!akunSudahTerisi) {
+                    bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+                }
+                if (!bundleSudahDipilih) {
+                    kotakOranye.ubahTampilan(warnaMerah, null, 0);
+                }
+                if (akunSudahTerisi && bundleSudahDipilih) {
+                    System.out.println("Lanjut ke pembayaran: " + bundleTerpilih);
+                    // TODO: Buka halaman MetodeBayar di sini
+                }
+            }
+        });
+
         panelBawah.add(bungkusTombolBayar);
         panelBawah.add(Box.createVerticalStrut(14));
 
-        // Area Logo Kinopedia
         JPanel panelLogo = new JPanel();
         panelLogo.setLayout(new FlowLayout(FlowLayout.CENTER));
         panelLogo.setBackground(Color.WHITE);
@@ -218,30 +242,101 @@ public class BundleML extends JFrame {
         if (this.logoBawah != null) {
             labelLogo = new JLabel(this.logoBawah);
         }
-        
         panelLogo.add(labelLogo);
         panelBawah.add(panelLogo);
     }
 
+    // === METHOD: CEK ID AKUN MOBILE LEGENDS ===
+    // Format ML: 8 angka + (4 angka Zone ID). Contoh: 72895647(2515)
+    private void cekIdAkun(Color warnaOranye, Color warnaMerah) {
+        String inputId = kolomId.getText().trim();
+
+        // Langkah 1: Cek panjang total harus 14 karakter
+        // Contoh: 72895647(2515) = 8 angka + "(" + 4 angka + ")" = 14 karakter
+        boolean panjangBenar = inputId.length() == 14;
+
+        // Langkah 2: Cek 8 karakter pertama harus angka
+        boolean delapanAngkaDepan = true;
+        if (panjangBenar) {
+            for (int i = 0; i < 8; i++) {
+                if (!Character.isDigit(inputId.charAt(i))) {
+                    delapanAngkaDepan = false;
+                }
+            }
+        }
+
+        // Langkah 3: Cek karakter ke-9 harus "(" dan karakter terakhir harus ")"
+        boolean adaKurung = false;
+        if (panjangBenar) {
+            boolean adaKurungBuka  = inputId.charAt(8) == '(';
+            boolean adaKurungTutup = inputId.charAt(13) == ')';
+            adaKurung = adaKurungBuka && adaKurungTutup;
+        }
+
+        // Langkah 4: Cek 4 karakter Zone ID (posisi 9-12) harus angka
+        boolean empatAngkaZoneId = true;
+        if (panjangBenar) {
+            for (int i = 9; i < 13; i++) {
+                if (!Character.isDigit(inputId.charAt(i))) {
+                    empatAngkaZoneId = false;
+                }
+            }
+        }
+
+        // Format benar hanya jika semua langkah terpenuhi
+        boolean formatBenar = panjangBenar && delapanAngkaDepan && adaKurung && empatAngkaZoneId;
+
+        if (!formatBenar) {
+            bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+            kolomNama.setText("");
+            kolomNama.setForeground(Color.BLACK);
+            return;
+        }
+
+        // Format benar — cari ID di Main.dataAkun
+        boolean akunDitemukan = false;
+
+        for (int i = 0; i < Main.dataAkun.size(); i++) {
+            String idDiDatabase   = Main.dataAkun.get(i).getIdAkun();
+            String namaDiDatabase = Main.dataAkun.get(i).getNamaAkun();
+            String gameDiDatabase = Main.dataAkun.get(i).getJenisGame();
+
+            boolean idSama   = idDiDatabase.equals(inputId);
+            boolean gameSama = gameDiDatabase.equals("ml");
+
+            if (idSama && gameSama) {
+                kolomNama.setText(namaDiDatabase);
+                kolomNama.setForeground(Color.BLACK);
+                bungkusId.ubahTampilan(Color.WHITE, warnaOranye, 1);
+                akunDitemukan = true;
+                break;
+            }
+        }
+
+        if (!akunDitemukan) {
+            kolomNama.setText("Akun Tidak Ditemukan");
+            kolomNama.setForeground(warnaMerah);
+            bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+        }
+    }
+
     public void buatKartu(JPanel grid, String judul, String harga) {
-        // Mode Awal: Background PUTIH murni, tanpa border
         PanelBulat kartu = new PanelBulat(15, Color.WHITE, null, 0);
         kartu.setLayout(new BoxLayout(kartu, BoxLayout.Y_AXIS));
-        // Padding dalam kartu 16px (kiri) untuk menjorokkan tulisan dengan pas
-        kartu.setBorder(new EmptyBorder(8, 16, 8, 4)); 
+        kartu.setBorder(new EmptyBorder(8, 16, 8, 4));
 
         JLabel gambarIkon = new JLabel("?");
         if (this.ikonMataUang != null) {
             gambarIkon = new JLabel(this.ikonMataUang);
         }
-        gambarIkon.setAlignmentX(Component.LEFT_ALIGNMENT); 
+        gambarIkon.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         JLabel teksJudul = new JLabel(judul);
-        teksJudul.setFont(new Font("SansSerif", Font.BOLD, 15)); 
+        teksJudul.setFont(new Font("SansSerif", Font.BOLD, 15));
         teksJudul.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         JLabel teksHarga = new JLabel(harga);
-        teksHarga.setFont(new Font("SansSerif", Font.PLAIN, 18)); 
+        teksHarga.setFont(new Font("SansSerif", Font.PLAIN, 18));
         teksHarga.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         kartu.add(gambarIkon);
@@ -253,17 +348,12 @@ public class BundleML extends JFrame {
         grid.add(kartu);
         daftarSemuaKartu.add(kartu);
 
-        // Fitur klik untuk mengubah background menjadi abu-abu
         kartu.addMouseListener(new MouseAdapter() {
-            @Override
             public void mouseClicked(MouseEvent e) {
-                // 1. Reset semua kartu ke background putih tanpa border
                 for (PanelBulat k : daftarSemuaKartu) {
-                    k.ubahTampilan(Color.WHITE, null, 0); 
+                    k.ubahTampilan(Color.WHITE, null, 0);
                 }
-                // 2. Ubah kartu yang diklik menjadi abu-abu terang dengan border abu-abu gelap
-                kartu.ubahTampilan(new Color(220, 220, 220), new Color(150, 150, 150), 2); 
-                
+                kartu.ubahTampilan(new Color(220, 220, 220), null, 0);
                 bundleTerpilih = judul;
                 System.out.println("User memilih: " + bundleTerpilih);
             }
@@ -279,5 +369,60 @@ public class BundleML extends JFrame {
         Image gambar = new ImageIcon(lokasi).getImage();
         Image gambarPas = gambar.getScaledInstance(lebar, tinggi, Image.SCALE_SMOOTH);
         return new ImageIcon(gambarPas);
+    }
+    
+    // --- KELAS PANEL CUSTOM UNTUK MEMBUAT SUDUT MEMBULAT (ROUNDED CORNER) ---
+    class PanelBulat extends JPanel {
+
+        private int radiusLengkungan;
+        private Color warnaLatar;
+        private Color warnaGaris;
+        private int tebalGaris;
+
+        public PanelBulat(int radius, Color warnaLatar, Color warnaGaris, int tebalGaris) {
+            super();
+            this.radiusLengkungan = radius;
+            this.warnaLatar = warnaLatar;
+            this.warnaGaris = warnaGaris;
+            this.tebalGaris = tebalGaris;
+            setOpaque(false);
+        }
+
+        // METHOD BARU: Mengubah Warna Latar Belakang DAN Garis sekaligus
+        public void ubahTampilan(Color warnaLatarBaru, Color warnaGarisBaru, int tebalGarisBaru) {
+            this.warnaLatar = warnaLatarBaru;
+            this.warnaGaris = warnaGarisBaru;
+            this.tebalGaris = tebalGarisBaru;
+            repaint();
+        }
+
+        @Override
+        public void paintComponent(Graphics g) {
+            super.paintComponent(g);
+
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            // Calculate a single set of coordinates so the fill and border align perfectly
+            int posisiX = this.tebalGaris / 2;
+            int posisiY = this.tebalGaris / 2;
+            int lebarPanel = getWidth() - this.tebalGaris - 1;
+            int tinggiPanel = getHeight() - this.tebalGaris - 1;
+
+            // Render Latar Belakang
+            if (this.warnaLatar != null) {
+                g2.setColor(this.warnaLatar);
+                g2.fillRoundRect(posisiX, posisiY, lebarPanel, tinggiPanel, this.radiusLengkungan, this.radiusLengkungan);
+            }
+
+            // Render Garis/Border
+            if (this.warnaGaris != null && this.tebalGaris > 0) {
+                g2.setColor(this.warnaGaris);
+                g2.setStroke(new BasicStroke(this.tebalGaris));
+                g2.drawRoundRect(posisiX, posisiY, lebarPanel, tinggiPanel, this.radiusLengkungan, this.radiusLengkungan);
+            }
+
+            g2.dispose();
+        }
     }
 }
