@@ -252,7 +252,7 @@ public class DetailTransaksiSeller extends JFrame{
         btnKonfirmasi.setContentAreaFilled(false);
         btnKonfirmasi.setBounds(45, 670, 370, 45);
         btnKonfirmasi.setBackground(new Color(68, 98, 128));
-        btnKonfirmasi.setForeground(Color.WHITE);
+        btnKonfirmasi.setForeground(Color.BLACK);
         btnKonfirmasi.setBorder(new RoundedBorder(15, new Color(255, 140, 0)));
         btnKonfirmasi.setFont(new Font("Arial", Font.BOLD, 14));
         btnKonfirmasi.setBorder(BorderFactory.createEmptyBorder());
