@@ -43,7 +43,7 @@ public class DetailPembayaran extends JFrame{
             @Override
             public void mouseClicked(MouseEvent e) {
                 dispose();
-                new HalamanConfirmation("Kembali ke Halaman Awal", true, "Pembayaran Sukses", "Silahkan menunggu konfirmasi penjual", "Buyer").setVisible(true);
+                new HalamanConfirmation("Kembali ke Halaman Awal", true, "Pembayaran Sukses", "Silahkan menunggu konfirmasi penjual", "Buyer",  new Color(255, 140, 0)).setVisible(true);
             }
         });
         

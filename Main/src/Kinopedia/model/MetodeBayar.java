@@ -344,7 +344,7 @@ class RoundedBorder implements javax.swing.border.Border {
     public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setColor(new Color(255, 140, 0));
+        g2.setColor(color);
         g2.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
     }
 
