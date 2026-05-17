@@ -236,7 +236,19 @@ public class DetailTransaksiSeller extends JFrame{
         totalHarga.setForeground(Color.BLACK);
         borderPilihanBayar.add(totalHarga);
         
-        JButton btnKonfirmasi = new JButton("Konfirmasi");
+        final Color warna2 = color;
+        JButton btnKonfirmasi = new JButton("Konfirmasi") {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(warna2);
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+                g2.dispose();
+                super.paintComponent(g);
+            } 
+        };
+        btnKonfirmasi.setOpaque(false);
         btnKonfirmasi.setBounds(45, 670, 370, 45);
         btnKonfirmasi.setBackground(new Color(68, 98, 128));
         btnKonfirmasi.setForeground(Color.WHITE);
@@ -244,7 +256,6 @@ public class DetailTransaksiSeller extends JFrame{
         btnKonfirmasi.setFont(new Font("Arial", Font.BOLD, 14));
         btnKonfirmasi.setBorder(BorderFactory.createEmptyBorder());
         btnKonfirmasi.setFocusPainted(false);
-        btnKonfirmasi.setOpaque(true);
         add(btnKonfirmasi);
         
 //        Ini untuk nanti saat seller membuka halaman yang udah sukses!
