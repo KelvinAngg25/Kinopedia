@@ -60,8 +60,17 @@ public class DetailTransaksiSeller extends JFrame{
         } else {
             color = new Color(80, 180, 80);
         }
-        
-        JPanel panelAtas = new JPanel();
+        final Color warna = color;
+        JPanel panelAtas = new JPanel() {
+          @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(warna);
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+                g2.dispose();
+            }  
+        };
         panelAtas.setBackground(color);
         panelAtas.setBounds(45, 80, 372, 220);
         panelAtas.setLayout(null);
@@ -112,7 +121,16 @@ public class DetailTransaksiSeller extends JFrame{
         detailPembayaran.setFont(new Font("Poppins", Font.BOLD, 18));
         add(detailPembayaran);
         
-        JPanel borderPilihanBayar = new JPanel();
+        JPanel borderPilihanBayar = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(Color.WHITE);
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+                g2.dispose();
+            }
+        };
         borderPilihanBayar.setLayout(null);
         borderPilihanBayar.setBorder(new RoundedBorder(20, color));
         borderPilihanBayar.setBounds(45, 350, 372, 300);
@@ -120,7 +138,17 @@ public class DetailTransaksiSeller extends JFrame{
         borderPilihanBayar.setBackground(Color.WHITE);
         add(borderPilihanBayar);
 
-        JPanel backgroundPilihanBayar = new JPanel();
+        JPanel backgroundPilihanBayar = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(warna);
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+                g2.fillRect(0, getHeight() - 20, getWidth(), 20);
+                g2.dispose();
+            }
+        };
         backgroundPilihanBayar.setBackground(color);
         backgroundPilihanBayar.setBounds(0, 0, 372, 220); 
         backgroundPilihanBayar.setLayout(null);

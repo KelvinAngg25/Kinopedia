@@ -24,12 +24,13 @@ public class DataTransaksi {
     private String jenisGame;
     private String pembayaran;
     private int nominal;
+    private String namaAkun;
     
     private boolean konfirmasi;
     private String tanggalKonfirmasi;
     private String waktuKonfirmasi;
 
-    public DataTransaksi(String idTransaksi, String tanggal, String waktu, String username, String idGame, String jenisGame, String pembayaran, int nominal, boolean konfirmasi, String tanggalKonfirmasi, String waktuKonfirmasi) {
+    public DataTransaksi(String idTransaksi, String tanggal, String waktu, String username, String idGame, String jenisGame, String pembayaran, int nominal, String namaAkun, boolean konfirmasi, String tanggalKonfirmasi, String waktuKonfirmasi) {
         this.idTransaksi = idTransaksi;
         this.tanggal = tanggal;
         this.waktu = waktu;
@@ -38,6 +39,7 @@ public class DataTransaksi {
         this.jenisGame = jenisGame;
         this.pembayaran = pembayaran;
         this.nominal = nominal;
+        this.namaAkun = namaAkun;
         this.konfirmasi = konfirmasi;
         this.tanggalKonfirmasi = tanggalKonfirmasi;
         this.waktuKonfirmasi = waktuKonfirmasi;
@@ -120,5 +122,14 @@ public class DataTransaksi {
     public void setNominal(int nominal) {
         this.nominal = nominal;
     }
+
+    public String getNamaAkun() {
+        return namaAkun;
+    }
+
+    public void setNamaAkun(String namaAkun) {
+        this.namaAkun = namaAkun;
+    }
+    
     
 }
