@@ -13,7 +13,7 @@ public class MetodeBayar extends JFrame{
     
     private String pilihanMetodePembayaran;
     
-    public MetodeBayar() {
+    public MetodeBayar(String usernameGame, String idGame, int totalHargaBundle, String pilihanGame, String username) {
         setTitle("Kinopedia");
         setSize(470, 844);
         setLocationRelativeTo(null);
@@ -55,6 +55,14 @@ public class MetodeBayar extends JFrame{
         btnMasuk.setFocusable(false); 
         btnMasuk.setFocusPainted(false);
         add(btnMasuk);
+        
+        btnMasuk.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                dispose();
+                new DetailPembayaran(usernameGame, idGame, getPilihanMetodePembayaran(), totalHargaBundle, pilihanGame, username).setVisible(true);
+            }
+        });
         
 //=========================================================================
 
@@ -299,7 +307,7 @@ public class MetodeBayar extends JFrame{
     }
     
     public static void main(String[] args) {
-        MetodeBayar frame = new MetodeBayar();
+        MetodeBayar frame = new MetodeBayar("KelvinAngjaya123", "2254012", 432000, "Valorant", "Kelvin");
         frame.setVisible(true);
     }
     

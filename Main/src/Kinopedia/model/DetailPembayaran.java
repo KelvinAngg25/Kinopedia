@@ -9,7 +9,7 @@ import javax.swing.border.Border;
 
 public class DetailPembayaran extends JFrame{
     
-    public DetailPembayaran(String usernameGame, String idGame, String jenisPembayaran, int totalHargaBundle, String pilihanGame) {
+    public DetailPembayaran(String usernameGame, String idGame, String jenisPembayaran, int totalHargaBundle, String pilihanGame, String username) {
         setTitle("Kinopedia");
         setSize(470, 844);
         setLocationRelativeTo(null);
@@ -25,11 +25,23 @@ public class DetailPembayaran extends JFrame{
             @Override
             public void mouseClicked(MouseEvent e) {
                 dispose();
-                new MetodeBayar().setVisible(true);
+                new MetodeBayar("KelvinAngjaya123", "2254012", 432000, "Valorant", "Kelvin").setVisible(true);
             }
         });
         
-        JButton btnMasuk = new JButton("Konfirmasi Pembayaran");
+        final Color warna2 = new Color(255, 140, 0);
+        JButton btnMasuk = new JButton("Konfirmasi Pembayaran") {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(warna2);
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+                g2.dispose();
+                super.paintComponent(g);
+            } 
+        };
+        btnMasuk.setOpaque(false);
         btnMasuk.setBounds(40, 660, 370, 45);
         btnMasuk.setBackground(new Color(255, 140, 0));
         btnMasuk.setForeground(Color.WHITE);
@@ -57,7 +69,17 @@ public class DetailPembayaran extends JFrame{
         detailPembayaran.setFont(new Font("Poppins", Font.BOLD, 18));
         add(detailPembayaran);
         
-        JPanel borderPilihanBayar = new JPanel();
+        final Color warna1 = new Color(255, 255, 255);
+        JPanel borderPilihanBayar = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(warna1);
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+                g2.dispose();
+            }  
+        };
         borderPilihanBayar.setLayout(null);
         borderPilihanBayar.setBorder(new RoundedBorder(20, new Color(255, 140, 0)));
         borderPilihanBayar.setBounds(40, 125, 372, 480);
@@ -65,9 +87,20 @@ public class DetailPembayaran extends JFrame{
         borderPilihanBayar.setBackground(Color.WHITE);
         add(borderPilihanBayar);
 
-        JPanel backgroundPilihanBayar = new JPanel();
+        final Color warna = new Color(255, 140, 0);
+        JPanel backgroundPilihanBayar = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(warna);
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+                g2.fillRect(0, getHeight() - 20, getWidth(), 20);
+                g2.dispose();
+            }  
+        };
         backgroundPilihanBayar.setBackground(new Color(255, 140, 0));
-        backgroundPilihanBayar.setBounds(0, 0, 372, 230); 
+        backgroundPilihanBayar.setBounds(0, 0, 372, 255); 
         backgroundPilihanBayar.setLayout(null);
         borderPilihanBayar.add(backgroundPilihanBayar); 
 
@@ -139,7 +172,7 @@ public class DetailPembayaran extends JFrame{
     }
     
     public static void main(String[] args) {
-        DetailPembayaran frame = new DetailPembayaran("", "", "", 0, "");
+        DetailPembayaran frame = new DetailPembayaran("", "", "", 0, "", "");
         frame.setVisible(true);
     }
 }
