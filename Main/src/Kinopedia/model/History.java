@@ -85,7 +85,7 @@ public class History extends JFrame {
 
                 wrap.setLayout(flow);
                 
-                wrap.setBorder(BorderFactory.createEmptyBorder(0, 6, 0, 0));
+                wrap.setBorder(BorderFactory.createEmptyBorder(0, 16, 0, 0));
 
                 wrap.add(createCard(tr));
 
