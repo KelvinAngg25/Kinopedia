@@ -91,7 +91,6 @@ public class HalamanConfirmation extends JFrame{
 //                    new MainMiniGames().setVisible(true);
                 } else if (halamanTerakhir.equals("Buyer")) {
                     dispose();
-//                    Diisi sama halaman utama buyer
                     new Game(new Buyer()).setVisible(true);
                 }
             }

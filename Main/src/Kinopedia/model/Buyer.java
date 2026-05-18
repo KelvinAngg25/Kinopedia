@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 public class Buyer extends JFrame {
     public Buyer() {
-        DataUser userLogin = Main.dataUser.get(0);
+        DataUser userLogin = Kinopedia.Session.getInstance().getCurrentUser();
         System.out.println(userLogin.getNama());
         
         setTitle("Kinopedia | Halaman Utama ");
