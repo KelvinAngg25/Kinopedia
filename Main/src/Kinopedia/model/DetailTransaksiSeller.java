@@ -261,30 +261,30 @@ public class DetailTransaksiSeller extends JFrame{
         
 //        Ini untuk nanti saat seller membuka halaman yang udah sukses!
 //        
-//        JPanel backgroundSuccess = new JPanel();
-//        backgroundSuccess.setBounds(45, 670, 370, 48);
-//        backgroundSuccess.setBackground(new Color(198, 239, 206));
-//        backgroundSuccess.setLayout(null);
-//        add(backgroundSuccess);
+        JPanel backgroundSuccess = new JPanel();
+        backgroundSuccess.setBounds(45, 670, 370, 48);
+        backgroundSuccess.setBackground(new Color(198, 239, 206));
+        backgroundSuccess.setLayout(null);
+        add(backgroundSuccess);
 
-//        ImageIcon iconSuccess = new ImageIcon(getClass().getResource("/Kinopedia/view/Image/berhasil.png"));
-//        Image ambiliconSuccess = iconSuccess.getImage();
-//        Image scaledImage = ambiliconSuccess.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-//        ImageIcon scaledIcon = new ImageIcon(scaledImage);
-//        JLabel iconSuccessFix = new JLabel(scaledIcon);
-//        iconSuccessFix.setBounds(30, 7, 35, 35);
-//        backgroundSuccess.add(iconSuccessFix);
-//
-//        JLabel text1 = new JLabel("Pembayaran Berhasil");
-//        text1.setBounds(80, 4, 280, 25);
-//        text1.setFont(new Font("Poppins", Font.BOLD, 13));
-//        text1.setForeground(new Color(0, 100, 0)); 
-//        backgroundSuccess.add(text1);
-//
-//        JLabel text2 = new JLabel("Top up telah diproses pada 20-05-2024 · 22:16");
-//        text2.setBounds(80, 21, 300, 20);
-//        text2.setFont(new Font("Poppins", Font.PLAIN, 13));
-//        text2.setForeground(new Color(0, 100, 0)); 
+        ImageIcon iconSuccess = new ImageIcon(getClass().getResource("/Kinopedia/view/Image/berhasil.png"));
+        Image ambiliconSuccess = iconSuccess.getImage();
+        Image scaledImage = ambiliconSuccess.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        JLabel iconSuccessFix = new JLabel(scaledIcon);
+        iconSuccessFix.setBounds(30, 7, 35, 35);
+        backgroundSuccess.add(iconSuccessFix);
+
+        JLabel text1 = new JLabel("Pembayaran Berhasil");
+        text1.setBounds(80, 4, 280, 25);
+        text1.setFont(new Font("Poppins", Font.BOLD, 13));
+        text1.setForeground(new Color(0, 100, 0)); 
+        backgroundSuccess.add(text1);
+
+        JLabel text2 = new JLabel("Top up telah diproses pada 20-05-2024 · 22:16");
+        text2.setBounds(80, 21, 300, 20);
+        text2.setFont(new Font("Poppins", Font.PLAIN, 13));
+        text2.setForeground(new Color(0, 100, 0)); 
 //        backgroundSuccess.add(text2);
         
 //        backgroundSuccess.setVisible(false);
@@ -292,8 +292,10 @@ public class DetailTransaksiSeller extends JFrame{
         btnKonfirmasi.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-//                btnKonfirmasi.setVisible(false);
-//                backgroundSuccess.setVisible(true);
+                btnKonfirmasi.setVisible(false);
+                backgroundSuccess.setVisible(true);
+                int tambahKreditUser = totalHargaBundle / 50000;
+                Kinopedia.Session.getInstance().getCurrentUser().setKredit(Kinopedia.Session.getInstance().getCurrentUser().getKredit() + tambahKreditUser);
                 dispose();
                 new HalamanConfirmation("Kembali ke halaman sebelumnya", true, "Pembayaran Berhasil", "", "Seller", new Color(75, 105, 135)).setVisible(true);
             }

@@ -109,7 +109,6 @@ public class DetailPembayaran extends JFrame{
                     
                 } while (ketemu);
                 
-                
                 LocalDate tanggal = LocalDate.now();
                 DateTimeFormatter formatTanggal = DateTimeFormatter.ofPattern("dd-MM-yyyy");
                 String tanggalSekarang = tanggal.format(formatTanggal);
