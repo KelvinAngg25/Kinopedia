@@ -5,6 +5,9 @@
  */
 package Kinopedia.minigames.DinoRun;
 
+import Kinopedia.Session;
+import javax.swing.JPanel;
+import javax.swing.Timer;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -29,7 +32,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class GamePanel extends JPanel implements KeyListener {
-
+    Kinopedia.DataUser user = Session.getInstance().getCurrentUser();
     private Image dinoImg;
     private Image cactusImg;
     private Image birdImg;

@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class Buyer extends JFrame {
     public Buyer() {
-        DataUser userLogin = Session.getInstance().getCurrentUser();
+        DataUser userLogin = Main.dataUser.get(0);
         System.out.println(userLogin.getNama());
         
         setTitle("Kinopedia | Halaman Utama ");

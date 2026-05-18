@@ -1,6 +1,9 @@
 package Kinopedia;
 
 
+import Kinopedia.model.DetailTransaksi;
+import Kinopedia.model.DetailTransaksiSeller;
+import Kinopedia.model.MetodeBayar;
 import Kinopedia.view.LoginRegister.Login;
 import java.io.BufferedReader;
 import java.io.File;
@@ -31,8 +34,10 @@ public class Main {
         
         // TODO code application logic here
         loadSemuaData(dataTransaksi,dataUser);
-        
-        new Login(dataTransaksi,dataUser);
+//        new MetodeBayar("KelvinAngjaya123", "2254012", 432000, "Valorant", "Kelvin").setVisible(true);
+//        new DetailTransaksi(Main.dataTransaksi.get(1).isKonfirmasi(), Main.dataTransaksi.get(1).getIdTransaksi(), Main.dataTransaksi.get(1).getTanggal(), Main.dataTransaksi.get(1).getIdGame(), Main.dataTransaksi.get(1).getNamaAkun(), Main.dataTransaksi.get(1).getJenisGame(), Main.dataTransaksi.get(1).getPembayaran(), Main.dataTransaksi.get(1).getNominal()).setVisible(true);
+//        new DetailTransaksiSeller(Main.dataTransaksi.get(0).isKonfirmasi(), Main.dataTransaksi.get(0).getIdTransaksi(), Main.dataTransaksi.get(0).getTanggal(), Main.dataTransaksi.get(0).getIdGame(), Main.dataTransaksi.get(0).getNamaAkun(), Main.dataTransaksi.get(0).getJenisGame(), Main.dataTransaksi.get(0).getPembayaran(), Main.dataTransaksi.get(0).getNominal()).setVisible(true);
+//        new Login(dataTransaksi,dataUser);
     }
     
     public static void loadSemuaData(ArrayList<DataTransaksi> dataTransaksi,ArrayList<DataUser> dataUser) {
@@ -45,7 +50,7 @@ public class Main {
                     String baris;
                     while ((baris = br.readLine()) != null) {
                         String[] data = baris.split(",");
-                        dataTransaksi.add(new DataTransaksi(data[0],data[1], data[2], data[3], data[4], data[5], data[6], Integer.parseInt(data[7]), Boolean.parseBoolean(data[8]), data[9], data[10]));
+                        dataTransaksi.add(new DataTransaksi(data[0],data[1], data[2], data[3], data[4], data[5], data[6], Integer.parseInt(data[7]), data[11], Boolean.parseBoolean(data[8]), data[9], data[10]));
                     }
                     br.close();
                     

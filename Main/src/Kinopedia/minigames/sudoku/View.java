@@ -14,7 +14,7 @@ import javax.swing.SwingUtilities;
  * @author William.l
  */
 public class View{
-    
+    String  p ;
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             Logic c = new Logic();
