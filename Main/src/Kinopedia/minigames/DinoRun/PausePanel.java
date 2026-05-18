@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Kinopedia.minigames.DinoRun;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -22,35 +13,28 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 public class PausePanel extends JPanel {
 
     private GameFrame frame;
     private JLabel    scoreLabel;
-    private Image dinoImg;
-    private Image cactusImg;
-    private Image birdImg;
+    private Image     dinoImg;
+    private Image     birdImg;
 
     public PausePanel(GameFrame frame) {
-        dinoImg = new ImageIcon(
-            getClass().getResource(
-                "/Kinopedia/minigames/DinoRun/Asset/Dino.png"
-            )
-        ).getImage();
-
-        cactusImg = new ImageIcon(
-            getClass().getResource(
-                "/Kinopedia/minigames/DinoRun/Asset/KaktusBesar.png"
-            )
-        ).getImage();
-
-        birdImg = new ImageIcon(
-            getClass().getResource(
-                "/Kinopedia/minigames/DinoRun/Asset/Burung.png"
-            )
-        ).getImage();
-        
         this.frame = frame;
+
+        dinoImg = new ImageIcon(
+            getClass().getResource("/Kinopedia/minigames/DinoRun/Asset/Dino.png")
+        ).getImage();
+        birdImg = new ImageIcon(
+            getClass().getResource("/Kinopedia/minigames/DinoRun/Asset/Burung.png")
+        ).getImage();
+
         setPreferredSize(new Dimension(GameFrame.WIDTH, GameFrame.HEIGHT));
         setBackground(Color.WHITE);
         setLayout(null);
@@ -89,11 +73,13 @@ public class PausePanel extends JPanel {
         });
         popup.add(continueBtn);
 
+        // EXIT saat pause = 0 koin (exitToMenu)
         JButton exitBtn = createPixelButton("EXIT", new Color(239, 68, 68));
         exitBtn.setBounds(20, 95, 250, 55);
         exitBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                frame.exitToMenu();         // <-- tidak memberi koin
                 frame.showScreen(GameFrame.MENU_SCREEN);
             }
         });
@@ -110,29 +96,16 @@ public class PausePanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_OFF);
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
 
         g2d.setColor(Color.BLACK);
         g2d.setStroke(new BasicStroke(3));
         g2d.drawLine(0, 600, GameFrame.WIDTH, 600);
 
-        drawDino(g2d, 15, 510);
-        drawBird(g2d, 290, 540);
+        g2d.drawImage(dinoImg, 15,  510, 80, 80, null);
+        g2d.drawImage(birdImg, 290, 540, 60, 40, null);
     }
 
-    private void drawDino(Graphics2D g, int x, int y) {
-
-        g.drawImage(dinoImg, x, y, 80, 80, null);
-
-    }   
-
-    private void drawBird(Graphics2D g, int x, int y) {
-
-        g.drawImage(birdImg, x, y, 60, 40, null);
-
-    }
-    
     private JButton createPixelButton(final String text, final Color bg) {
         JButton btn = new JButton() {
             @Override

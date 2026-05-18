@@ -5,8 +5,6 @@
  */
 package Kinopedia.minigames.DinoRun;
 
-import javax.swing.JPanel;
-import javax.swing.Timer;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -27,54 +25,70 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+import javax.swing.Timer;
 
 public class GamePanel extends JPanel implements KeyListener {
-    
+
     private Image dinoImg;
     private Image cactusImg;
     private Image birdImg;
 
-    // ===== Enum tipe obstacle =====
+    // ===== Tipe obstacle =====
     enum ObstacleType { CACTUS_SMALL, CACTUS_BIG, BIRD }
 
     // ===== Kelas obstacle =====
     static class Obstacle {
+
         int x, y, width, height;
+
         ObstacleType type;
 
+        boolean passed;
+
         Obstacle(int x, int y, int w, int h, ObstacleType t) {
-            this.x      = x;
-            this.y      = y;
-            this.width  = w;
+
+            this.x = x;
+            this.y = y;
+            this.width = w;
             this.height = h;
-            this.type   = t;
+            this.type = t;
+
+            passed = false;
         }
 
         Rectangle getBounds() {
-            return new Rectangle(x + 4, y + 4, width - 8, height - 8);
+
+            return new Rectangle(
+                x + 4,
+                y + 4,
+                width - 8,
+                height - 8
+            );
         }
     }
 
     // ===== Konstanta =====
-    private static final int GROUND_Y     = 600;
-    private static final int DINO_X       = 60;
-    private static final int GRAVITY      = 1;
-    private static final int JUMP_FORCE   = -22;
-    private static final int WIN_SCORE    = 100;
-    private static final int INIT_SPEED   = 6;
+    private static final int GROUND_Y   = 600;
+    private static final int DINO_X     = 60;
+    private static final int GRAVITY    = 1;
+    private static final int JUMP_FORCE = -22;
+    public  static final int WIN_SCORE  = 100;
+    private static final int INIT_SPEED = 6;
 
     // ===== Field =====
-    private GameFrame frame;
-    private int  dinoY, dinoVY;
-    private boolean onGround;
-    private int  dinoLeg, legTick;
+    private GameFrame      frame;
+    private int            dinoY, dinoVY;
+    private boolean        onGround;
+    private int            dinoLeg, legTick;
     private List<Obstacle> obstacles;
-    private Random random;
-    private int  obstacleTimer, obstacleInterval;
-    private int  score, speed;
-    private boolean running, paused;
-    private Timer gameTimer;
-    private int  tickCount;
+    private Random         random;
+    private int            obstacleTimer, obstacleInterval;
+    private int            score, speed;
+    private boolean        running, paused;
+    private Timer          gameTimer;
+    private int            tickCount;
+    private int            challengeLevel;
 
     public GamePanel(GameFrame frame) {
         this.frame = frame;
@@ -85,35 +99,24 @@ public class GamePanel extends JPanel implements KeyListener {
 
         random    = new Random();
         obstacles = new ArrayList<Obstacle>();
-        
+
         try {
             dinoImg = new ImageIcon(
-                getClass().getResource(
-                    "/Kinopedia/minigames/DinoRun/Asset/Dino.png"
-                )
+                getClass().getResource("/Kinopedia/minigames/DinoRun/Asset/Dino.png")
             ).getImage();
-
             cactusImg = new ImageIcon(
-                getClass().getResource(
-                    "/Kinopedia/minigames/DinoRun/Asset/KaktusBesar.png"
-                )
+                getClass().getResource("/Kinopedia/minigames/DinoRun/Asset/KaktusBesar.png")
             ).getImage();
             birdImg = new ImageIcon(
-                getClass().getResource(
-                    "/Kinopedia/minigames/DinoRun/Asset/Burung.png"
-                )
+                getClass().getResource("/Kinopedia/minigames/DinoRun/Asset/Burung.png")
             ).getImage();
-            
-            System.out.println(birdImg);
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("Gagal memuat aset: " + e);
         }
-        
 
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                // Klik tombol PAUSE
                 if (e.getX() >= 360 && e.getX() <= 450
                         && e.getY() >= 30  && e.getY() <= 70) {
                     frame.triggerPause(score);
@@ -135,6 +138,7 @@ public class GamePanel extends JPanel implements KeyListener {
     }
 
     // ===== Kontrol game =====
+
     public void resetGame() {
         dinoY            = GROUND_Y - 80;
         dinoVY           = 0;
@@ -149,6 +153,7 @@ public class GamePanel extends JPanel implements KeyListener {
         obstacleInterval = 80;
         running          = false;
         paused           = false;
+        challengeLevel   = 1;
     }
 
     public void startGame() {
@@ -178,10 +183,11 @@ public class GamePanel extends JPanel implements KeyListener {
     }
 
     // ===== Update loop =====
+
     private void update() {
         tickCount++;
 
-        // Gravitasi & posisi dino
+        // Fisika dino
         dinoVY += GRAVITY;
         dinoY  += dinoVY;
         if (dinoY >= GROUND_Y - 80) {
@@ -197,36 +203,73 @@ public class GamePanel extends JPanel implements KeyListener {
             dinoLeg = 1 - dinoLeg;
         }
 
-        // Naikkan skor
-        if (tickCount % 6 == 0) {
-            score++;
-            if (score >= WIN_SCORE) {
-                running = false;
-                gameTimer.stop();
-                frame.triggerVictory(score);
-                return;
-            }
+        // Naikkan kecepatan setiap 20 poin
+        // ===== Speed naik setiap 5 score =====
+        challengeLevel = (score / 5) + 1;
+
+        if (challengeLevel > 100) {
+            challengeLevel = 100;
         }
 
-        // Naikkan kecepatan tiap 20 poin
-        speed = INIT_SPEED + (score / 20);
+        // Speed bertambah tiap 5 score
+        speed = INIT_SPEED + challengeLevel;
+
+        // Spawn obstacle makin cepat
+        obstacleInterval = 90 - challengeLevel;
+
+        if (obstacleInterval < 35) {
+            obstacleInterval = 35;
+        }
 
         // Spawn obstacle
         obstacleTimer++;
+
         if (obstacleTimer >= obstacleInterval) {
-            obstacleTimer    = 0;
-            obstacleInterval = 60 + random.nextInt(80);
+
+            obstacleTimer = 0;
+
             spawnObstacle();
         }
 
-        // Gerakkan & hapus obstacle yang keluar layar
+        // Gerakkan & hapus obstacle keluar layar
         List<Obstacle> toRemove = new ArrayList<Obstacle>();
+
         for (Obstacle ob : obstacles) {
+
             ob.x -= speed;
+
+            // Jika obstacle berhasil dilewati
+            if (!ob.passed && ob.x + ob.width < DINO_X) {
+
+                ob.passed = true;
+
+                score++;
+
+                // Level challenge mengikuti score
+                challengeLevel = score;
+
+                if (challengeLevel > 100) {
+                    challengeLevel = 100;
+                }
+
+                // Menang setelah melewati 100 obstacle
+                if (score >= WIN_SCORE) {
+
+                    running = false;
+                    gameTimer.stop();
+
+                    frame.triggerVictory(score);
+
+                    return;
+                }
+            }
+
+            // Hapus obstacle keluar layar
             if (ob.x + ob.width < 0) {
                 toRemove.add(ob);
             }
         }
+
         obstacles.removeAll(toRemove);
 
         // Deteksi tabrakan
@@ -242,32 +285,73 @@ public class GamePanel extends JPanel implements KeyListener {
     }
 
     private void spawnObstacle() {
-        int type = random.nextInt(4);
-        if (type == 0) {
-            obstacles.add(new Obstacle(GameFrame.WIDTH, GROUND_Y - 55,
-                    24, 55, ObstacleType.CACTUS_SMALL));
-        } else if (type == 1) {
-            obstacles.add(new Obstacle(GameFrame.WIDTH, GROUND_Y - 75,
-                    30, 75, ObstacleType.CACTUS_SMALL));
-        } else if (type == 2) {
-            obstacles.add(new Obstacle(GameFrame.WIDTH, GROUND_Y - 90,
-                    34, 90, ObstacleType.CACTUS_BIG));
-        } else {
-            int flyY = GROUND_Y - 180 - random.nextInt(80);
-            obstacles.add(new Obstacle(GameFrame.WIDTH, flyY,
-                    60, 32, ObstacleType.BIRD));
+
+        int chance = random.nextInt(100);
+
+        // ===== 25% KAKTUS KECIL =====
+        if (chance < 25) {
+
+            int h;
+
+            // Tinggi cactus random
+            if (random.nextBoolean()) {
+                h = 55;
+            } else {
+                h = 75;
+            }
+
+            obstacles.add(
+                new Obstacle(
+                    GameFrame.WIDTH,
+                    GROUND_Y - h,
+                    30,
+                    h,
+                    ObstacleType.CACTUS_SMALL
+                )
+            );
+        }
+
+        // ===== 25% KAKTUS BESAR =====
+        else if (chance < 50) {
+
+            obstacles.add(
+                new Obstacle(
+                    GameFrame.WIDTH,
+                    GROUND_Y - 90,
+                    40,
+                    90,
+                    ObstacleType.CACTUS_BIG
+                )
+            );
+        }
+
+        // ===== 50% BURUNG =====
+        else {
+
+            int flyY =
+                    GROUND_Y - 250 + random.nextInt(120);
+
+            obstacles.add(
+                new Obstacle(
+                    GameFrame.WIDTH,
+                    flyY,
+                    60,
+                    40,
+                    ObstacleType.BIRD
+                )
+            );
         }
     }
 
     // ===== Render =====
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_OFF);
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
 
-        // Skor
+        // Skor tengah atas
         g2d.setColor(Color.BLACK);
         g2d.setFont(new Font("Courier New", Font.BOLD, 38));
         String sc = String.format("%03d", score);
@@ -295,31 +379,25 @@ public class GamePanel extends JPanel implements KeyListener {
             if (ob.type == ObstacleType.BIRD) {
                 drawBird(g2d, ob.x, ob.y);
             } else {
-                drawCactus(g2d, ob.x, ob.y, ob.height,
-                        ob.type == ObstacleType.CACTUS_BIG);
+                drawCactus(g2d, ob.x, ob.y, ob.height, ob.type == ObstacleType.CACTUS_BIG);
             }
         }
     }
 
     private void drawDino(Graphics2D g, int x, int y) {
-
         g.drawImage(dinoImg, x, y, 80, 80, null);
-
-    }    
+    }
 
     private void drawCactus(Graphics2D g, int x, int y, int h, boolean big) {
-
         g.drawImage(cactusImg, x, y, 45, h, null);
-
     }
 
     private void drawBird(Graphics2D g, int x, int y) {
-
         g.drawImage(birdImg, x, y, 60, 40, null);
-
     }
 
     // ===== KeyListener =====
+
     @Override
     public void keyPressed(KeyEvent e) {
         int k = e.getKeyCode();
@@ -334,4 +412,3 @@ public class GamePanel extends JPanel implements KeyListener {
     @Override public void keyReleased(KeyEvent e) {}
     @Override public void keyTyped(KeyEvent e)    {}
 }
-
