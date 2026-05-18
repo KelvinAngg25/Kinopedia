@@ -5,8 +5,6 @@
  */
 package Kinopedia.minigames.DinoRun;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -20,34 +18,74 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import Kinopedia.DataUser;
+import Kinopedia.Session;
+import javax.swing.JOptionPane;
 
 public class MenuPanel extends JPanel {
 
     private GameFrame frame;
-    private Image dinoImg;
-    private Image cactusImg;
-    private Image birdImg;
+    private Image     dinoImg;
+    private JLabel    coinLabel;
 
     public MenuPanel(GameFrame frame) {
-        dinoImg = new ImageIcon(
-            getClass().getResource(
-                "/Kinopedia/minigames/DinoRun/Asset/Dino.png"
-            )
-        ).getImage();
-        
         this.frame = frame;
+
+        dinoImg = new ImageIcon(
+            getClass().getResource("/Kinopedia/minigames/DinoRun/Asset/Dino.png")
+        ).getImage();
+
         setPreferredSize(new Dimension(GameFrame.WIDTH, GameFrame.HEIGHT));
         setBackground(Color.WHITE);
         setLayout(null);
-
+        
+        // Label total koin (ditampilkan di pojok kanan atas)
         JButton startBtn = createPixelButton("START", new Color(34, 197, 94));
         startBtn.setBounds(115, 570, 240, 55);
-        startBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.startNewGame();
+        startBtn.addActionListener(
+            new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                    DataUser user =
+                            Session.getInstance().getCurrentUser();
+
+                    // Cek apakah user ada
+                    if (user == null) {
+
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "User belum login!"
+                        );
+
+                        return;
+                    }
+
+                    // Cek kredit cukup atau tidak
+                    if (user.getKredit() >= 1) {
+
+                        // Kurangi 1 kredit
+                        user.setKredit(
+                                user.getKredit() - 1
+                        );
+
+                        // Mulai game
+                        frame.startNewGame();
+
+                    } else {
+
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "Kredit Tidak Cukup"
+                        );
+                    }
+                }
             }
-        });
+        );
         add(startBtn);
 
         JButton exitBtn = createPixelButton("EXIT", new Color(239, 68, 68));
@@ -60,6 +98,11 @@ public class MenuPanel extends JPanel {
             }
         });
         add(exitBtn);
+    }
+
+    /** Perbarui tampilan koin setiap kali menu ditampilkan. */
+    public void refreshCoins() {
+
     }
 
     @Override
@@ -78,10 +121,8 @@ public class MenuPanel extends JPanel {
     }
 
     private void drawDino(Graphics2D g, int x, int y) {
-
         g.drawImage(dinoImg, x, y, 80, 80, null);
-
-    }   
+    }
 
     private JButton createPixelButton(final String text, final Color bg) {
         JButton btn = new JButton() {
@@ -108,4 +149,3 @@ public class MenuPanel extends JPanel {
         return btn;
     }
 }
-
