@@ -18,10 +18,12 @@ public class History extends JFrame {
     public History() {
 
         setTitle("History");
-        setSize(470, 844);
+        setSize(390, 844);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
+        
+        
 
         JPanel main = new JPanel();
         main.setLayout(null);
@@ -72,30 +74,30 @@ public class History extends JFrame {
                 JPanel wrap = new JPanel();
 
                 wrap.setOpaque(false);
+                wrap.setMaximumSize(new Dimension(390, 110));
+                wrap.setPreferredSize(new Dimension(390, 110));
 
-                FlowLayout flow = new FlowLayout(FlowLayout.LEFT);
-                flow.setHgap(18);
+                FlowLayout flow = new FlowLayout(
+                FlowLayout.LEFT,
+                0,
+                0
+            );
 
                 wrap.setLayout(flow);
+                
+                wrap.setBorder(BorderFactory.createEmptyBorder(0, 6, 0, 0));
 
                 wrap.add(createCard(tr));
 
                 content.add(wrap);
-                content.add(Box.createVerticalStrut(14));
+                content.add(Box.createVerticalStrut(0));
             }
         }
 
-        content.add(Box.createVerticalStrut(25));
-
-        JLabel logo = new JLabel("K");
-        logo.setFont(new Font("SansSerif", Font.BOLD, 42));
-        logo.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        content.add(logo);
-
+        
         JScrollPane scroll = new JScrollPane(content);
 
-        scroll.setBounds(0, 65, 390, 730);
+        scroll.setBounds(0, 65, 390, 620);
 
         scroll.setBorder(null);
 
@@ -106,6 +108,21 @@ public class History extends JFrame {
         scroll.getVerticalScrollBar().setUnitIncrement(16);
 
         main.add(scroll);
+        
+        ImageIcon icon = new ImageIcon(getClass().getResource("IMAGESS/LogoKinopedia.png"));
+
+        Image scaledImage = icon.getImage().getScaledInstance(
+        50,
+        50,
+        Image.SCALE_SMOOTH
+        );
+
+        JLabel logoKinopedia = new JLabel(new ImageIcon(scaledImage));
+
+        logoKinopedia.setBounds(170, 700, 50, 50);
+
+        main.add(logoKinopedia);
+
 
         add(main);
 
@@ -131,7 +148,7 @@ public class History extends JFrame {
 
         GradientPanel card = new GradientPanel(start, end);
 
-        card.setPreferredSize(new Dimension(340, 86));
+        card.setPreferredSize(new Dimension(352, 96));
         card.setLayout(null);
 
         JLabel title = new JLabel("ID Transaksi");
@@ -142,7 +159,7 @@ public class History extends JFrame {
         JLabel id = new JLabel("#" + tr.getIdTransaksi());
         id.setFont(new Font("SansSerif", Font.BOLD, 13));
         id.setForeground(Color.WHITE);
-        id.setBounds(16, 40, 180, 16);
+        id.setBounds(16, 44, 200, 16);
 
         JLabel date = new JLabel(
                 tr.getTanggal() + " · " + tr.getWaktu()
@@ -150,7 +167,7 @@ public class History extends JFrame {
 
         date.setFont(new Font("SansSerif", Font.PLAIN, 11));
         date.setForeground(new Color(225, 225, 225));
-        date.setBounds(16, 60, 150, 15);
+        date.setBounds(16, 66, 170, 15);
 
         // ================= ARROW =================
         JButton arrow = new JButton("❯");
@@ -158,7 +175,7 @@ public class History extends JFrame {
         arrow.setFont(new Font("SansSerif", Font.BOLD, 20));
         arrow.setForeground(Color.WHITE);
 
-        arrow.setBounds(295, 24, 30, 30);
+        arrow.setBounds(307, 31, 30, 30);
 
         arrow.setBorderPainted(false);
         arrow.setContentAreaFilled(false);
