@@ -25,8 +25,11 @@ public class GameWindow extends JFrame {
     // Panel-panel utama
     private MainPanel mainPanel;
     private FlappyWild flappyWild;
+    
+    private Kinopedia.minigames.MainMiniGames mainMiniGames;
 
-    public GameWindow() {
+    public GameWindow(Kinopedia.minigames.MainMiniGames mainMiniGames) {
+        this.mainMiniGames = mainMiniGames;
         AssetManager.loadAll();
         setTitle("Flappy Wild");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -61,8 +64,36 @@ public class GameWindow extends JFrame {
 
     // Mulai game dengan karakter yang dipilih
     public void startGame(String character) {
+        if (!KoinManager.bisaBermain()) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Kredit tidak cukup untuk bermain!\n", // isi alert
+                "Alert", // judul alert
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+        
+        // Kurangi kredit
+        boolean berhasil = KoinManager.kurangiKredit();
+        if (!berhasil) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Gagal memproses kredit. Silahkan coba lagi.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+        
+        // Mulai Game
         flappyWild.startGame(character);
         cardLayout.show(mainContainer, "GAME");
         flappyWild.requestFocusInWindow(); // Agar bisa menerima input keyboard
+    }
+    
+    public void refreshMainMiniGames() {
+        if (mainMiniGames != null) {
+            mainMiniGames.refreshInfo();
+        }
     }
 }
