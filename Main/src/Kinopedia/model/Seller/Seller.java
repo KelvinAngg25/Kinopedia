@@ -1,7 +1,11 @@
 package Kinopedia.model.Seller;
 
+import Kinopedia.Main;
+import Kinopedia.view.LoginRegister.Login;
+import Kinopedia.view.LoginRegister.Register;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 
 public class Seller extends JFrame {
 
@@ -10,7 +14,7 @@ public class Seller extends JFrame {
     public Seller() {
 
         setTitle("Menu Seller");
-        setSize(375, 812);
+        setSize(470, 844);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
@@ -166,7 +170,7 @@ public class Seller extends JFrame {
         orangeBox.setBounds(18, 95, 284, 108);
         orangeBox.setLayout(new GridBagLayout());
 
-        JLabel amount = new JLabel("Rp 100.000");
+        JLabel amount = new JLabel("Rp " + Main.admin.getKoin());
         amount.setFont(new Font("SansSerif", Font.BOLD, 28));
         amount.setForeground(new Color(90, 50, 0));
 
@@ -190,8 +194,16 @@ public class Seller extends JFrame {
         logout.setFont(new Font("SansSerif", Font.BOLD, 16));
         logout.setFocusPainted(false);
         logout.setBorderPainted(false);
-
+        
         mainPanel.add(logout);
+        
+        logout.addMouseListener(new java.awt.event.MouseAdapter(){
+            public void mouseClicked (java.awt.event.MouseEvent e) {
+                Main.saveSemuaData(Main.dataTransaksi, Main.dataUser, Main.admin);
+                new Login(Main.dataTransaksi, Main.dataUser);
+                dispose();
+            };
+        });
     }
 
     private void buatLogo() {
