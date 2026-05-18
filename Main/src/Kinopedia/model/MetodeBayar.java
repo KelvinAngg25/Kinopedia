@@ -60,7 +60,7 @@ public class MetodeBayar extends JFrame{
         };
         btnMasuk.setBounds(40, 660, 370, 45);
         btnMasuk.setBackground(new Color(255, 140, 0));
-        btnMasuk.setForeground(Color.BLACK);
+        btnMasuk.setForeground(Color.WHITE);
         btnMasuk.setBorder(new RoundedBorder(20, new Color(255, 140, 0)));
         btnMasuk.setFont(new Font("Arial", Font.BOLD, 14));
         btnMasuk.setMargin(new Insets(0, 0, 0, 0));

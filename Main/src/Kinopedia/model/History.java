@@ -18,7 +18,7 @@ public class History extends JFrame {
     public History() {
 
         setTitle("History");
-        setSize(390, 844);
+        setSize(470, 844);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);

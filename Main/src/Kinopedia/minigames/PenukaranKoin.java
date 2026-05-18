@@ -237,6 +237,7 @@ public class PenukaranKoin extends JFrame {
         JButton btnTukar = new JButton ("Tukar");
         btnTukar.setBounds(35, 730, 400, 45);
         btnTukar.setFont(new Font("Arial", Font.BOLD, 20));
+        btnTukar.setForeground(Color.WHITE);
         btnTukar.setFocusPainted(false);
         btnTukar.setBorderPainted(false);
         btnTukar.setBackground(ORANGE);

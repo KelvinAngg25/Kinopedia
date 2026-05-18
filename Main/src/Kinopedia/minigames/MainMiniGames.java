@@ -23,13 +23,7 @@ public class MainMiniGames extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-//            JFrame dummyBack = new JFrame();
-//            dummyBack.setSize(470, 844);
-//            dummyBack.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//            dummyBack.setVisible(true);
-
             new MainMiniGames().setVisible(true);
-//            dummyBack.setVisible(false);
         });
     }
 
@@ -102,7 +96,7 @@ public class MainMiniGames extends JFrame {
         btnTukarKoin.setMargin(new Insets(0, 0, 0, 0));
         btnTukarKoin.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
         btnTukarKoin.setBackground(new Color(255, 140, 0));
-        btnTukarKoin.setForeground(Color.BLACK);
+        btnTukarKoin.setForeground(Color.WHITE);
         btnTukarKoin.setBorder(new RoundedBorder(20,Color.BLACK)); 
         btnTukarKoin.setOpaque(false);
         btnTukarKoin.setContentAreaFilled(false);
