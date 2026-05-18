@@ -121,7 +121,7 @@ public class Main {
             try {
                 String namaFile = "save/DataTransaksi/" + i + ".txt";
                 FileWriter fw = new FileWriter(namaFile);
-                fw.write(dataTransaksi.get(i).getIdTransaksi() + "," + dataTransaksi.get(i).getTanggal() + ","+ dataTransaksi.get(i).getWaktu() + ","+ dataTransaksi.get(i).getUsername() + ","+ dataTransaksi.get(i).getIdGame() + ","+ dataTransaksi.get(i).getJenisGame() + ","+ dataTransaksi.get(i).getPembayaran() +  ","+ dataTransaksi.get(i).getNominal() +  "," + dataTransaksi.get(i).isKonfirmasi() + "," + dataTransaksi.get(i).getTanggalKonfirmasi() + "," + dataTransaksi.get(i).getWaktuKonfirmasi() + "," + Main.dataTransaksi.get(i).getNamaAkun() +  "\n");
+                fw.write(dataTransaksi.get(i).getIdTransaksi() + "," + dataTransaksi.get(i).getTanggal() + ","+ dataTransaksi.get(i).getWaktu() + ","+ dataTransaksi.get(i).getUsername() + ","+ dataTransaksi.get(i).getIdGame() + ","+ dataTransaksi.get(i).getJenisGame() + ","+ dataTransaksi.get(i).getPembayaran() +  ","+ dataTransaksi.get(i).getNominal() +  "," + dataTransaksi.get(i).isKonfirmasi() + "," + dataTransaksi.get(i).getTanggalKonfirmasi() + "," + dataTransaksi.get(i).getWaktuKonfirmasi() + "," + dataTransaksi.get(i).getNamaAkun() +  "\n");
                 System.out.println("  Menyimpan "+ i + ".txt...   OK");
                 fw.close();
                 

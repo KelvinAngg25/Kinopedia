@@ -80,7 +80,7 @@ public class Buyer extends JFrame {
         btn.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         btn.setBackground(new Color(0xFF8C1A));
-        btn.setForeground(Color.BLACK);
+        btn.setForeground(Color.WHITE);
         btn.setFont(new Font("SansSerif", Font.BOLD, 16));
 
         btn.setFocusPainted(false);

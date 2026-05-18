@@ -203,7 +203,7 @@ public class BundleValorant extends JFrame {
 
         JLabel teksTombolBayar = new JLabel("Pilih Metode Pembayaran", SwingConstants.CENTER);
         teksTombolBayar.setFont(new Font("SansSerif", Font.BOLD, 15));
-        teksTombolBayar.setForeground(Color.BLACK);
+        teksTombolBayar.setForeground(Color.WHITE);
         bungkusTombolBayar.add(teksTombolBayar, BorderLayout.CENTER);
 
         // === LOGIKA TOMBOL PILIH METODE PEMBAYARAN (Gaya CODM) ===

@@ -211,7 +211,7 @@ public class BundlePUBG extends JFrame {
  
         JLabel teksTombolBayar = new JLabel("Pilih Metode Pembayaran", SwingConstants.CENTER);
         teksTombolBayar.setFont(new Font("SansSerif", Font.BOLD, 15));
-        teksTombolBayar.setForeground(Color.BLACK);
+        teksTombolBayar.setForeground(Color.WHITE);
         bungkusTombolBayar.add(teksTombolBayar, BorderLayout.CENTER);
  
         // === LOGIKA TOMBOL PILIH METODE PEMBAYARAN ===
@@ -339,7 +339,7 @@ public class BundlePUBG extends JFrame {
                     k.ubahTampilan(Color.WHITE, null, 0);
                 }
                 kartu.ubahTampilan(new Color(220, 220, 220), null, 0);
-                bundleTerpilih = judul;
+                bundleTerpilih = harga;
                 System.out.println("User memilih: " + bundleTerpilih);
             }
         });

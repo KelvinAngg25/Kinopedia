@@ -211,7 +211,7 @@ public class BundleEfootball extends JFrame {
 
         JLabel teksTombolBayar = new JLabel("Pilih Metode Pembayaran", SwingConstants.CENTER);
         teksTombolBayar.setFont(new Font("SansSerif", Font.BOLD, 15));
-        teksTombolBayar.setForeground(Color.BLACK);
+        teksTombolBayar.setForeground(Color.WHITE);
         bungkusTombolBayar.add(teksTombolBayar, BorderLayout.CENTER);
 
         // === LOGIKA TOMBOL PILIH METODE PEMBAYARAN ===
@@ -362,7 +362,7 @@ public class BundleEfootball extends JFrame {
                 }
                 // Tandai kartu yang dipilih dengan warna abu-abu
                 kartu.ubahTampilan(new Color(220, 220, 220),null, 2);
-                bundleTerpilih = judul;
+                bundleTerpilih = harga;
                 System.out.println("User memilih: " + bundleTerpilih);
             }
         });

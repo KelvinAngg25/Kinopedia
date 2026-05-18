@@ -237,16 +237,19 @@ public class PenukaranKoin extends JFrame {
         JButton btnTukar = new JButton ("Tukar");
         btnTukar.setBounds(35, 730, 400, 45);
         btnTukar.setFont(new Font("Arial", Font.BOLD, 20));
+        btnTukar.setForeground(Color.WHITE);
         btnTukar.setFocusPainted(false);
         btnTukar.setBorderPainted(false);
         btnTukar.setBackground(ORANGE);
         btnTukar.addActionListener(e -> {
-             dispose();
-            if(user.getKoin()>= diPilih.getHarga()){
-                user.setKoin(user.getKoin()-diPilih.getHarga());
-                new HalamanConfirmation("Kembali ke Halaman Minigames", true, "Penukaran Sukses", "", "Coin",  new Color(255, 140, 0)).setVisible(true);
-            }else{
-                new HalamanConfirmation("Kembali ke Halaman Minigames", false, "Penukaran Gagal", "Cek koin anda terlebih dahulu", "Coin",  new Color(255, 140, 0)).setVisible(true);
+            if(diPilih!=null){
+                dispose();
+                if(user.getKoin()>= diPilih.getHarga()){
+                    user.setKoin(user.getKoin()-diPilih.getHarga());
+                    new HalamanConfirmation("Kembali ke Halaman Minigames", true, "Penukaran Sukses", "", "Coin",  new Color(255, 140, 0)).setVisible(true);
+                }else{
+                    new HalamanConfirmation("Kembali ke Halaman Minigames", false, "Penukaran Gagal", "Cek koin anda terlebih dahulu", "Coin",  new Color(255, 140, 0)).setVisible(true);
+                }
             }
         });
         
