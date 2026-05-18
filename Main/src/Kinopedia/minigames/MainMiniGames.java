@@ -103,14 +103,16 @@ public class MainMiniGames extends JFrame {
         btnTukarKoin.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
         btnTukarKoin.setBackground(new Color(255, 140, 0));
         btnTukarKoin.setForeground(Color.BLACK);
-        btnTukarKoin.setBorder(new RoundedBorder(20)); 
+        btnTukarKoin.setBorder(new RoundedBorder(20,Color.BLACK)); 
         btnTukarKoin.setOpaque(false);
         btnTukarKoin.setContentAreaFilled(false);
         btnTukarKoin.setFocusPainted(false);
         btnTukarKoin.setFocusable(false); 
         btnTukarKoin.setAlignmentX(Component.LEFT_ALIGNMENT);
         btnTukarKoin.addActionListener(e -> {
-            System.out.println("Bisa");
+            dispose();
+            PenukaranKoin p = new PenukaranKoin();
+            p.setVisible(true);
         });
         // ===== FOOTER LOGO (CENTERED) =====
         JPanel footer = new JPanel(new BorderLayout());
@@ -273,10 +275,13 @@ public class MainMiniGames extends JFrame {
 
 class RoundedBorder implements javax.swing.border.Border {
     private int radius;
-
-    public RoundedBorder(int radius) {
+    private Color color;
+    
+    public RoundedBorder(int radius, Color color) {
         this.radius = radius;
+        this.color = color;
     }
+    
 
     @Override
     public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
