@@ -37,7 +37,7 @@ public class Main {
 //        new MetodeBayar("KelvinAngjaya123", "2254012", 432000, "Valorant", "Kelvin").setVisible(true);
 //        new DetailTransaksi(Main.dataTransaksi.get(1).isKonfirmasi(), Main.dataTransaksi.get(1).getIdTransaksi(), Main.dataTransaksi.get(1).getTanggal(), Main.dataTransaksi.get(1).getIdGame(), Main.dataTransaksi.get(1).getNamaAkun(), Main.dataTransaksi.get(1).getJenisGame(), Main.dataTransaksi.get(1).getPembayaran(), Main.dataTransaksi.get(1).getNominal()).setVisible(true);
 //        new DetailTransaksiSeller(Main.dataTransaksi.get(0).isKonfirmasi(), Main.dataTransaksi.get(0).getIdTransaksi(), Main.dataTransaksi.get(0).getTanggal(), Main.dataTransaksi.get(0).getIdGame(), Main.dataTransaksi.get(0).getNamaAkun(), Main.dataTransaksi.get(0).getJenisGame(), Main.dataTransaksi.get(0).getPembayaran(), Main.dataTransaksi.get(0).getNominal()).setVisible(true);
-//        new Login(dataTransaksi,dataUser);
+        new Login(dataTransaksi,dataUser);
     }
     
     public static void loadSemuaData(ArrayList<DataTransaksi> dataTransaksi,ArrayList<DataUser> dataUser) {
@@ -121,7 +121,7 @@ public class Main {
             try {
                 String namaFile = "save/DataTransaksi/" + i + ".txt";
                 FileWriter fw = new FileWriter(namaFile);
-                fw.write(dataTransaksi.get(i).getIdTransaksi() + "," + dataTransaksi.get(i).getTanggal() + ","+ dataTransaksi.get(i).getWaktu() + ","+ dataTransaksi.get(i).getUsername() + ","+ dataTransaksi.get(i).getIdGame() + ","+ dataTransaksi.get(i).getJenisGame() + ","+ dataTransaksi.get(i).getPembayaran() +  ","+ dataTransaksi.get(i).getNominal() +  "," + dataTransaksi.get(i).isKonfirmasi() + "," + dataTransaksi.get(i).getTanggalKonfirmasi() + "," + dataTransaksi.get(i).getWaktuKonfirmasi() +  "\n");
+                fw.write(dataTransaksi.get(i).getIdTransaksi() + "," + dataTransaksi.get(i).getTanggal() + ","+ dataTransaksi.get(i).getWaktu() + ","+ dataTransaksi.get(i).getUsername() + ","+ dataTransaksi.get(i).getIdGame() + ","+ dataTransaksi.get(i).getJenisGame() + ","+ dataTransaksi.get(i).getPembayaran() +  ","+ dataTransaksi.get(i).getNominal() +  "," + dataTransaksi.get(i).isKonfirmasi() + "," + dataTransaksi.get(i).getTanggalKonfirmasi() + "," + dataTransaksi.get(i).getWaktuKonfirmasi() + "," + Main.dataTransaksi.get(i).getNamaAkun() +  "\n");
                 System.out.println("  Menyimpan "+ i + ".txt...   OK");
                 fw.close();
                 

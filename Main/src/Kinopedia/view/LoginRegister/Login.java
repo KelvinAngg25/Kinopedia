@@ -12,6 +12,7 @@ import static Kinopedia.Main.dataTransaksi;
 import static Kinopedia.Main.dataUser;
 import Kinopedia.Session;
 import Kinopedia.model.*;
+import Kinopedia.model.Seller.Seller;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Component;
@@ -198,8 +199,9 @@ public class Login extends JFrame {
             String username = inputUser.getText();
             String pass = inputPass.getText();
             
-            if (username.equals(Main.admin.getNama()) && pass.equals(Main.admin.getPassword())) {
-                JOptionPane.showMessageDialog(null, "Berhasil disimpan!");
+            if (username.equals("Admin") && pass.equals("Admin123")) {
+                dispose();
+                new Seller().setVisible(true);
             }
             else if (username.isEmpty() || pass.isEmpty()) {
                 CetakError("Masih ada inputan yang kosong", "Tolong Pastikan inputan terisi semua!");

@@ -9,22 +9,33 @@ package Kinopedia.PilihanBundle;
  *
  * @author Victus
  */
+import Kinopedia.Main;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class BundleValorant extends JFrame {
 
-    private JFrame backTo;
+    private JFrame menuSebelumnya;
+    private ImageIcon ikonMataUang;
+    private ImageIcon logoBawah;
 
-    private String currencyName = "Valorant Points";
-    private ImageIcon currencyIcon;
-    private ImageIcon logoFooter;
+    private ArrayList<PanelBulat> daftarSemuaKartu = new ArrayList<>();
+    private String bundleTerpilih = "";
 
-    public BundleValorant(JFrame backTo) {
-        this.backTo = backTo;
+    // === KOMPONEN INPUT (Dibuat class-level agar bisa diakses method validasi) ===
+    private PanelBulat bungkusId;
+    private PanelBulat bungkusNama;
+    private PanelBulat kotakOranye;
+    private JTextField kolomId;
+    private JTextField kolomNama;
+
+    public BundleValorant(JFrame menuSebelumnya) {
+        this.menuSebelumnya = menuSebelumnya;
 
         setTitle("Valorant - Bundling");
         setSize(470, 844);
@@ -32,184 +43,366 @@ public class BundleValorant extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        Color ORANGE = new Color(0xFF8C1A);
+        Color warnaOranye = new Color(0xFF8C1A);
+        Color warnaAbuAbu = new Color(0xBDBDBD);
+        Color warnaMerah  = new Color(0xFF3B30); // Tambahkan warna merah
 
-        // load icons
-        currencyIcon = loadIcon("/Kinopedia/model/IMAGESS/Valorant-pointss.png", 18, 18);
-        logoFooter   = loadIcon("/Kinopedia/model/IMAGESS/LogoKinopedia.png", 50, 50);
+        ikonMataUang = muatGambar("/Kinopedia/model/IMAGESS/Valorant-pointss.png", 25, 25);
+        logoBawah    = muatGambar("/Kinopedia/model/IMAGESS/LogoKinopedia.png", 50, 50);
 
-        // root
-        JPanel root = new JPanel(new BorderLayout());
-        root.setBackground(Color.WHITE);
-        root.setBorder(new EmptyBorder(18, 18, 18, 18));
-        setContentPane(root);
+        // --- Panel Utama ---
+        JPanel panelAkar = new JPanel();
+        panelAkar.setLayout(new BorderLayout());
+        panelAkar.setBackground(Color.WHITE);
+        panelAkar.setBorder(new EmptyBorder(14, 16, 14, 16));
+        setContentPane(panelAkar);
 
-        // top bar
-        JButton backBtn = new JButton("< Kembali");
-        backBtn.setFocusPainted(false);
-        backBtn.setBorderPainted(false);
-        backBtn.setContentAreaFilled(false);
-        backBtn.setFont(new Font("SansSerif", Font.PLAIN, 16));
-        backBtn.setHorizontalAlignment(SwingConstants.LEFT);
-        backBtn.addActionListener(e -> {
+        // --- Tombol Kembali ---
+        JButton tombolKembali = new JButton("< Kembali");
+        tombolKembali.setFocusPainted(false);
+        tombolKembali.setBorderPainted(false);
+        tombolKembali.setContentAreaFilled(false);
+        tombolKembali.setFont(new Font("SansSerif", Font.PLAIN, 15));
+        tombolKembali.setHorizontalAlignment(SwingConstants.LEFT);
+        tombolKembali.addActionListener(e -> {
             dispose();
-            if (backTo != null) backTo.setVisible(true);
+            if (this.menuSebelumnya != null) {
+                this.menuSebelumnya.setVisible(true);
+            }
         });
 
-        JPanel top = new JPanel(new BorderLayout());
-        top.setBackground(Color.WHITE);
-        top.add(backBtn, BorderLayout.WEST);
-        root.add(top, BorderLayout.NORTH);
+        JPanel barAtas = new JPanel(new BorderLayout());
+        barAtas.setBackground(Color.WHITE);
+        barAtas.add(tombolKembali, BorderLayout.WEST);
+        panelAkar.add(barAtas, BorderLayout.NORTH);
 
-        // scroll content
-        JPanel content = new JPanel();
-        content.setBackground(Color.WHITE);
-        content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
-        content.setBorder(new EmptyBorder(8, 12, 0, 12));
+        // --- Panel Isi ---
+        JPanel panelIsi = new JPanel();
+        panelIsi.setBackground(Color.WHITE);
+        panelIsi.setLayout(new BoxLayout(panelIsi, BoxLayout.Y_AXIS));
+        panelIsi.setBorder(new EmptyBorder(8, 30, 0, 30));
+        panelAkar.add(panelIsi, BorderLayout.CENTER);
 
-        JScrollPane scroll = new JScrollPane(content);
-        scroll.setBorder(null);
-        scroll.getViewport().setBackground(Color.WHITE);
-        scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        root.add(scroll, BorderLayout.CENTER);
+        // --- Input ID ---
+        bungkusId = new PanelBulat(20, Color.WHITE, warnaOranye, 1);
+        bungkusId.setLayout(new BorderLayout());
+        bungkusId.setBorder(new EmptyBorder(8, 15, 8, 15));
+        bungkusId.setMaximumSize(new Dimension(9999, 45));
+        bungkusId.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        // NUMBER ID
-        JLabel idLabel = new JLabel("NUMBER ID");
-        idLabel.setFont(new Font("SansSerif", Font.PLAIN, 10));
-        idLabel.setForeground(Color.DARK_GRAY);
-        idLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        content.add(idLabel);
-        content.add(Box.createVerticalStrut(6));
+        kolomId = new JTextField("");
+        kolomId.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        kolomId.setOpaque(false);
+        kolomId.setBorder(null);
+        bungkusId.add(kolomId, BorderLayout.CENTER);
 
-        JTextField idField = new JTextField("225180606 (2554)");
-        idField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
-        idField.setBorder(BorderFactory.createCompoundBorder(
-                new LineBorder(ORANGE, 2, true),
-                new EmptyBorder(8, 12, 8, 12)
-        ));
-        idField.setAlignmentX(Component.LEFT_ALIGNMENT);
-        content.add(idField);
-        content.add(Box.createVerticalStrut(10));
+        panelIsi.add(bungkusId);
+        panelIsi.add(Box.createVerticalStrut(14));
 
-        // ACCOUNT NAME
-        JLabel accLabel = new JLabel("ACCOUNT NAME");
-        accLabel.setFont(new Font("SansSerif", Font.PLAIN, 10));
-        accLabel.setForeground(Color.DARK_GRAY);
-        accLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        content.add(accLabel);
-        content.add(Box.createVerticalStrut(6));
+        // --- Label ACCOUNT NAME ---
+        JLabel teksAkun = new JLabel("ACCOUNT NAME");
+        teksAkun.setFont(new Font("SansSerif", Font.BOLD, 11));
+        teksAkun.setForeground(Color.DARK_GRAY);
+        teksAkun.setAlignmentX(Component.LEFT_ALIGNMENT);
+        panelIsi.add(teksAkun);
+        panelIsi.add(Box.createVerticalStrut(8));
 
-        JTextField accNameField = new JTextField("KelvinAngjaya123");
-        accNameField.setEditable(false);
-        accNameField.setBackground(new Color(0xD9D9D9));
-        accNameField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
-        accNameField.setBorder(BorderFactory.createCompoundBorder(
-                new LineBorder(ORANGE, 2, true),
-                new EmptyBorder(8, 12, 8, 12)
-        ));
-        accNameField.setAlignmentX(Component.LEFT_ALIGNMENT);
-        content.add(accNameField);
-        content.add(Box.createVerticalStrut(12));
+        // --- Input Nama Akun (read-only) ---
+        bungkusNama = new PanelBulat(20, warnaAbuAbu, warnaOranye, 1);
+        bungkusNama.setLayout(new BorderLayout());
+        bungkusNama.setBorder(new EmptyBorder(8, 15, 8, 15));
+        bungkusNama.setMaximumSize(new Dimension(9999, 45));
+        bungkusNama.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        // tag "1. Bundling"
-        JPanel tagPanel = new JPanel(new BorderLayout());
-        tagPanel.setBackground(Color.WHITE);
-        tagPanel.setBorder(BorderFactory.createCompoundBorder(
-                new LineBorder(ORANGE, 2, true),
-                new EmptyBorder(6, 10, 6, 10)
-        ));
-        tagPanel.setMaximumSize(new Dimension(160, 32));
-        tagPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        kolomNama = new JTextField("");
+        kolomNama.setEditable(false);
+        kolomNama.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        kolomNama.setOpaque(false);
+        kolomNama.setBorder(null);
+        bungkusNama.add(kolomNama, BorderLayout.CENTER);
 
-        JLabel tagText = new JLabel("1. Bundling", SwingConstants.CENTER);
-        tagText.setFont(new Font("SansSerif", Font.BOLD, 12));
-        tagPanel.add(tagText, BorderLayout.CENTER);
+        panelIsi.add(bungkusNama);
+        panelIsi.add(Box.createVerticalStrut(20));
 
-        content.add(tagPanel);
-        content.add(Box.createVerticalStrut(8));
+        // === VALIDASI ID SAAT USER SELESAI MENGETIK (Gaya CODM) ===
+        kolomId.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                cekIdAkun(warnaOranye, warnaMerah);
+            }
 
-        // orange box + grid
-        JPanel orangeBox = new JPanel(new BorderLayout());
-        orangeBox.setBackground(ORANGE);
-        orangeBox.setBorder(new EmptyBorder(10, 10, 10, 10));
-        orangeBox.setAlignmentX(Component.LEFT_ALIGNMENT);
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                cekIdAkun(warnaOranye, warnaMerah);
+            }
 
-        JPanel grid = new JPanel(new GridLayout(0, 2, 8, 8));
-        grid.setOpaque(false);
-        orangeBox.add(grid, BorderLayout.CENTER);
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                cekIdAkun(warnaOranye, warnaMerah);
+            }
+        });
 
-        addCard(grid, "475 " + currencyName, "Rp 60.000");
-        addCard(grid, "1000 " + currencyName, "Rp 120.000");
-        addCard(grid, "1500 " + currencyName, "Rp 180.000");
-        addCard(grid, "2050 " + currencyName, "Rp 235.000");
-        addCard(grid, "3650 " + currencyName, "Rp 400.000");
-        addCard(grid, "5350 " + currencyName, "Rp 580.000");
-        addCard(grid, "11000 " + currencyName, "Rp 1.200.000");
-        addCard(grid, "20000 " + currencyName, "Rp 2.000.000");
+        // --- AREA BUNDLE ---
+        JPanel areaBundle = new JPanel();
+        areaBundle.setLayout(new BoxLayout(areaBundle, BoxLayout.Y_AXIS));
+        areaBundle.setBackground(Color.WHITE);
+        areaBundle.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        content.add(orangeBox);
-        content.add(Box.createVerticalStrut(10));
+        JLabel teksLabel = new JLabel("1. Bundling");
+        teksLabel.setFont(new Font("SansSerif", Font.BOLD, 14));
 
-        // footer fixed
-        JPanel footer = new JPanel();
-        footer.setBackground(Color.WHITE);
-        footer.setLayout(new BoxLayout(footer, BoxLayout.Y_AXIS));
-        footer.setBorder(new EmptyBorder(10, 0, 0, 0));
-        root.add(footer, BorderLayout.SOUTH);
+        PanelBulat pilBundling = new PanelBulat(25, Color.WHITE, warnaOranye, 1);
+        pilBundling.setLayout(new BorderLayout());
+        pilBundling.setBorder(new EmptyBorder(8, 20, 10, 22));
+        pilBundling.add(teksLabel, BorderLayout.CENTER);
 
-        JButton payBtn = new JButton("Pilih Metode Pembayaran");
-        payBtn.setBackground(ORANGE);
-        payBtn.setForeground(Color.BLACK);
-        payBtn.setFont(new Font("SansSerif", Font.BOLD, 13));
-        payBtn.setFocusPainted(false);
-        payBtn.setOpaque(true);
-        payBtn.setBorder(BorderFactory.createEmptyBorder(10, 12, 10, 12));
+        JPanel tempatLabel = new JPanel();
+        tempatLabel.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 0));
+        tempatLabel.setOpaque(false);
+        tempatLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        tempatLabel.setMaximumSize(new Dimension(9999, 45));
+        tempatLabel.add(pilBundling);
 
-        JPanel payWrap = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        payWrap.setBackground(Color.WHITE);
-        payWrap.add(payBtn);
-        footer.add(payWrap);
+        areaBundle.add(tempatLabel);
+        areaBundle.add(Box.createVerticalStrut(-20));
 
-        footer.add(Box.createVerticalStrut(14));
+        JPanel panelGrid = new JPanel();
+        panelGrid.setLayout(new GridLayout(4, 2, 10, 10));
+        panelGrid.setOpaque(false);
 
-        JLabel logoLabel = (logoFooter != null) ? new JLabel(logoFooter) : new JLabel("Logo");
-        logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        footer.add(logoLabel);
+        String nama = " VP";
+        buatKartu(panelGrid, "125"   + nama, "15000");
+        buatKartu(panelGrid, "420"   + nama, "50000");
+        buatKartu(panelGrid, "700"   + nama, "79000");
+        buatKartu(panelGrid, "1375"  + nama, "150000");
+        buatKartu(panelGrid, "2400"  + nama, "250000");
+        buatKartu(panelGrid, "4000"  + nama, "400000");
+        buatKartu(panelGrid, "8150"  + nama, "800000");
+        buatKartu(panelGrid, "10500" + nama, "1000000");
+
+        // Jadikan kotakOranye sebagai class-level
+        kotakOranye = new PanelBulat(25, warnaOranye, null, 0);
+        kotakOranye.setLayout(new BorderLayout());
+        kotakOranye.setBorder(new EmptyBorder(30, 10, 20, 10));
+        kotakOranye.setAlignmentX(Component.LEFT_ALIGNMENT);
+        kotakOranye.add(panelGrid, BorderLayout.CENTER);
+
+        areaBundle.add(kotakOranye);
+        panelIsi.add(areaBundle);
+        panelIsi.add(Box.createVerticalStrut(20));
+
+        // --- PANEL BAWAH ---
+        JPanel panelBawah = new JPanel();
+        panelBawah.setBackground(Color.WHITE);
+        panelBawah.setLayout(new BoxLayout(panelBawah, BoxLayout.Y_AXIS));
+        panelBawah.setBorder(new EmptyBorder(10, 36, 0, 36));
+        panelAkar.add(panelBawah, BorderLayout.SOUTH);
+
+        PanelBulat bungkusTombolBayar = new PanelBulat(15, warnaOranye, null, 0);
+        bungkusTombolBayar.setLayout(new BorderLayout());
+        bungkusTombolBayar.setMaximumSize(new Dimension(9999, 50));
+        bungkusTombolBayar.setAlignmentX(Component.LEFT_ALIGNMENT);
+        bungkusTombolBayar.setBorder(new EmptyBorder(14, 0, 14, 0));
+
+        JLabel teksTombolBayar = new JLabel("Pilih Metode Pembayaran", SwingConstants.CENTER);
+        teksTombolBayar.setFont(new Font("SansSerif", Font.BOLD, 15));
+        teksTombolBayar.setForeground(Color.BLACK);
+        bungkusTombolBayar.add(teksTombolBayar, BorderLayout.CENTER);
+
+        // === LOGIKA TOMBOL PILIH METODE PEMBAYARAN (Gaya CODM) ===
+        bungkusTombolBayar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // Cek apakah kolom nama sudah terisi dan bukan pesan error
+                boolean akunSudahTerisi = !kolomNama.getText().isEmpty()
+                                          && !kolomNama.getText().equals("Akun Tidak Ditemukan");
+
+                // Cek apakah user sudah memilih bundle
+                boolean bundleSudahDipilih = !bundleTerpilih.isEmpty();
+
+                // Jika akun belum terisi, border ID jadi merah
+                if (!akunSudahTerisi) {
+                    bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 1);
+                }
+
+                // Jika bundle belum dipilih, border kotak oranye jadi merah
+                if (!bundleSudahDipilih) {
+                    kotakOranye.ubahTampilan(warnaOranye, warnaMerah, 2);
+                }
+
+                // Jika keduanya sudah benar, lanjut ke halaman pembayaran
+                if (akunSudahTerisi && bundleSudahDipilih) {
+                    dispose();
+                    new Kinopedia.model.MetodeBayar(kolomNama.getText(),kolomId.getText(), Integer.parseInt(bundleTerpilih), "valorant", Kinopedia.Session.getInstance().getCurrentUser().getNama()).setVisible(true);
+                    // TODO: lanjut ke halaman metode pembayaran
+                }
+            }
+        });
+
+        panelBawah.add(bungkusTombolBayar);
+        panelBawah.add(Box.createVerticalStrut(14));
+
+        JPanel panelLogo = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        panelLogo.setBackground(Color.WHITE);
+        panelLogo.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        JLabel labelLogo = new JLabel("Kinopedia");
+        if (this.logoBawah != null) {
+            labelLogo = new JLabel(this.logoBawah);
+        }
+        panelLogo.add(labelLogo);
+        panelBawah.add(panelLogo);
     }
 
-    private ImageIcon loadIcon(String path, int w, int h) {
-        URL url = getClass().getResource(path);
-        if (url == null) {
-            System.out.println("Icon not found: " + path);
+    // === METHOD: CEK ID AKUN VALORANT (Gaya CODM) ===
+    private void cekIdAkun(Color warnaOranye, Color warnaMerah) {
+        String idDiInput = kolomId.getText().trim();
+
+        // Langkah 1: Cek format (harus ada "#" di posisi index ke-6)
+        int posisiPagar = idDiInput.indexOf("#");
+
+        if (posisiPagar == -1) {
+            // Format salah — border merah, kolom nama dikosongkan
+            bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+            kolomNama.setText("");
+            kolomNama.setForeground(Color.BLACK);
+            return;
+        }
+
+        String bagianDepan    = idDiInput.substring(0, posisiPagar);
+        String bagianBelakang = idDiInput.substring(posisiPagar + 1);
+
+        if (bagianDepan.length() != 6 || bagianBelakang.length() != 4) {
+            // Format salah — border merah, kolom nama dikosongkan
+            bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+            kolomNama.setText("");
+            kolomNama.setForeground(Color.BLACK);
+            return;
+        }
+
+        // Format benar — cari ID di Main.dataAkun
+        boolean akunDitemukan = false;
+
+        for (int i = 0; i < Main.dataAkun.size(); i++) {
+            String idDiDatabase   = Main.dataAkun.get(i).getIdAkun();
+            String namaDiDatabase = Main.dataAkun.get(i).getNamaAkun();
+            String gameDiDatabase = Main.dataAkun.get(i).getJenisGame();
+
+            // Cocokkan ID dan pastikan jenisGame-nya "valorant"
+            boolean idSama    = idDiDatabase.equals(idDiInput);
+            boolean gameSama  = gameDiDatabase.equals("valorant");
+
+            if (idSama && gameSama) {
+                kolomNama.setText(namaDiDatabase);
+                kolomNama.setForeground(Color.BLACK);
+                bungkusId.ubahTampilan(Color.WHITE, warnaOranye, 1);
+                akunDitemukan = true;
+                break;
+            }
+        }
+    }
+
+    public void buatKartu(JPanel grid, String judul, String harga) {
+        PanelBulat kartu = new PanelBulat(15, Color.WHITE, null, 0);
+        kartu.setLayout(new BoxLayout(kartu, BoxLayout.Y_AXIS));
+        kartu.setBorder(new EmptyBorder(8, 16, 8, 4));
+
+        JLabel gambarIkon = new JLabel("?");
+        if (this.ikonMataUang != null) {
+            gambarIkon = new JLabel(this.ikonMataUang);
+        }
+        gambarIkon.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        JLabel teksJudul = new JLabel(judul);
+        teksJudul.setFont(new Font("SansSerif", Font.BOLD, 15));
+        teksJudul.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        JLabel teksHarga = new JLabel("Rp "+harga);
+        teksHarga.setFont(new Font("SansSerif", Font.PLAIN, 18));
+        teksHarga.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        kartu.add(gambarIkon);
+        kartu.add(Box.createVerticalStrut(6));
+        kartu.add(teksJudul);
+        kartu.add(Box.createVerticalStrut(2));
+        kartu.add(teksHarga);
+
+        grid.add(kartu);
+        daftarSemuaKartu.add(kartu);
+
+        kartu.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // Reset kotak oranye jika sebelumnya merah karena error
+                if (kotakOranye != null) {
+                    kotakOranye.ubahTampilan(new Color(0xFF8C1A), null, 0);
+                }
+                
+                for (PanelBulat k : daftarSemuaKartu) {
+                    k.ubahTampilan(Color.WHITE, null, 0);
+                }
+                kartu.ubahTampilan(new Color(220, 220, 220), null, 2);
+                bundleTerpilih = harga;
+                System.out.println("User memilih: " + bundleTerpilih);
+            }
+        });
+    }
+
+    public ImageIcon muatGambar(String path, int lebar, int tinggi) {
+        URL lokasi = getClass().getResource(path);
+        if (lokasi == null) {
+            System.out.println("Gambar tidak ditemukan: " + path);
             return null;
         }
-        Image img = new ImageIcon(url).getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
-        return new ImageIcon(img);
+        Image gambar    = new ImageIcon(lokasi).getImage();
+        Image gambarPas = gambar.getScaledInstance(lebar, tinggi, Image.SCALE_SMOOTH);
+        return new ImageIcon(gambarPas);
     }
 
-    private void addCard(JPanel grid, String title, String price) {
-        JPanel card = new JPanel();
-        card.setBackground(Color.WHITE);
-        card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
-        card.setBorder(new EmptyBorder(6, 8, 6, 8));
+    class PanelBulat extends JPanel {
 
-        JLabel iconLabel = (currencyIcon != null) ? new JLabel(currencyIcon) : new JLabel("?");
-        iconLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        private int radiusLengkungan;
+        private Color warnaLatar;
+        private Color warnaGaris;
+        private int tebalGaris;
 
-        JLabel t = new JLabel(title);
-        t.setFont(new Font("SansSerif", Font.BOLD, 10));
-        t.setAlignmentX(Component.LEFT_ALIGNMENT);
+        public PanelBulat(int radius, Color warnaLatar, Color warnaGaris, int tebalGaris) {
+            super();
+            this.radiusLengkungan = radius;
+            this.warnaLatar = warnaLatar;
+            this.warnaGaris = warnaGaris;
+            this.tebalGaris = tebalGaris;
+            setOpaque(false);
+        }
 
-        JLabel p = new JLabel(price);
-        p.setFont(new Font("SansSerif", Font.PLAIN, 10));
-        p.setAlignmentX(Component.LEFT_ALIGNMENT);
+        public void ubahTampilan(Color warnaLatarBaru, Color warnaGarisBaru, int tebalGarisBaru) {
+            this.warnaLatar = warnaLatarBaru;
+            this.warnaGaris = warnaGarisBaru;
+            this.tebalGaris = tebalGarisBaru;
+            repaint();
+        }
 
-        card.add(iconLabel);
-        card.add(Box.createVerticalStrut(2));
-        card.add(t);
-        card.add(Box.createVerticalStrut(1));
-        card.add(p);
+        @Override
+        public void paintComponent(Graphics g) {
+            super.paintComponent(g);
 
-        grid.add(card);
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            int posisiX = this.tebalGaris / 2;
+            int posisiY = this.tebalGaris / 2;
+            int lebarPanel = getWidth() - this.tebalGaris - 1;
+            int tinggiPanel = getHeight() - this.tebalGaris - 1;
+
+            if (this.warnaLatar != null) {
+                g2.setColor(this.warnaLatar);
+                g2.fillRoundRect(posisiX, posisiY, lebarPanel, tinggiPanel, this.radiusLengkungan, this.radiusLengkungan);
+            }
+
+            if (this.warnaGaris != null && this.tebalGaris > 0) {
+                g2.setColor(this.warnaGaris);
+                g2.setStroke(new BasicStroke(this.tebalGaris));
+                g2.drawRoundRect(posisiX, posisiY, lebarPanel, tinggiPanel, this.radiusLengkungan, this.radiusLengkungan);
+            }
+
+            g2.dispose();
+        }
     }
 }

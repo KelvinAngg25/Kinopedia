@@ -3,26 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Kinopedia.view;
+package Kinopedia.model;
 
+import Kinopedia.DataUser;
+import Kinopedia.Main;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 
 public class History extends JFrame {
 
-    ArrayList<Transaction> list = new ArrayList<>();
+    DataUser user = Kinopedia.Session.getInstance().getCurrentUser();
 
     public History() {
 
         setTitle("History");
-        setSize(390, 820);
+        setSize(470, 844);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
-
-        dataTransaction();
 
         JPanel main = new JPanel();
         main.setLayout(null);
@@ -43,8 +42,8 @@ public class History extends JFrame {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-
                 dispose();
+                new Buyer().setVisible(true);
             }
         };
 
@@ -59,22 +58,31 @@ public class History extends JFrame {
         content.setBackground(new Color(242, 242, 242));
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
 
-        for (Transaction tr : list) {
+        content.setBorder(BorderFactory.createEmptyBorder(
+                8,
+                0,
+                0,
+                0
+        ));
 
-            JPanel wrap = new JPanel();
+        for (Kinopedia.DataTransaksi tr : Main.dataTransaksi) {
 
-            wrap.setOpaque(false);
+            if (tr.getUsername().equals(user.getNama())) {
 
-            wrap.setLayout(new FlowLayout(
-                    FlowLayout.CENTER,
-                    0,
-                    0
-            ));
+                JPanel wrap = new JPanel();
 
-            wrap.add(createCard(tr));
+                wrap.setOpaque(false);
 
-            content.add(wrap);
-            content.add(Box.createVerticalStrut(14));
+                FlowLayout flow = new FlowLayout(FlowLayout.LEFT);
+                flow.setHgap(18);
+
+                wrap.setLayout(flow);
+
+                wrap.add(createCard(tr));
+
+                content.add(wrap);
+                content.add(Box.createVerticalStrut(14));
+            }
         }
 
         content.add(Box.createVerticalStrut(25));
@@ -104,53 +112,13 @@ public class History extends JFrame {
         setVisible(true);
     }
 
-    // ================= DATA =================
-    private void dataTransaction() {
-
-        list.add(new Transaction(
-                "INV-20240521-005",
-                "21-05-2024 · 17:30",
-                false
-        ));
-
-        list.add(new Transaction(
-                "INV-20240521-005",
-                "21-05-2024 · 17:30",
-                false
-        ));
-
-        list.add(new Transaction(
-                "INV-20240521-005",
-                "21-05-2024 · 17:30",
-                true
-        ));
-
-        list.add(new Transaction(
-                "INV-20240521-005",
-                "21-05-2024 · 17:30",
-                true
-        ));
-
-        list.add(new Transaction(
-                "INV-20240521-005",
-                "21-05-2024 · 17:30",
-                true
-        ));
-
-        list.add(new Transaction(
-                "INV-20240521-005",
-                "21-05-2024 · 17:30",
-                false
-        ));
-    }
-
     // ================= CARD =================
-    private JPanel createCard(Transaction tr) {
+    private JPanel createCard(Kinopedia.DataTransaksi tr) {
 
         Color start;
         Color end;
 
-        if (tr.success) {
+        if (tr.isKonfirmasi()) {
 
             start = new Color(45, 170, 35);
             end = new Color(5, 60, 15);
@@ -171,12 +139,15 @@ public class History extends JFrame {
         title.setForeground(new Color(220, 220, 220));
         title.setBounds(16, 12, 100, 15);
 
-        JLabel id = new JLabel("#" + tr.id);
+        JLabel id = new JLabel("#" + tr.getIdTransaksi());
         id.setFont(new Font("SansSerif", Font.BOLD, 13));
         id.setForeground(Color.WHITE);
         id.setBounds(16, 40, 180, 16);
 
-        JLabel date = new JLabel(tr.date);
+        JLabel date = new JLabel(
+                tr.getTanggal() + " · " + tr.getWaktu()
+        );
+
         date.setFont(new Font("SansSerif", Font.PLAIN, 11));
         date.setForeground(new Color(225, 225, 225));
         date.setBounds(16, 60, 150, 15);
@@ -187,7 +158,7 @@ public class History extends JFrame {
         arrow.setFont(new Font("SansSerif", Font.BOLD, 20));
         arrow.setForeground(Color.WHITE);
 
-        arrow.setBounds(295, 28, 22, 22);
+        arrow.setBounds(295, 24, 30, 30);
 
         arrow.setBorderPainted(false);
         arrow.setContentAreaFilled(false);
@@ -214,65 +185,30 @@ public class History extends JFrame {
         return card;
     }
 
-    // ================= TRANSACTION =================
-    class Transaction {
-
-        String id;
-        String date;
-        boolean success;
-
-        public Transaction(
-                String id,
-                String date,
-                boolean success
-        ) {
-
-            this.id = id;
-            this.date = date;
-            this.success = success;
-        }
-    }
-
     // ================= DETAIL =================
     class DetailTransaction extends JFrame {
 
-        public DetailTransaction(Transaction tr) {
+        public DetailTransaction(Kinopedia.DataTransaksi tr) {
 
             setTitle("Detail");
-            setSize(320, 300);
+            setSize(470, 844);
             setLocationRelativeTo(null);
             setResizable(false);
 
-            JPanel panel = new JPanel();
-            panel.setLayout(null);
-            panel.setBackground(Color.WHITE);
-
-            JLabel title = new JLabel("Detail Transaksi");
-            title.setFont(new Font("SansSerif", Font.BOLD, 20));
-            title.setBounds(20, 20, 200, 25);
-
-            JLabel id = new JLabel("ID : " + tr.id);
-            id.setBounds(20, 80, 250, 20);
-
-            JLabel date = new JLabel("Tanggal : " + tr.date);
-            date.setBounds(20, 120, 250, 20);
-
-            JLabel status = new JLabel(
-                    tr.success
-                            ? "Status : Success"
-                            : "Status : Failed"
+            DetailTransaksi frame = new DetailTransaksi(
+                    tr.isKonfirmasi(),
+                    tr.getIdTransaksi(),
+                    tr.getTanggal() + " " + tr.getWaktu(),
+                    tr.getNamaAkun(),
+                    tr.getIdGame(),
+                    tr.getJenisGame(),
+                    tr.getPembayaran(),
+                    tr.getNominal()
             );
 
-            status.setBounds(20, 160, 200, 20);
+            frame.setVisible(true);
 
-            panel.add(title);
-            panel.add(id);
-            panel.add(date);
-            panel.add(status);
-
-            add(panel);
-
-            setVisible(true);
+            dispose();
         }
     }
 

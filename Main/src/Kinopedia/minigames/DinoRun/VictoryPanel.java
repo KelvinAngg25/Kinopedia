@@ -30,6 +30,8 @@ public class VictoryPanel extends JPanel {
     private Image dinoImg;
     private Image cactusImg;
     private Image birdImg;
+    
+    private JLabel earnedCoinsLabel;
 
     public VictoryPanel(GameFrame frame) {
 
@@ -65,14 +67,20 @@ public class VictoryPanel extends JPanel {
         scoreLabel = new JLabel("SCORE: 100", SwingConstants.CENTER);
         scoreLabel.setFont(new Font("Courier New", Font.BOLD, 24));
         scoreLabel.setForeground(Color.BLACK);
-        scoreLabel.setBounds(0, 490, GameFrame.WIDTH, 40);
+        scoreLabel.setBounds(0, 460, GameFrame.WIDTH, 40);
         add(scoreLabel);
 
         JLabel tryLbl = new JLabel("TRY AGAIN?", SwingConstants.CENTER);
         tryLbl.setFont(new Font("Courier New", Font.BOLD, 22));
         tryLbl.setForeground(Color.BLACK);
-        tryLbl.setBounds(0, 545, GameFrame.WIDTH, 35);
+        tryLbl.setBounds(0, 555, GameFrame.WIDTH, 35);
         add(tryLbl);
+        
+        earnedCoinsLabel = new JLabel("COINS EARNED: 0", SwingConstants.CENTER);
+        earnedCoinsLabel.setFont(new Font("Courier New", Font.BOLD, 20));
+        earnedCoinsLabel.setForeground(Color.BLACK);
+        earnedCoinsLabel.setBounds(0, 505, GameFrame.WIDTH, 35);
+        add(earnedCoinsLabel);
 
         JButton retryBtn = new JButton() {
             @Override
@@ -111,7 +119,7 @@ public class VictoryPanel extends JPanel {
         exitBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.showScreen(GameFrame.MENU_SCREEN);
+                frame.exitToMenu();
             }
         });
         add(exitBtn);
@@ -119,6 +127,10 @@ public class VictoryPanel extends JPanel {
 
     public void setScore(int score) {
         scoreLabel.setText(String.format("SCORE: %03d", score));
+    }
+    
+    public void setEarnedCoins(int coins) {
+        earnedCoinsLabel.setText("COINS  : +" + coins);
     }
 
     @Override
