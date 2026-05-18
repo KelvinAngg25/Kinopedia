@@ -74,8 +74,8 @@ public class History extends JFrame {
                 JPanel wrap = new JPanel();
 
                 wrap.setOpaque(false);
-                wrap.setMaximumSize(new Dimension(390, 110));
-                wrap.setPreferredSize(new Dimension(390, 110));
+                wrap.setMaximumSize(new Dimension(450, 110));
+                wrap.setPreferredSize(new Dimension(450, 110));
 
                 FlowLayout flow = new FlowLayout(
                 FlowLayout.LEFT,
@@ -97,9 +97,13 @@ public class History extends JFrame {
         
         JScrollPane scroll = new JScrollPane(content);
 
-        scroll.setBounds(0, 65, 390, 620);
+        scroll.setBounds(0, 65, 470, 620);
 
         scroll.setBorder(null);
+        
+        scroll.setHorizontalScrollBarPolicy(
+        JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
+        );
 
         scroll.getViewport().setBackground(
                 new Color(242, 242, 242)
@@ -119,7 +123,7 @@ public class History extends JFrame {
 
         JLabel logoKinopedia = new JLabel(new ImageIcon(scaledImage));
 
-        logoKinopedia.setBounds(170, 700, 50, 50);
+        logoKinopedia.setBounds(210, 700, 50, 50);
 
         main.add(logoKinopedia);
 
@@ -148,7 +152,7 @@ public class History extends JFrame {
 
         GradientPanel card = new GradientPanel(start, end);
 
-        card.setPreferredSize(new Dimension(352, 96));
+        card.setPreferredSize(new Dimension(418, 96));
         card.setLayout(null);
 
         JLabel title = new JLabel("ID Transaksi");
@@ -175,7 +179,7 @@ public class History extends JFrame {
         arrow.setFont(new Font("SansSerif", Font.BOLD, 20));
         arrow.setForeground(Color.WHITE);
 
-        arrow.setBounds(307, 31, 30, 30);
+        arrow.setBounds(372, 31, 30, 30);
 
         arrow.setBorderPainted(false);
         arrow.setContentAreaFilled(false);
@@ -246,37 +250,37 @@ public class History extends JFrame {
         @Override
         protected void paintComponent(Graphics g) {
 
-            Graphics2D g2 = (Graphics2D) g.create();
+        super.paintComponent(g);
+
+          Graphics2D g2 = (Graphics2D) g.create();
 
             g2.setRenderingHint(
-                    RenderingHints.KEY_ANTIALIASING,
-                    RenderingHints.VALUE_ANTIALIAS_ON
+            RenderingHints.KEY_ANTIALIASING,
+            RenderingHints.VALUE_ANTIALIAS_ON
             );
 
             GradientPaint gp = new GradientPaint(
-                    0,
-                    0,
-                    start,
-                    getWidth(),
-                    0,
-                    end
+            0,
+            0,
+            start,
+            getWidth(),
+            0,
+            end
             );
 
-            g2.setPaint(gp);
+              g2.setPaint(gp);
 
-            g2.fillRoundRect(
-                    0,
-                    0,
-                    getWidth(),
-                    getHeight(),
-                    14,
-                    14
-            );
+              g2.fillRoundRect(
+                0,
+            0,
+            getWidth(),
+            getHeight(),
+            20,
+            20
+             );
 
-            g2.dispose();
-
-            super.paintComponent(g);
-        }
+    g2.dispose();
+}
     }
 
     // ================= MAIN =================
