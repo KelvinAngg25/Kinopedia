@@ -13,6 +13,7 @@ package Kinopedia.minigames;
 import Kinopedia.DataUser;
 import Kinopedia.Main;
 import Kinopedia.Session;
+import Kinopedia.minigames.FllapyWild.KoinManager;
 import Kinopedia.model.Buyer;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -26,6 +27,9 @@ public class MainMiniGames extends JFrame {
             new MainMiniGames().setVisible(true);
         });
     }
+    
+    private JLabel koinLabel;
+    private JLabel kreditLabel;
 
 //    private final JFrame backTo;
 
@@ -57,12 +61,14 @@ public class MainMiniGames extends JFrame {
         top.add(backBtn, BorderLayout.WEST);
         root.add(top, BorderLayout.NORTH);
 
-        JLabel koinLabel = new JLabel("Koin: " + userLogin.getKoin());
+//        JLabel koinLabel = new JLabel("Koin: " + userLogin.getKoin());
+        this.koinLabel = new JLabel("Koin: "  + userLogin.getKoin());
         koinLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
         koinLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         koinLabel.setBorder(BorderFactory.createEmptyBorder(20, 15, 0, 0)); 
         
-        JLabel kreditLabel = new JLabel("Kredit: " + userLogin.getKredit());
+//        JLabel kreditLabel = new JLabel("Kredit: " + userLogin.getKredit());
+        this.kreditLabel = new JLabel("Kredit: " + userLogin.getKredit());
         kreditLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
         kreditLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         kreditLabel.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 0)); 
@@ -73,6 +79,7 @@ public class MainMiniGames extends JFrame {
 
         content.setBorder(new EmptyBorder(10, 0, 10, 0));
         root.add(content, BorderLayout.CENTER);
+        
         content.add(koinLabel);
         content.add(Box.createVerticalStrut(5));
         content.add(kreditLabel);
@@ -108,6 +115,7 @@ public class MainMiniGames extends JFrame {
             PenukaranKoin p = new PenukaranKoin();
             p.setVisible(true);
         });
+        
         // ===== FOOTER LOGO (CENTERED) =====
         JPanel footer = new JPanel(new BorderLayout());
         footer.setLayout(new BoxLayout(footer, BoxLayout.Y_AXIS));
@@ -122,12 +130,26 @@ public class MainMiniGames extends JFrame {
         footer.add(Box.createVerticalStrut(10));
 
         ImageIcon logoImg = loadIcon("LogoKinopedia.png", 50, 50);
-        JLabel logoLabel = (logoImg != null) ? new JLabel(logoImg) : new JLabel("Kinopedia");
+        JLabel logoLabel;
+        if (logoImg != null){
+            logoLabel = new JLabel(logoImg);
+        } else {
+            logoLabel = new JLabel("Kinopedia");
+        }
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
         logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT); 
 
         footer.add(logoLabel, BorderLayout.CENTER);
         root.add(footer, BorderLayout.SOUTH);
+    }
+    
+    // Refresh label koin & kredit dari Session
+    public void refreshInfo() {
+        DataUser userLogin = Session.getInstance().getCurrentUser();
+        if (userLogin != null) {
+            koinLabel.setText("Koin: " + userLogin.getKoin());
+            kreditLabel.setText("Kredit: " + userLogin.getKredit());
+        }
     }
 
     private JLabel sectionTitle(String text) {
@@ -149,7 +171,9 @@ public class MainMiniGames extends JFrame {
         row.setAlignmentX(Component.LEFT_ALIGNMENT);
         row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 120));
 
-        for (String n : names) row.add(iconCard(n));
+        for (String n : names) {
+            row.add(iconCard(n));
+        }
         return row;
     }
 
@@ -178,9 +202,15 @@ public class MainMiniGames extends JFrame {
         });
 
         String fileName = "";
-        if (name.equals("DinoRun")) fileName = "logoDinoRun.png";
-        if (name.equals("Sudoku")) fileName = "logoSudoku.jpg";
-        if (name.equals("Flappy Wild")) fileName = "LogoFlappyWild.png";
+        if (name.equals("DinoRun")) {
+            fileName = "logoDinoRun.png";
+        }
+        if (name.equals("Sudoku")) {
+            fileName = "logoSudoku.jpg";
+        }
+        if (name.equals("Flappy Wild")) {
+            fileName = "LogoFlappyWild.png";
+        }
 
         ImageIcon img = loadIcon(fileName, 70, 70);
         if (img != null) {
@@ -207,7 +237,36 @@ public class MainMiniGames extends JFrame {
 
     private void openBundlePage(String name) {
         if (name.equals("Flappy Wild")) {
-            new Kinopedia.minigames.FllapyWild.GameWindow().setVisible(true);
+//            if (!KoinManager.bisaBermain()) {
+//                JOptionPane.showMessageDialog(
+//                        this,
+//                        "Kredit kamu tidak cukup untuk bermain!\n"
+//                        + "Kredit saat ini: " + KoinManager.getKreditSekarang() + "\n"
+//                        + "Dibutuhkan minimal 1 kredit untuk bermain.",
+//                        "Kredit Tidak Cukup",
+//                        JOptionPane.WARNING_MESSAGE
+//                );
+//            return;
+//            }
+//            
+//            // MENGURANGI 1 KREDIT SAAT MULAI GAME
+//            boolean berhasil = KoinManager.kurangiKredit();
+//            if (!berhasil) {
+//                JOptionPane.showMessageDialog(
+//                        this,
+//                        "Gagal memproses kredit. Silahkan coba lagi.",
+//                        "Error",
+//                        JOptionPane.ERROR_MESSAGE
+//                );
+//                return;
+//            }
+//            
+//            // Update label kredit langsung setelah dikurangi
+//            refreshInfo();
+//            
+//            // Buka game dan pass referensi MainMiniGames untuk refresh setelah selesai
+            new Kinopedia.minigames.FllapyWild.GameWindow(this).setVisible(true);
+            dispose();
         }
 
         if (name.equals("DinoRun")) {
@@ -215,10 +274,9 @@ public class MainMiniGames extends JFrame {
         }
 
         if (name.equals("Sudoku")) {
-//            Kinopedia.minigames.sudoku.Logic frame = new Kinopedia.minigames.sudoku.Logic();
-//            frame.menuGame();
-//            frame.setVisible(true);
-
+            Kinopedia.minigames.sudoku.Logic frame = new Kinopedia.minigames.sudoku.Logic();
+            frame.menuGame();
+            frame.setVisible(true);
         }
         dispose();
     }
@@ -227,7 +285,9 @@ public class MainMiniGames extends JFrame {
         if (fileName == null || fileName.equals("")) return null;
 
         java.net.URL url = getClass().getResource("/Kinopedia/minigames/gambarMain/" + fileName);
-        if (url == null) return null;
+        if (url == null) {
+            return null;
+        }
 
         Image scaled = new ImageIcon(url).getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
         return new ImageIcon(scaled);
@@ -239,7 +299,6 @@ public class MainMiniGames extends JFrame {
     }
 
     private static class RoundedImageLabel extends JLabel {
-
         private int radius;
 
         public RoundedImageLabel(int radius) {
@@ -295,4 +354,3 @@ class RoundedBorder implements javax.swing.border.Border {
         return false;
     }
 }
-
