@@ -134,12 +134,16 @@ public class BundleCODM extends JFrame {
         panelIsi.add(Box.createVerticalStrut(20));
 
         // === VALIDASI ID SAAT USER SELESAI MENGETIK ===
-        kolomId.addActionListener(e -> {
-            cekIdAkun(warnaOranye, warnaMerah);
-        });
+        kolomId.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                cekIdAkun(warnaOranye, warnaMerah);
+            }
 
-        kolomId.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent e) {
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                cekIdAkun(warnaOranye, warnaMerah);
+            }
+
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
                 cekIdAkun(warnaOranye, warnaMerah);
             }
         });
@@ -173,14 +177,14 @@ public class BundleCODM extends JFrame {
         panelGrid.setOpaque(false);
 
         String nama = " CP";
-        buatKartu(panelGrid, "321" + nama,   "Rp 45.200");
-        buatKartu(panelGrid, "800" + nama,   "Rp 108.100");
-        buatKartu(panelGrid, "1373" + nama,  "Rp 180.100");
-        buatKartu(panelGrid, "2060" + nama,  "Rp 270.200");
-        buatKartu(panelGrid, "3564" + nama,  "Rp 450.500");
-        buatKartu(panelGrid, "5650" + nama, "Rp 658.600");
-        buatKartu(panelGrid, "15200" + nama, "Rp 1.803.000");
-        buatKartu(panelGrid, "32150" + nama, "Rp 4.504.500");
+        buatKartu(panelGrid, "321" + nama,   "45200");
+        buatKartu(panelGrid, "800" + nama,   "108100");
+        buatKartu(panelGrid, "1373" + nama,  "180100");
+        buatKartu(panelGrid, "2060" + nama,  "270200");
+        buatKartu(panelGrid, "3564" + nama,  "450500");
+        buatKartu(panelGrid, "5650" + nama, "658600");
+        buatKartu(panelGrid, "15200" + nama, "1803000");
+        buatKartu(panelGrid, "32150" + nama, "4504500");
 
         kotakOranye = new PanelBulat(25, warnaOranye, null, 0);
         kotakOranye.setLayout(new BorderLayout());
@@ -223,18 +227,18 @@ public class BundleCODM extends JFrame {
 
                 // Jika akun belum terisi, border ID jadi merah
                 if (!akunSudahTerisi) {
-                    bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+                    bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 1);
                 }
 
                 // Jika bundle belum dipilih, border kotak oranye jadi merah
                 if (!bundleSudahDipilih) {
-                    kotakOranye.ubahTampilan(warnaMerah, null, 0);
+                    kotakOranye.ubahTampilan(warnaOranye, warnaMerah, 2);
                 }
 
                 // Jika keduanya sudah benar, lanjut ke halaman pembayaran
                 if (akunSudahTerisi && bundleSudahDipilih) {
-                    System.out.println("Lanjut ke pembayaran: " + bundleTerpilih);
-                    // TODO: Buka halaman MetodeBayar di sini
+                    dispose();
+                    new Kinopedia.model.MetodeBayar(kolomNama.getText(),kolomId.getText(), Integer.parseInt(bundleTerpilih), "codm", Kinopedia.Session.getInstance().getCurrentUser().getNama()).setVisible(true);
                 }
             }
         });
@@ -326,7 +330,7 @@ public class BundleCODM extends JFrame {
         teksJudul.setFont(new Font("SansSerif", Font.BOLD, 15));
         teksJudul.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        JLabel teksHarga = new JLabel(harga);
+        JLabel teksHarga = new JLabel("Rp "+harga);
         teksHarga.setFont(new Font("SansSerif", Font.PLAIN, 18));
         teksHarga.setAlignmentX(Component.LEFT_ALIGNMENT);
 
@@ -346,7 +350,7 @@ public class BundleCODM extends JFrame {
                     k.ubahTampilan(Color.WHITE, null, 0);
                 }
                 // Tandai kartu yang dipilih dengan warna abu-abu
-                kartu.ubahTampilan(new Color(220, 220, 220), new Color(150, 150, 150), 2);
+                kartu.ubahTampilan(new Color(220, 220, 220), null, 2);
                 bundleTerpilih = judul;
                 System.out.println("User memilih: " + bundleTerpilih);
             }

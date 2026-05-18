@@ -125,12 +125,16 @@ public class BundleSteam extends JFrame {
         panelIsi.add(Box.createVerticalStrut(20));
  
         // === VALIDASI EMAIL SAAT USER SELESAI MENGETIK ===
-        kolomId.addActionListener(e -> {
-            cekIdAkun(warnaOranye, warnaMerah);
-        });
- 
-        kolomId.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent e) {
+        kolomId.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                cekIdAkun(warnaOranye, warnaMerah);
+            }
+
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                cekIdAkun(warnaOranye, warnaMerah);
+            }
+
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
                 cekIdAkun(warnaOranye, warnaMerah);
             }
         });
@@ -164,14 +168,14 @@ public class BundleSteam extends JFrame {
         panelGrid.setOpaque(false);
  
         String nama = " Steam Credits";
-        buatKartu(panelGrid, "IDR 12.000",  "Rp 15.000");
-        buatKartu(panelGrid, "IDR 45.000",  "Rp 50.000");
-        buatKartu(panelGrid, "IDR 60.000",  "Rp 70.000");
-        buatKartu(panelGrid, "IDR 90.000",  "Rp 100.000");
-        buatKartu(panelGrid, "IDR 120.000", "Rp 135.000");
-        buatKartu(panelGrid, "IDR 250.000", "Rp 275.000");
-        buatKartu(panelGrid, "IDR 400.000", "Rp 435.000");
-        buatKartu(panelGrid, "IDR 600.000", "Rp 650.000");
+        buatKartu(panelGrid, "IDR 12.000",  "15000");
+        buatKartu(panelGrid, "IDR 45.000",  "50000");
+        buatKartu(panelGrid, "IDR 60.000",  "70000");
+        buatKartu(panelGrid, "IDR 90.000",  "100000");
+        buatKartu(panelGrid, "IDR 120.000", "135000");
+        buatKartu(panelGrid, "IDR 250.000", "275000");
+        buatKartu(panelGrid, "IDR 400.000", "435000");
+        buatKartu(panelGrid, "IDR 600.000", "650000");
  
         kotakOranye = new PanelBulat(25, warnaOranye, null, 0);
         kotakOranye.setLayout(new BorderLayout());
@@ -209,14 +213,14 @@ public class BundleSteam extends JFrame {
                 boolean bundleSudahDipilih = !bundleTerpilih.isEmpty();
  
                 if (!akunSudahTerisi) {
-                    bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+                    bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 1);
                 }
                 if (!bundleSudahDipilih) {
-                    kotakOranye.ubahTampilan(warnaMerah, null, 0);
+                    kotakOranye.ubahTampilan(warnaOranye, warnaMerah, 2);
                 }
                 if (akunSudahTerisi && bundleSudahDipilih) {
-                    System.out.println("Lanjut ke pembayaran: " + bundleTerpilih);
-                    // TODO: Buka halaman MetodeBayar di sini
+                    dispose();
+                    new Kinopedia.model.MetodeBayar(kolomNama.getText(),kolomId.getText(), Integer.parseInt(bundleTerpilih), "steam", Kinopedia.Session.getInstance().getCurrentUser().getNama()).setVisible(true);
                 }
             }
         });
@@ -319,7 +323,7 @@ public class BundleSteam extends JFrame {
         teksJudul.setFont(new Font("SansSerif", Font.BOLD, 15));
         teksJudul.setAlignmentX(Component.LEFT_ALIGNMENT);
  
-        JLabel teksHarga = new JLabel(harga);
+        JLabel teksHarga = new JLabel("Rp "+harga);
         teksHarga.setFont(new Font("SansSerif", Font.PLAIN, 18));
         teksHarga.setAlignmentX(Component.LEFT_ALIGNMENT);
  

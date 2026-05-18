@@ -134,12 +134,16 @@ public class BundlePUBG extends JFrame {
         panelIsi.add(Box.createVerticalStrut(20));
  
         // === VALIDASI ID SAAT USER SELESAI MENGETIK ===
-        kolomId.addActionListener(e -> {
-            cekIdAkun(warnaOranye, warnaMerah);
-        });
- 
-        kolomId.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent e) {
+        kolomId.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                cekIdAkun(warnaOranye, warnaMerah);
+            }
+
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                cekIdAkun(warnaOranye, warnaMerah);
+            }
+
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
                 cekIdAkun(warnaOranye, warnaMerah);
             }
         });
@@ -173,14 +177,14 @@ public class BundlePUBG extends JFrame {
         panelGrid.setOpaque(false);
  
         String nama = " UC";
-        buatKartu(panelGrid, "30" + nama,    "Rp 5.000");
-        buatKartu(panelGrid, "60" + nama,    "Rp 10.000");
-        buatKartu(panelGrid, "325" + nama,   "Rp 50.000");
-        buatKartu(panelGrid, "660" + nama,   "Rp 100.000");
-        buatKartu(panelGrid, "1800" + nama,  "Rp 250.000");
-        buatKartu(panelGrid, "3850" + nama,  "Rp 500.000");
-        buatKartu(panelGrid, "8100" + nama,  "Rp 1.000.000");
-        buatKartu(panelGrid, "16200" + nama, "Rp 2.000.000");
+        buatKartu(panelGrid, "30" + nama,    "5000");
+        buatKartu(panelGrid, "60" + nama,    "10000");
+        buatKartu(panelGrid, "325" + nama,   "50000");
+        buatKartu(panelGrid, "660" + nama,   "100000");
+        buatKartu(panelGrid, "1800" + nama,  "250000");
+        buatKartu(panelGrid, "3850" + nama,  "500000");
+        buatKartu(panelGrid, "8100" + nama,  "1000000");
+        buatKartu(panelGrid, "16200" + nama, "2000000");
  
         kotakOranye = new PanelBulat(25, warnaOranye, null, 0);
         kotakOranye.setLayout(new BorderLayout());
@@ -218,14 +222,14 @@ public class BundlePUBG extends JFrame {
                 boolean bundleSudahDipilih = !bundleTerpilih.isEmpty();
  
                 if (!akunSudahTerisi) {
-                    bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+                    bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 1);
                 }
                 if (!bundleSudahDipilih) {
-                    kotakOranye.ubahTampilan(warnaMerah, null, 0);
+                    kotakOranye.ubahTampilan(warnaOranye, warnaMerah, 2);
                 }
                 if (akunSudahTerisi && bundleSudahDipilih) {
-                    System.out.println("Lanjut ke pembayaran: " + bundleTerpilih);
-                    // TODO: Buka halaman MetodeBayar di sini
+                    dispose();
+                    new Kinopedia.model.MetodeBayar(kolomNama.getText(),kolomId.getText(), Integer.parseInt(bundleTerpilih), "pubg", Kinopedia.Session.getInstance().getCurrentUser().getNama()).setVisible(true);
                 }
             }
         });
@@ -316,7 +320,7 @@ public class BundlePUBG extends JFrame {
         teksJudul.setFont(new Font("SansSerif", Font.BOLD, 15));
         teksJudul.setAlignmentX(Component.LEFT_ALIGNMENT);
  
-        JLabel teksHarga = new JLabel(harga);
+        JLabel teksHarga = new JLabel("Rp "+harga);
         teksHarga.setFont(new Font("SansSerif", Font.PLAIN, 18));
         teksHarga.setAlignmentX(Component.LEFT_ALIGNMENT);
  

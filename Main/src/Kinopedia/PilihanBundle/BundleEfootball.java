@@ -134,12 +134,16 @@ public class BundleEfootball extends JFrame {
         panelIsi.add(Box.createVerticalStrut(20));
 
         // === VALIDASI ID SAAT USER SELESAI MENGETIK ===
-        kolomId.addActionListener(e -> {
-            cekIdAkun(warnaOranye, warnaMerah);
-        });
+        kolomId.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                cekIdAkun(warnaOranye, warnaMerah);
+            }
 
-        kolomId.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent e) {
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                cekIdAkun(warnaOranye, warnaMerah);
+            }
+
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
                 cekIdAkun(warnaOranye, warnaMerah);
             }
         });
@@ -173,14 +177,14 @@ public class BundleEfootball extends JFrame {
         panelGrid.setOpaque(false);
 
         String nama = " Coins";
-        buatKartu(panelGrid, "137" + nama,   "Rp 16.200");
-        buatKartu(panelGrid, "578" + nama,   "Rp 66.700");
-        buatKartu(panelGrid, "1092" + nama,   "Rp 124.300");
-        buatKartu(panelGrid, "2237" + nama,  "Rp 253.000");
-        buatKartu(panelGrid, "3413" + nama,  "Rp 378.300");
-        buatKartu(panelGrid, "5985" + nama,  "Rp 630.600");
-        buatKartu(panelGrid, "13440" + nama,  "Rp 1.351.000");
-        buatKartu(panelGrid, "32200" + nama, "Rp 3.153.100");
+        buatKartu(panelGrid, "137" + nama,   "16200");
+        buatKartu(panelGrid, "578" + nama,   "66700");
+        buatKartu(panelGrid, "1092" + nama,   "124300");
+        buatKartu(panelGrid, "2237" + nama,  "253000");
+        buatKartu(panelGrid, "3413" + nama,  "378300");
+        buatKartu(panelGrid, "5985" + nama,  "630600");
+        buatKartu(panelGrid, "13440" + nama,  "1351000");
+        buatKartu(panelGrid, "32200" + nama, "3153100");
 
         kotakOranye = new PanelBulat(25, warnaOranye, null, 0);
         kotakOranye.setLayout(new BorderLayout());
@@ -220,16 +224,16 @@ public class BundleEfootball extends JFrame {
                 boolean bundleSudahDipilih = !bundleTerpilih.isEmpty();
 
                 if (!akunSudahTerisi) {
-                    bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+                    bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 1);
                 }
 
                 if (!bundleSudahDipilih) {
-                    kotakOranye.ubahTampilan(warnaMerah, null, 0);
+                    kotakOranye.ubahTampilan(warnaOranye, warnaMerah, 2);
                 }
 
                 if (akunSudahTerisi && bundleSudahDipilih) {
-                    System.out.println("Lanjut ke pembayaran: " + bundleTerpilih);
-                    // TODO: Buka halaman MetodeBayar di sini
+                    dispose();
+                    new Kinopedia.model.MetodeBayar(kolomNama.getText(),kolomId.getText(), Integer.parseInt(bundleTerpilih), "efootball", Kinopedia.Session.getInstance().getCurrentUser().getNama()).setVisible(true);
                 }
             }
         });
@@ -337,7 +341,7 @@ public class BundleEfootball extends JFrame {
         teksJudul.setFont(new Font("SansSerif", Font.BOLD, 15));
         teksJudul.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        JLabel teksHarga = new JLabel(harga);
+        JLabel teksHarga = new JLabel("Rp "+harga);
         teksHarga.setFont(new Font("SansSerif", Font.PLAIN, 18));
         teksHarga.setAlignmentX(Component.LEFT_ALIGNMENT);
 
@@ -357,7 +361,7 @@ public class BundleEfootball extends JFrame {
                     k.ubahTampilan(Color.WHITE, null, 0);
                 }
                 // Tandai kartu yang dipilih dengan warna abu-abu
-                kartu.ubahTampilan(new Color(220, 220, 220), new Color(150, 150, 150), 2);
+                kartu.ubahTampilan(new Color(220, 220, 220),null, 2);
                 bundleTerpilih = judul;
                 System.out.println("User memilih: " + bundleTerpilih);
             }
