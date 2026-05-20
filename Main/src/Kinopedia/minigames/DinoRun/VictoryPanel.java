@@ -22,6 +22,9 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
+import Kinopedia.DataUser;
+import Kinopedia.Session;
+import javax.swing.JOptionPane;
 
 public class VictoryPanel extends JPanel {
 
@@ -109,7 +112,27 @@ public class VictoryPanel extends JPanel {
         retryBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.startNewGame();
+
+                DataUser user =
+                        Session.getInstance().getCurrentUser();
+
+                // Cek kredit
+                if (user.getKredit() >= 1) {
+
+                    // Kurangi kredit
+                    user.setKredit(
+                            user.getKredit() - 1
+                    );
+
+                    frame.startNewGame();
+
+                } else {
+
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "Kredit Tidak Cukup"
+                    );
+                }
             }
         });
         add(retryBtn);
