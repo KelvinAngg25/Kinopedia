@@ -38,6 +38,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import Kinopedia.PilihanBundle.BundleCODM;
+import java.awt.BasicStroke;
 
 /**
  *
@@ -46,10 +48,20 @@ import javax.swing.border.LineBorder;
 public class PenukaranKoin extends JFrame {
     Kinopedia.DataUser user = Session.getInstance().getCurrentUser();
     ArrayList<Bundle> bundle = new ArrayList<>();
+    private ArrayList<PanelBulat> daftarSemuaKartu = new ArrayList<>();
     private ImageIcon logoFooter;
     int index = 0;
     JPanel selected = null;
     Bundle diPilih = null;
+    private PanelBulat bungkusId;
+    private JTextField kolomId;
+    private PanelBulat bungkusNama;
+    private PanelBulat kotakOranye;
+    private JTextField kolomNama;
+    
+    Color warnaOranye = new Color(0xFF8C1A);
+    Color warnaAbuAbu = new Color(0xBDBDBD);
+    Color warnaMerah = new Color(0xFF3B30);
 
     MouseAdapter bundleClick = new MouseAdapter() {
         @Override
@@ -253,6 +265,29 @@ public class PenukaranKoin extends JFrame {
             }
         });
         
+        // --- Label & Input NUMBER ID ---
+        JLabel teksId = new JLabel("NUMBER ID");
+        teksId.setFont(new Font("SansSerif", Font.BOLD, 11));
+        teksId.setForeground(Color.DARK_GRAY);
+        teksId.setBounds(40, 575, 100,30 );
+        add(teksId);
+        
+        bungkusId = new PanelBulat(20, Color.WHITE, warnaOranye, 1);
+        bungkusId.setLayout(null);
+        bungkusId.setBorder(new EmptyBorder(8, 15, 8, 15));
+        bungkusId.setMaximumSize(new Dimension(9999, 45));
+        bungkusId.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        kolomId = new JTextField("");
+        kolomId.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        kolomId.setOpaque(false);
+        kolomId.setBorder(null);
+        kolomId.setBounds(15, 5, 370, 34);
+        bungkusId.add(kolomId);
+        bungkusId.setBounds(33, 600, 400, 50);
+        add(bungkusId);
+        
+        
         add(btnTukar);
         add(bgBundle);
         
@@ -264,4 +299,525 @@ public class PenukaranKoin extends JFrame {
             PenukaranKoin frame = new PenukaranKoin();
             frame.setVisible(true);
     }
+    
+    class PanelBulat extends JPanel {
+
+        private int radiusLengkungan;
+        private Color warnaLatar;
+        private Color warnaGaris;
+        private int tebalGaris;
+
+        public PanelBulat(int radius, Color warnaLatar, Color warnaGaris, int tebalGaris) {
+            super();
+            this.radiusLengkungan = radius;
+            this.warnaLatar = warnaLatar;
+            this.warnaGaris = warnaGaris;
+            this.tebalGaris = tebalGaris;
+            setOpaque(false);
+        }
+
+        // METHOD BARU: Mengubah Warna Latar Belakang DAN Garis sekaligus
+        public void ubahTampilan(Color warnaLatarBaru, Color warnaGarisBaru, int tebalGarisBaru) {
+            this.warnaLatar = warnaLatarBaru;
+            this.warnaGaris = warnaGarisBaru;
+            this.tebalGaris = tebalGarisBaru;
+            repaint();
+        }
+
+        @Override
+        public void paintComponent(Graphics g) {
+            super.paintComponent(g);
+
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            // Calculate a single set of coordinates so the fill and border align perfectly
+            int posisiX = this.tebalGaris / 2;
+            int posisiY = this.tebalGaris / 2;
+            int lebarPanel = getWidth() - this.tebalGaris - 1;
+            int tinggiPanel = getHeight() - this.tebalGaris - 1;
+
+            // Render Latar Belakang
+            if (this.warnaLatar != null) {
+                g2.setColor(this.warnaLatar);
+                g2.fillRoundRect(posisiX, posisiY, lebarPanel, tinggiPanel, this.radiusLengkungan, this.radiusLengkungan);
+            }
+
+            // Render Garis/Border
+            if (this.warnaGaris != null && this.tebalGaris > 0) {
+                g2.setColor(this.warnaGaris);
+                g2.setStroke(new BasicStroke(this.tebalGaris));
+                g2.drawRoundRect(posisiX, posisiY, lebarPanel, tinggiPanel, this.radiusLengkungan, this.radiusLengkungan);
+            }
+
+            g2.dispose();
+        }
+    }
+    
+//    // === METHOD: CEK ID AKUN CODM ===
+//    // Format CODM: tepat 10 angka. Contoh: 1345678935
+//    private void cekIdAkun(Color warnaOranye, Color warnaMerah) {
+//        String inputId = kolomId.getText().trim();
+//
+//        // Langkah 1: Cek apakah panjangnya tepat 10 karakter
+//        boolean panjangBenar = inputId.length() == 10;
+//
+//        // Langkah 2: Cek apakah semua karakternya adalah angka
+//        boolean semuaAngka = true;
+//        for (int i = 0; i < inputId.length(); i++) {
+//            if (!Character.isDigit(inputId.charAt(i))) {
+//                semuaAngka = false;
+//            }
+//        }
+//
+//        // Format benar hanya jika keduanya terpenuhi
+//        boolean formatBenar = panjangBenar && semuaAngka;
+//
+//        if (!formatBenar) {
+//            // Format salah — border merah, kolom nama dikosongkan
+//            bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+//            kolomNama.setText("");
+//            kolomNama.setForeground(Color.BLACK);
+//            return;
+//        }
+//
+//        // Format benar — cari ID di Main.dataAkun
+//        boolean akunDitemukan = false;
+//
+//        for (int i = 0; i < Main.dataAkun.size(); i++) {
+//            String idDiDatabase   = Main.dataAkun.get(i).getIdAkun();
+//            String namaDiDatabase = Main.dataAkun.get(i).getNamaAkun();
+//            String gameDiDatabase = Main.dataAkun.get(i).getJenisGame();
+//
+//            // Cocokkan ID dan pastikan jenisGame-nya "codm"
+//            boolean idSama    = idDiDatabase.equals(inputId);
+//            boolean gameSama  = gameDiDatabase.equals("codm");
+//
+//            if (idSama && gameSama) {
+//                kolomNama.setText(namaDiDatabase);
+//                kolomNama.setForeground(Color.BLACK);
+//                bungkusId.ubahTampilan(Color.WHITE, warnaOranye, 1);
+//                akunDitemukan = true;
+//                break;
+//            }
+//        }
+//
+//        if (!akunDitemukan) {
+//            // ID tidak ada di database
+//            kolomNama.setText("Akun Tidak Ditemukan");
+//            kolomNama.setForeground(warnaMerah);
+//            bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+//        }
+//    }
+    
+    
+    
+//    // === METHOD: CEK ID AKUN EFOOTBALL ===
+//    // Format eFootball: 4 huruf + tanda "-" + 6 angka. Contoh: ASAA-845389
+//    private void cekIdAkun(Color warnaOranye, Color warnaMerah) {
+//        String inputId = kolomId.getText().trim();
+//
+//        // Langkah 1: Cek panjang totalnya harus 11 karakter (4 huruf + 1 strip + 6 angka)
+//        boolean panjangYangBenar = inputId.length() == 11;
+//
+//        // Langkah 2: Cek karakter ke-5 harus tanda "-"
+//        boolean adaTandaStrip = false;
+//        if (panjangYangBenar) {
+//            adaTandaStrip = inputId.charAt(4) == '-';
+//        }
+//
+//        // Langkah 3: Cek 4 karakter pertama harus semua huruf
+//        boolean empatHurufDepan = true;
+//        if (panjangYangBenar) {
+//            for (int i = 0; i < 4; i++) {
+//                if (!Character.isLetter(inputId.charAt(i))) {
+//                    empatHurufDepan = false;
+//                }
+//            }
+//        }
+//
+//        // Langkah 4: Cek 6 karakter terakhir harus semua angka
+//        boolean enamAngkaBelakang = true;
+//        if (panjangYangBenar) {
+//            for (int i = 5; i < 11; i++) {
+//                if (!Character.isDigit(inputId.charAt(i))) {
+//                    enamAngkaBelakang = false;
+//                }
+//            }
+//        }
+//
+//        // Format benar hanya jika semua langkah terpenuhi
+//        boolean formatBenar = panjangYangBenar && adaTandaStrip && empatHurufDepan && enamAngkaBelakang;
+//
+//        if (!formatBenar) {
+//            // Format salah — border merah, kolom nama dikosongkan
+//            bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+//            kolomNama.setText("");
+//            kolomNama.setForeground(Color.BLACK);
+//            return;
+//        }
+//
+//        // Format benar — cari ID di Main.dataAkun
+//        boolean akunDitemukan = false;
+//
+//        for (int i = 0; i < Main.dataAkun.size(); i++) {
+//            String idDiDatabase   = Main.dataAkun.get(i).getIdAkun();
+//            String namaDiDatabase = Main.dataAkun.get(i).getNamaAkun();
+//            String gameDiDatabase = Main.dataAkun.get(i).getJenisGame();
+//
+//            boolean idSama   = idDiDatabase.equals(inputId);
+//            boolean gameSama = gameDiDatabase.equals("efootball");
+//
+//            if (idSama && gameSama) {
+//                kolomNama.setText(namaDiDatabase);
+//                kolomNama.setForeground(Color.BLACK);
+//                bungkusId.ubahTampilan(Color.WHITE, warnaOranye, 1);
+//                akunDitemukan = true;
+//                break;
+//            }
+//        }
+//
+//        if (!akunDitemukan) {
+//            kolomNama.setText("Akun Tidak Ditemukan");
+//            kolomNama.setForeground(warnaMerah);
+//            bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+//        }
+//    }
+    
+    
+    
+//    // === METHOD: CEK ID AKUN FREE FIRE ===
+//    // Format FF: tepat 9 angka. Contoh: 736452836
+//    private void cekIdAkun(Color warnaOranye, Color warnaMerah) {
+//        String inputId = kolomId.getText().trim();
+// 
+//        // Langkah 1: Cek panjangnya harus tepat 9 karakter
+//        boolean panjangBenar = inputId.length() == 9;
+// 
+//        // Langkah 2: Cek semua karakternya harus angka
+//        boolean semuaAngka = true;
+//        if (panjangBenar) {
+//            for (int i = 0; i < inputId.length(); i++) {
+//                if (!Character.isDigit(inputId.charAt(i))) {
+//                    semuaAngka = false;
+//                }
+//            }
+//        }
+// 
+//        // Format benar hanya jika keduanya terpenuhi
+//        boolean formatBenar = panjangBenar && semuaAngka;
+// 
+//        if (!formatBenar) {
+//            bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+//            kolomNama.setText("");
+//            kolomNama.setForeground(Color.BLACK);
+//            return;
+//        }
+// 
+//        // Format benar — cari ID di Main.dataAkun
+//        boolean akunDitemukan = false;
+// 
+//        for (int i = 0; i < Main.dataAkun.size(); i++) {
+//            String idDiDatabase   = Main.dataAkun.get(i).getIdAkun();
+//            String namaDiDatabase = Main.dataAkun.get(i).getNamaAkun();
+//            String gameDiDatabase = Main.dataAkun.get(i).getJenisGame();
+// 
+//            boolean idSama   = idDiDatabase.equals(inputId);
+//            boolean gameSama = gameDiDatabase.equals("ff");
+// 
+//            if (idSama && gameSama) {
+//                kolomNama.setText(namaDiDatabase);
+//                kolomNama.setForeground(Color.BLACK);
+//                bungkusId.ubahTampilan(Color.WHITE, warnaOranye, 1);
+//                akunDitemukan = true;
+//                break;
+//            }
+//        }
+// 
+//        if (!akunDitemukan) {
+//            kolomNama.setText("Akun Tidak Ditemukan");
+//            kolomNama.setForeground(warnaMerah);
+//            bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+//        }
+//    }
+    
+    
+//    // === METHOD: CEK ID AKUN MOBILE LEGENDS ===
+//    // Format ML: 8 angka + (4 angka Zone ID). Contoh: 72895647(2515)
+//    private void cekIdAkun(Color warnaOranye, Color warnaMerah) {
+//        String inputId = kolomId.getText().trim();
+//
+//        // Langkah 1: Cek panjang total harus 14 karakter
+//        // Contoh: 72895647(2515) = 8 angka + "(" + 4 angka + ")" = 14 karakter
+//        boolean panjangBenar = inputId.length() == 14;
+//
+//        // Langkah 2: Cek 8 karakter pertama harus angka
+//        boolean delapanAngkaDepan = true;
+//        if (panjangBenar) {
+//            for (int i = 0; i < 8; i++) {
+//                if (!Character.isDigit(inputId.charAt(i))) {
+//                    delapanAngkaDepan = false;
+//                }
+//            }
+//        }
+//
+//        // Langkah 3: Cek karakter ke-9 harus "(" dan karakter terakhir harus ")"
+//        boolean adaKurung = false;
+//        if (panjangBenar) {
+//            boolean adaKurungBuka  = inputId.charAt(8) == '(';
+//            boolean adaKurungTutup = inputId.charAt(13) == ')';
+//            adaKurung = adaKurungBuka && adaKurungTutup;
+//        }
+//
+//        // Langkah 4: Cek 4 karakter Zone ID (posisi 9-12) harus angka
+//        boolean empatAngkaZoneId = true;
+//        if (panjangBenar) {
+//            for (int i = 9; i < 13; i++) {
+//                if (!Character.isDigit(inputId.charAt(i))) {
+//                    empatAngkaZoneId = false;
+//                }
+//            }
+//        }
+//
+//        // Format benar hanya jika semua langkah terpenuhi
+//        boolean formatBenar = panjangBenar && delapanAngkaDepan && adaKurung && empatAngkaZoneId;
+//
+//        if (!formatBenar) {
+//            bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+//            kolomNama.setText("");
+//            kolomNama.setForeground(Color.BLACK);
+//            return;
+//        }
+//
+//        // Format benar — cari ID di Main.dataAkun
+//        boolean akunDitemukan = false;
+//
+//        for (int i = 0; i < Main.dataAkun.size(); i++) {
+//            String idDiDatabase   = Main.dataAkun.get(i).getIdAkun();
+//            String namaDiDatabase = Main.dataAkun.get(i).getNamaAkun();
+//            String gameDiDatabase = Main.dataAkun.get(i).getJenisGame();
+//
+//            boolean idSama   = idDiDatabase.equals(inputId);
+//            boolean gameSama = gameDiDatabase.equals("ml");
+//
+//            if (idSama && gameSama) {
+//                kolomNama.setText(namaDiDatabase);
+//                kolomNama.setForeground(Color.BLACK);
+//                bungkusId.ubahTampilan(Color.WHITE, warnaOranye, 1);
+//                akunDitemukan = true;
+//                break;
+//            }
+//        }
+//
+//        if (!akunDitemukan) {
+//            kolomNama.setText("Akun Tidak Ditemukan");
+//            kolomNama.setForeground(warnaMerah);
+//            bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+//        }
+//    }
+    
+    
+//    // === METHOD: CEK ID AKUN PUBG MOBILE ===
+//    // Format PUBGM: tepat 12 angka. Contoh: 736452836472
+//    private void cekIdAkun(Color warnaOranye, Color warnaMerah) {
+//        String inputId = kolomId.getText().trim();
+// 
+//        // Langkah 1: Cek panjangnya harus tepat 12 karakter
+//        boolean panjangBenar = inputId.length() == 12;
+// 
+//        // Langkah 2: Cek semua karakternya harus angka
+//        boolean semuaAngka = true;
+//        if (panjangBenar) {
+//            for (int i = 0; i < inputId.length(); i++) {
+//                if (!Character.isDigit(inputId.charAt(i))) {
+//                    semuaAngka = false;
+//                }
+//            }
+//        }
+// 
+//        // Format benar hanya jika keduanya terpenuhi
+//        boolean formatBenar = panjangBenar && semuaAngka;
+// 
+//        if (!formatBenar) {
+//            bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+//            kolomNama.setText("");
+//            kolomNama.setForeground(Color.BLACK);
+//            return;
+//        }
+// 
+//        // Format benar — cari ID di Main.dataAkun
+//        boolean akunDitemukan = false;
+// 
+//        for (int i = 0; i < Main.dataAkun.size(); i++) {
+//            String idDiDatabase   = Main.dataAkun.get(i).getIdAkun();
+//            String namaDiDatabase = Main.dataAkun.get(i).getNamaAkun();
+//            String gameDiDatabase = Main.dataAkun.get(i).getJenisGame();
+// 
+//            boolean idSama   = idDiDatabase.equals(inputId);
+//            boolean gameSama = gameDiDatabase.equals("pubgm");
+// 
+//            if (idSama && gameSama) {
+//                kolomNama.setText(namaDiDatabase);
+//                kolomNama.setForeground(Color.BLACK);
+//                bungkusId.ubahTampilan(Color.WHITE, warnaOranye, 1);
+//                akunDitemukan = true;
+//                break;
+//            }
+//        }
+// 
+//        if (!akunDitemukan) {
+//            kolomNama.setText("Akun Tidak Ditemukan");
+//            kolomNama.setForeground(warnaMerah);
+//            bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+//        }
+//    }
+    
+    
+//    // === METHOD: CEK EMAIL AKUN STEAM ===
+//    // Format Steam: Alamat Email. Wajib ada "@gmail.com" di bagian belakang
+//    // Contoh: NichoDev123@gmail.com
+//    private void cekIdAkun(Color warnaOranye, Color warnaMerah) {
+//        String inputEmail = kolomId.getText().trim();
+// 
+//        // Langkah 1: Cek apakah ada karakter "@" di dalam email
+//        boolean adaAt = false;
+//        int posisiAt = -1;
+//        for (int i = 0; i < inputEmail.length(); i++) {
+//            if (inputEmail.charAt(i) == '@') {
+//                adaAt = true;
+//                posisiAt = i;
+//                break;
+//            }
+//        }
+// 
+//        // Langkah 2: Cek apakah bagian belakangnya adalah "@gmail.com"
+//        boolean emailGmail = false;
+//        if (adaAt) {
+//            String bagianBelakang = inputEmail.substring(posisiAt);
+//            emailGmail = bagianBelakang.equals("@gmail.com");
+//        }
+// 
+//        // Langkah 3: Cek apakah ada nama email di depan "@" (tidak boleh kosong)
+//        boolean adaNamaDepan = false;
+//        if (adaAt) {
+//            adaNamaDepan = posisiAt > 0;
+//        }
+// 
+//        // Format benar hanya jika semua langkah terpenuhi
+//        boolean formatBenar = adaAt && emailGmail && adaNamaDepan;
+// 
+//        if (!formatBenar) {
+//            bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+//            kolomNama.setText("");
+//            kolomNama.setForeground(Color.BLACK);
+//            return;
+//        }
+// 
+//        // Format benar — cari email di Main.dataAkun
+//        boolean akunDitemukan = false;
+// 
+//        for (int i = 0; i < Main.dataAkun.size(); i++) {
+//            String idDiDatabase   = Main.dataAkun.get(i).getIdAkun();
+//            String namaDiDatabase = Main.dataAkun.get(i).getNamaAkun();
+//            String gameDiDatabase = Main.dataAkun.get(i).getJenisGame();
+// 
+//            boolean idSama   = idDiDatabase.equals(inputEmail);
+//            boolean gameSama = gameDiDatabase.equals("steam");
+// 
+//            if (idSama && gameSama) {
+//                kolomNama.setText(namaDiDatabase);
+//                kolomNama.setForeground(Color.BLACK);
+//                bungkusId.ubahTampilan(Color.WHITE, warnaOranye, 1);
+//                akunDitemukan = true;
+//                break;
+//            }
+//        }
+// 
+//        if (!akunDitemukan) {
+//            kolomNama.setText("Akun Tidak Ditemukan");
+//            kolomNama.setForeground(warnaMerah);
+//            bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+//        }
+//    }
+    
+    
+//    // === METHOD: CEK ID AKUN VALORANT ===
+//    // Format Valorant: 6 karakter (huruf/angka) + "#" + 4 karakter TAG
+//    // Contoh: Will067#WILL
+//    private void cekIdAkun(Color warnaOranye, Color warnaMerah) {
+//        String inputId = kolomId.getText().trim();
+//
+//        // Langkah 1: Cek panjang total harus 11 karakter
+//        // 6 karakter nama + 1 tanda "#" + 4 karakter TAG = 11
+//        boolean panjangBenar = inputId.length() == 11;
+//
+//        // Langkah 2: Cek karakter ke-7 harus tanda "#"
+//        boolean adaTandaPagar = false;
+//        if (panjangBenar) {
+//            adaTandaPagar = inputId.charAt(6) == '#';
+//        }
+//
+//        // Langkah 3: Cek 6 karakter pertama harus huruf atau angka
+//        boolean enamKarakterDepan = true;
+//        if (panjangBenar) {
+//            for (int i = 0; i < 6; i++) {
+//                boolean huruf = Character.isLetter(inputId.charAt(i));
+//                boolean angka = Character.isDigit(inputId.charAt(i));
+//
+//                if (!huruf && !angka) {
+//                    enamKarakterDepan = false;
+//                }
+//            }
+//        }
+//
+//        // Langkah 4: Cek 4 karakter TAG di belakang "#" harus huruf atau angka
+//        boolean empatKarakterTag = true;
+//        if (panjangBenar) {
+//            for (int i = 7; i < 11; i++) {
+//                boolean huruf = Character.isLetter(inputId.charAt(i));
+//                boolean angka = Character.isDigit(inputId.charAt(i));
+//
+//                if (!huruf && !angka) {
+//                    empatKarakterTag = false;
+//                }
+//            }
+//        }
+//
+//        // Format benar hanya jika semua langkah terpenuhi
+//        boolean formatBenar = panjangBenar && adaTandaPagar && enamKarakterDepan && empatKarakterTag;
+//
+//        if (!formatBenar) {
+//            bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+//            kolomNama.setText("");
+//            kolomNama.setForeground(Color.BLACK);
+//            return;
+//        }
+//
+//        // Format benar — cari ID di Main.dataAkun
+//        boolean akunDitemukan = false;
+//
+//        for (int i = 0; i < Main.dataAkun.size(); i++) {
+//            String idDiDatabase   = Main.dataAkun.get(i).getIdAkun();
+//            String namaDiDatabase = Main.dataAkun.get(i).getNamaAkun();
+//            String gameDiDatabase = Main.dataAkun.get(i).getJenisGame();
+//
+//            boolean idSama   = idDiDatabase.equals(inputId);
+//            boolean gameSama = gameDiDatabase.equals("valorant");
+//
+//            if (idSama && gameSama) {
+//                kolomNama.setText(namaDiDatabase);
+//                kolomNama.setForeground(Color.BLACK);
+//                bungkusId.ubahTampilan(Color.WHITE, warnaOranye, 1);
+//                akunDitemukan = true;
+//                break;
+//            }
+//        }
+//
+//        if (!akunDitemukan) {
+//            kolomNama.setText("Akun Tidak Ditemukan");
+//            kolomNama.setForeground(warnaMerah);
+//            bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+//        }
+//    }
+    
 }
