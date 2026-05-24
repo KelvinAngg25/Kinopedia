@@ -21,6 +21,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -195,7 +196,7 @@ public class Login extends JFrame {
         add(backgroundErrorMessage);
         
         
-        btnMasuk.addActionListener(e -> {
+        btnMasuk.addActionListener((ActionEvent e) -> {
             String username = inputUser.getText();
             String pass = inputPass.getText();
             

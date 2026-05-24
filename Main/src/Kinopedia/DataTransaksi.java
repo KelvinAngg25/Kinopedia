@@ -131,5 +131,7 @@ public class DataTransaksi {
         this.namaAkun = namaAkun;
     }
     
-    
+    public void setKonfirmasi(boolean konfirmasi) {
+        this.konfirmasi = konfirmasi;
+    }
 }
