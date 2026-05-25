@@ -245,7 +245,7 @@ public class BundleValorant extends JFrame {
                 // Jika keduanya sudah benar, lanjut ke halaman pembayaran
                 if (akunSudahTerisi && bundleSudahDipilih) {
                     dispose();
-                    new Kinopedia.model.MetodeBayar(kolomNama.getText(),kolomId.getText(), Integer.parseInt(bundleTerpilih), "valorant", Kinopedia.Session.getInstance().getCurrentUser().getNama()).setVisible(true);
+                    new Kinopedia.model.MetodeBayar(kolomNama.getText(),kolomId.getText(), Integer.parseInt(bundleTerpilih), "Valorant", Kinopedia.Session.getInstance().getCurrentUser().getNama()).setVisible(true);
                     // TODO: lanjut ke halaman metode pembayaran
                 }
             }

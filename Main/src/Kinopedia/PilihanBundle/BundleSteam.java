@@ -164,7 +164,7 @@ public class BundleSteam extends JFrame {
  
         PanelBulat pilBundling = new PanelBulat(25, Color.WHITE, warnaOranye, 1);
         pilBundling.setLayout(new BorderLayout());
-        pilBundling.setBorder(new EmptyBorder(8, 20, 8, 20));
+        pilBundling.setBorder(new EmptyBorder(8, 20, 10, 20));
         pilBundling.add(teksLabel, BorderLayout.CENTER);
  
         JPanel tempatLabel = new JPanel();
@@ -205,7 +205,7 @@ public class BundleSteam extends JFrame {
         JPanel panelBawah = new JPanel();
         panelBawah.setBackground(Color.WHITE);
         panelBawah.setLayout(new BoxLayout(panelBawah, BoxLayout.Y_AXIS));
-        panelBawah.setBorder(new EmptyBorder(10, 30, 0, 30));
+        panelBawah.setBorder(new EmptyBorder(10, 36, 0, 36));
         panelAkar.add(panelBawah, BorderLayout.SOUTH);
  
         PanelBulat bungkusTombolBayar = new PanelBulat(15, warnaOranye, null, 0);
@@ -234,7 +234,7 @@ public class BundleSteam extends JFrame {
                 }
                 if (akunSudahTerisi && bundleSudahDipilih) {
                     dispose();
-                    new Kinopedia.model.MetodeBayar(kolomNama.getText(),kolomId.getText(), Integer.parseInt(bundleTerpilih), "steam", Kinopedia.Session.getInstance().getCurrentUser().getNama()).setVisible(true);
+                    new Kinopedia.model.MetodeBayar(kolomNama.getText(),kolomId.getText(), Integer.parseInt(bundleTerpilih), "Steam", Kinopedia.Session.getInstance().getCurrentUser().getNama()).setVisible(true);
                 }
             }
         });

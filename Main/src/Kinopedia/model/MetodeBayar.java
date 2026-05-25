@@ -29,17 +29,17 @@ public class MetodeBayar extends JFrame{
             @Override
             public void mouseClicked(MouseEvent e) {
                 dispose();
-                if (pilihanGame.equals("valorant")) {
+                if (pilihanGame.equals("Valorant")) {
                     new BundleValorant(new Game(new Buyer())).setVisible(true);
-                } else if (pilihanGame.equals("codm")) {
+                } else if (pilihanGame.equals("CODM")) {
                     new BundleCODM(new Game(new Buyer())).setVisible(true);
-                } else if (pilihanGame.equals("efootball")) {
+                } else if (pilihanGame.equals("EFootball")) {
                     new BundleEfootball(new Game(new Buyer())).setVisible(true);
-                } else if (pilihanGame.equals("ff")) {
+                } else if (pilihanGame.equals("FF")) {
                     new BundleFF(new Game(new Buyer())).setVisible(true);
-                } else if (pilihanGame.equals("ml")) {
+                } else if (pilihanGame.equals("ML")) {
                     new BundleML(new Game(new Buyer())).setVisible(true);
-                } else if (pilihanGame.equals("pubg")) {
+                } else if (pilihanGame.equals("PUBG")) {
                     new BundlePUBG(new Game(new Buyer())).setVisible(true);
                 } else {
                     new BundleSteam(new Game(new Buyer())).setVisible(true);

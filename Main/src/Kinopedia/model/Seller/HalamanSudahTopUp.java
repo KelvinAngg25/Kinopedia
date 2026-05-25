@@ -96,22 +96,23 @@ public class HalamanSudahTopUp extends JFrame {
                 ));
 
                 for (Kinopedia.DataTransaksi tr : Main.dataTransaksi) {
+                    if (tr.isKonfirmasi()) {
+                        JPanel wrap = new JPanel();
 
-                    JPanel wrap = new JPanel();
+                        wrap.setOpaque(false);
 
-                    wrap.setOpaque(false);
+                        wrap.setLayout(new FlowLayout(
+                                FlowLayout.CENTER,
+                                0,
+                                0
+                        ));
 
-                    wrap.setLayout(new FlowLayout(
-                            FlowLayout.CENTER,
-                            0,
-                            0
-                    ));
+                        wrap.setPreferredSize(new Dimension(450, 120));
 
-                    wrap.setPreferredSize(new Dimension(450, 120));
+                        wrap.add(createCard(tr));
 
-                    wrap.add(createCard(tr));
-
-                    content.add(wrap);
+                        content.add(wrap);
+                    }
                 }
                 // ================= SCROLL =================
                 JScrollPane scroll = new JScrollPane(content);
