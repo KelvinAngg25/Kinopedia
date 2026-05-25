@@ -21,51 +21,66 @@ public class HalamanSudahTopUp extends JFrame {
 
         try {
             setTitle("History");
-                setSize(470, 844);
-                setLocationRelativeTo(null);
-                setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                setResizable(false);
+            setSize(470, 844);
+            setLocationRelativeTo(null);
+            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            setResizable(false);
 
-                JPanel main = new JPanel();
-                main.setLayout(null);
-                main.setBackground(new Color(242, 242, 242));
+            JPanel main = new JPanel();
+            main.setLayout(null);
+            main.setBackground(new Color(242, 242, 242));
 
                 // ================= BACK =================
-                JLabel backArrow = new JLabel("‹");
+//                JLabel backArrow = new JLabel("‹");
+//
+//                backArrow.setFont(new Font("SansSerif", Font.BOLD, 28));
+//
+//                backArrow.setBounds(12, 22, 20, 30);
+//
+//                backArrow.setCursor(new Cursor(Cursor.HAND_CURSOR));
+//
+//                JLabel backText = new JLabel("Kembali");
+//
+//                backText.setFont(new Font("SansSerif", Font.PLAIN, 14));
+//
+//                backText.setBounds(28, 29, 80, 18);
+//
+//                backText.setCursor(new Cursor(Cursor.HAND_CURSOR));
+//
+//                MouseAdapter backEvent = new MouseAdapter() {
+//
+//                    @Override
+//                    public void mouseClicked(MouseEvent e) {
+//
+//                        dispose();
+//
+//                        new Seller().setVisible(true);
+//                    }
+//                };
+//
+//                backArrow.addMouseListener(backEvent);
+//
+//                backText.addMouseListener(backEvent);
+//
+//                main.add(backArrow);
+//
+//                main.add(backText);
 
-                backArrow.setFont(new Font("SansSerif", Font.BOLD, 28));
+                ImageIcon iconBack = new ImageIcon(getClass().getResource("/Kinopedia/model/ImageMetodeBayar/back.png"));
+                JLabel btnBack = new JLabel(iconBack);
+                btnBack.setBounds(35, 1, 100, 100);
+                add(btnBack);
 
-                backArrow.setBounds(12, 22, 20, 30);
-
-                backArrow.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-                JLabel backText = new JLabel("Kembali");
-
-                backText.setFont(new Font("SansSerif", Font.PLAIN, 14));
-
-                backText.setBounds(28, 29, 80, 18);
-
-                backText.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-                MouseAdapter backEvent = new MouseAdapter() {
-
+                btnBack.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
-
                         dispose();
-
                         new Seller().setVisible(true);
                     }
-                };
-
-                backArrow.addMouseListener(backEvent);
-
-                backText.addMouseListener(backEvent);
-
-                main.add(backArrow);
-
-                main.add(backText);
-
+                });
+                
+                main.add(btnBack);
+                
                 // ================= CONTENT =================
                 JPanel content = new JPanel();
 
@@ -232,7 +247,8 @@ public class HalamanSudahTopUp extends JFrame {
                         tr.getIdGame(),
                         tr.getJenisGame(),
                         tr.getPembayaran(),
-                        tr.getNominal()
+                        tr.getNominal(),
+                        true
                 );
 
                 detail.addWindowListener(new WindowAdapter() {

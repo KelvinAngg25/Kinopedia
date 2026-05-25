@@ -59,24 +59,38 @@ public class BundleML extends JFrame {
         setContentPane(panelAkar);
 
         // --- Bagian Atas (Tombol Kembali) ---
-        JButton tombolKembali = new JButton("< Kembali");
-        tombolKembali.setFocusPainted(false);
-        tombolKembali.setBorderPainted(false);
-        tombolKembali.setContentAreaFilled(false);
-        tombolKembali.setFont(new Font("SansSerif", Font.PLAIN, 15));
-        tombolKembali.setHorizontalAlignment(SwingConstants.LEFT);
+//        JButton tombolKembali = new JButton("< Kembali");
+//        tombolKembali.setFocusPainted(false);
+//        tombolKembali.setBorderPainted(false);
+//        tombolKembali.setContentAreaFilled(false);
+//        tombolKembali.setFont(new Font("SansSerif", Font.PLAIN, 15));
+//        tombolKembali.setHorizontalAlignment(SwingConstants.LEFT);
+//
+//        tombolKembali.addActionListener(e -> {
+//            dispose();
+//            if (this.menuSebelumnya != null) {
+//                this.menuSebelumnya.setVisible(true);
+//            }
+//        });
 
-        tombolKembali.addActionListener(e -> {
-            dispose();
-            if (this.menuSebelumnya != null) {
-                this.menuSebelumnya.setVisible(true);
+        ImageIcon iconBack = new ImageIcon(getClass().getResource("/Kinopedia/model/ImageMetodeBayar/back.png"));
+        JLabel btnBack = new JLabel(iconBack);
+        btnBack.setBounds(35, 1, 100, 100);
+
+        btnBack.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                dispose();
+                if (menuSebelumnya != null) {
+                    menuSebelumnya.setVisible(true);
+                }
             }
         });
 
         JPanel barAtas = new JPanel();
         barAtas.setLayout(new BorderLayout());
         barAtas.setBackground(Color.WHITE);
-        barAtas.add(tombolKembali, BorderLayout.WEST);
+        barAtas.add(btnBack, BorderLayout.WEST);
         panelAkar.add(barAtas, BorderLayout.NORTH);
 
         // --- Bagian Tengah ---
