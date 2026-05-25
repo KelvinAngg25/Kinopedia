@@ -29,7 +29,7 @@ import java.awt.Image;
  */
 public class DetailTransaksiSeller extends JFrame{
     
-    public DetailTransaksiSeller(boolean penandaBerhasilAtauGagal, String IDTransaksiTampil, String TanggalDanWaktu, String usernameIngame, String IDUsername, String gameyangDipilih, String metodePembayaran, int totalHargaBundle) {
+    public DetailTransaksiSeller(boolean penandaBerhasilAtauGagal, String IDTransaksiTampil, String TanggalDanWaktu, String usernameIngame, String IDUsername, String gameyangDipilih, String metodePembayaran, int totalHargaBundle, boolean berhasilDiKonfirmasiAtauTidak) {
         setTitle("Kinopedia");
         setSize(470, 844);
         setLocationRelativeTo(null);
@@ -236,74 +236,101 @@ public class DetailTransaksiSeller extends JFrame{
         totalHarga.setForeground(Color.BLACK);
         borderPilihanBayar.add(totalHarga);
         
-        final Color warna2 = color;
-        JButton btnKonfirmasi = new JButton("Konfirmasi") {
-            @Override
-            protected void paintComponent(Graphics g) {
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(warna2);
-                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
-                g2.dispose();
-                super.paintComponent(g);
-            } 
-        };
-        btnKonfirmasi.setOpaque(false);
-        btnKonfirmasi.setContentAreaFilled(false);
-        btnKonfirmasi.setBounds(45, 670, 370, 45);
-        btnKonfirmasi.setBackground(new Color(68, 98, 128));
-        btnKonfirmasi.setForeground(Color.BLACK);
-        btnKonfirmasi.setBorder(new RoundedBorder(15, new Color(255, 140, 0)));
-        btnKonfirmasi.setFont(new Font("Arial", Font.BOLD, 14));
-        btnKonfirmasi.setBorder(BorderFactory.createEmptyBorder());
-        btnKonfirmasi.setFocusPainted(false);
-        add(btnKonfirmasi);
-        
-//        Ini untuk nanti saat seller membuka halaman yang udah sukses!
-//        
-        JPanel backgroundSuccess = new JPanel();
-        backgroundSuccess.setBounds(45, 670, 370, 48);
-        backgroundSuccess.setBackground(new Color(198, 239, 206));
-        backgroundSuccess.setLayout(null);
-        add(backgroundSuccess);
+        if (!berhasilDiKonfirmasiAtauTidak) {
+            final Color warna2 = color;
+            JButton btnKonfirmasi = new JButton("Konfirmasi") {
+                @Override
+                protected void paintComponent(Graphics g) {
+                    Graphics2D g2 = (Graphics2D) g.create();
+                    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                    g2.setColor(warna2);
+                    g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+                    g2.dispose();
+                    super.paintComponent(g);
+                } 
+            };
+            btnKonfirmasi.setOpaque(false);
+            btnKonfirmasi.setContentAreaFilled(false);
+            btnKonfirmasi.setBounds(45, 670, 370, 45);
+            btnKonfirmasi.setBackground(new Color(68, 98, 128));
+            btnKonfirmasi.setForeground(Color.BLACK);
+            btnKonfirmasi.setBorder(new RoundedBorder(15, new Color(255, 140, 0)));
+            btnKonfirmasi.setFont(new Font("Arial", Font.BOLD, 14));
+            btnKonfirmasi.setBorder(BorderFactory.createEmptyBorder());
+            btnKonfirmasi.setFocusPainted(false);
+            add(btnKonfirmasi);
+            
+            JPanel backgroundSuccess = new JPanel();
+            backgroundSuccess.setBounds(45, 670, 370, 48);
+            backgroundSuccess.setBackground(new Color(198, 239, 206));
+            backgroundSuccess.setLayout(null);
+            add(backgroundSuccess);
 
-        ImageIcon iconSuccess = new ImageIcon(getClass().getResource("/Kinopedia/view/Image/berhasil.png"));
-        Image ambiliconSuccess = iconSuccess.getImage();
-        Image scaledImage = ambiliconSuccess.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-        ImageIcon scaledIcon = new ImageIcon(scaledImage);
-        JLabel iconSuccessFix = new JLabel(scaledIcon);
-        iconSuccessFix.setBounds(30, 7, 35, 35);
-        backgroundSuccess.add(iconSuccessFix);
+            ImageIcon iconSuccess = new ImageIcon(getClass().getResource("/Kinopedia/view/Image/berhasil.png"));
+            Image ambiliconSuccess = iconSuccess.getImage();
+            Image scaledImage = ambiliconSuccess.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+            ImageIcon scaledIcon = new ImageIcon(scaledImage);
+            JLabel iconSuccessFix = new JLabel(scaledIcon);
+            iconSuccessFix.setBounds(30, 7, 35, 35);
+            backgroundSuccess.add(iconSuccessFix);
 
-        JLabel text1 = new JLabel("Pembayaran Berhasil");
-        text1.setBounds(80, 4, 280, 25);
-        text1.setFont(new Font("Poppins", Font.BOLD, 13));
-        text1.setForeground(new Color(0, 100, 0)); 
-        backgroundSuccess.add(text1);
+            JLabel text1 = new JLabel("Pembayaran Berhasil");
+            text1.setBounds(80, 4, 280, 25);
+            text1.setFont(new Font("Poppins", Font.BOLD, 13));
+            text1.setForeground(new Color(0, 100, 0)); 
+            backgroundSuccess.add(text1);
 
-        JLabel text2 = new JLabel("Top up telah diproses pada 20-05-2024 · 22:16");
-        text2.setBounds(80, 21, 300, 20);
-        text2.setFont(new Font("Poppins", Font.PLAIN, 13));
-        text2.setForeground(new Color(0, 100, 0)); 
-//        backgroundSuccess.add(text2);
-        
-//        backgroundSuccess.setVisible(false);
-        
-        btnKonfirmasi.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                btnKonfirmasi.setVisible(false);
-                backgroundSuccess.setVisible(true);
-                int tambahKreditUser = totalHargaBundle / 50000;
-                Kinopedia.Session.getInstance().getCurrentUser().setKredit(Kinopedia.Session.getInstance().getCurrentUser().getKredit() + tambahKreditUser);
-                dispose();
-                new HalamanConfirmation("Kembali ke halaman sebelumnya", true, "Pembayaran Berhasil", "", "Seller", new Color(75, 105, 135)).setVisible(true);
-            }
-        });
+            JLabel text2 = new JLabel("Top up telah diproses pada " + TanggalDanWaktu);
+            text2.setBounds(80, 21, 300, 20);
+            text2.setFont(new Font("Poppins", Font.PLAIN, 13));
+            text2.setForeground(new Color(0, 100, 0)); 
+            backgroundSuccess.add(text2);
+            
+            btnKonfirmasi.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    btnKonfirmasi.setVisible(false);
+                    backgroundSuccess.setVisible(true);
+                    int tambahKreditUser = totalHargaBundle / 50000;
+                    Kinopedia.Session.getInstance().getCurrentUser().setKredit(Kinopedia.Session.getInstance().getCurrentUser().getKredit() + tambahKreditUser);
+                    dispose();
+                    new HalamanConfirmation("Kembali ke halaman sebelumnya", true, "Pembayaran Berhasil", "", "Seller", new Color(75, 105, 135)).setVisible(true);
+                }
+            });
+            
+        } else {
+            //  Ini untuk nanti saat seller membuka halaman yang udah sukses
+            
+            JPanel backgroundSuccess = new JPanel();
+            backgroundSuccess.setBounds(45, 670, 370, 48);
+            backgroundSuccess.setBackground(new Color(198, 239, 206));
+            backgroundSuccess.setLayout(null);
+            add(backgroundSuccess);
+
+            ImageIcon iconSuccess = new ImageIcon(getClass().getResource("/Kinopedia/view/Image/berhasil.png"));
+            Image ambiliconSuccess = iconSuccess.getImage();
+            Image scaledImage = ambiliconSuccess.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+            ImageIcon scaledIcon = new ImageIcon(scaledImage);
+            JLabel iconSuccessFix = new JLabel(scaledIcon);
+            iconSuccessFix.setBounds(30, 7, 35, 35);
+            backgroundSuccess.add(iconSuccessFix);
+
+            JLabel text1 = new JLabel("Pembayaran Berhasil");
+            text1.setBounds(80, 4, 280, 25);
+            text1.setFont(new Font("Poppins", Font.BOLD, 13));
+            text1.setForeground(new Color(0, 100, 0)); 
+            backgroundSuccess.add(text1);
+
+            JLabel text2 = new JLabel("Top up telah diproses pada " + TanggalDanWaktu);
+            text2.setBounds(80, 21, 300, 20);
+            text2.setFont(new Font("Poppins", Font.PLAIN, 13));
+            text2.setForeground(new Color(0, 100, 0)); 
+            backgroundSuccess.add(text2);
+        }
     }
         
-    public static void main(String[] args) {
-        new DetailTransaksiSeller(false, "#INV-20240521", "21-05-2025 | 14:30", "KelvinANgajay123", "AWDAWD", "Valorant", "OVO", 100000).setVisible(true);
-    }
+//    public static void main(String[] args) {
+//        new DetailTransaksiSeller(false, "#INV-20240521", "21-05-2025 | 14:30", "KelvinANgajay123", "AWDAWD", "Valorant", "OVO", 100000).setVisible(true);
+//    }
         
 }

@@ -390,10 +390,10 @@ public class MetodeBayar extends JFrame{
         this.pilihanMetodePembayaran = pilihanMetodePembayaran;
     }
     
-    public static void main(String[] args) {
-        MetodeBayar frame = new MetodeBayar("KelvinAngjaya123", "2254012", 432000, "Valorant", "Kelvin");
-        frame.setVisible(true);
-    }
+//    public static void main(String[] args) {
+//        MetodeBayar frame = new MetodeBayar("KelvinAngjaya123", "2254012", 432000, "Valorant", "Kelvin");
+//        frame.setVisible(true);
+//    }
     
     private static class RoundedImageLabel extends JLabel {
 
