@@ -58,22 +58,37 @@ public class BundleValorant extends JFrame {
         setContentPane(panelAkar);
 
         // --- Tombol Kembali ---
-        JButton tombolKembali = new JButton("< Kembali");
-        tombolKembali.setFocusPainted(false);
-        tombolKembali.setBorderPainted(false);
-        tombolKembali.setContentAreaFilled(false);
-        tombolKembali.setFont(new Font("SansSerif", Font.PLAIN, 15));
-        tombolKembali.setHorizontalAlignment(SwingConstants.LEFT);
-        tombolKembali.addActionListener(e -> {
-            dispose();
-            if (this.menuSebelumnya != null) {
-                this.menuSebelumnya.setVisible(true);
+//        JButton tombolKembali = new JButton("< Kembali");
+//        tombolKembali.setFocusPainted(false);
+//        tombolKembali.setBorderPainted(false);
+//        tombolKembali.setContentAreaFilled(false);
+//        tombolKembali.setFont(new Font("SansSerif", Font.PLAIN, 15));
+//        tombolKembali.setHorizontalAlignment(SwingConstants.LEFT);
+//        tombolKembali.addActionListener(e -> {
+//            dispose();
+//            if (this.menuSebelumnya != null) {
+//                this.menuSebelumnya.setVisible(true);
+//            }
+//        });
+
+        ImageIcon iconBack = new ImageIcon(getClass().getResource("/Kinopedia/model/ImageMetodeBayar/back.png"));
+        JLabel btnBack = new JLabel(iconBack);
+        btnBack.setBounds(35, 1, 100, 100);
+
+        btnBack.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                dispose();
+                if (menuSebelumnya != null) {
+                    menuSebelumnya.setVisible(true);
+                }
             }
         });
 
-        JPanel barAtas = new JPanel(new BorderLayout());
+        JPanel barAtas = new JPanel();
+        barAtas.setLayout(new BorderLayout());
         barAtas.setBackground(Color.WHITE);
-        barAtas.add(tombolKembali, BorderLayout.WEST);
+        barAtas.add(btnBack, BorderLayout.WEST);
         panelAkar.add(barAtas, BorderLayout.NORTH);
 
         // --- Panel Isi ---
@@ -195,7 +210,7 @@ public class BundleValorant extends JFrame {
         panelBawah.setBorder(new EmptyBorder(10, 36, 0, 36));
         panelAkar.add(panelBawah, BorderLayout.SOUTH);
 
-        PanelBulat bungkusTombolBayar = new PanelBulat(15, warnaOranye, null, 0);
+        PanelBulat bungkusTombolBayar = new PanelBulat(30, warnaOranye, null, 0);
         bungkusTombolBayar.setLayout(new BorderLayout());
         bungkusTombolBayar.setMaximumSize(new Dimension(9999, 50));
         bungkusTombolBayar.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -230,7 +245,7 @@ public class BundleValorant extends JFrame {
                 // Jika keduanya sudah benar, lanjut ke halaman pembayaran
                 if (akunSudahTerisi && bundleSudahDipilih) {
                     dispose();
-                    new Kinopedia.model.MetodeBayar(kolomNama.getText(),kolomId.getText(), Integer.parseInt(bundleTerpilih), "valorant", Kinopedia.Session.getInstance().getCurrentUser().getNama()).setVisible(true);
+                    new Kinopedia.model.MetodeBayar(kolomNama.getText(),kolomId.getText(), Integer.parseInt(bundleTerpilih), "Valorant", Kinopedia.Session.getInstance().getCurrentUser().getNama()).setVisible(true);
                     // TODO: lanjut ke halaman metode pembayaran
                 }
             }

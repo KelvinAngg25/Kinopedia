@@ -38,6 +38,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import Kinopedia.PilihanBundle.BundleCODM;
+import java.awt.BasicStroke;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -46,17 +49,29 @@ import javax.swing.border.LineBorder;
 public class PenukaranKoin extends JFrame {
     Kinopedia.DataUser user = Session.getInstance().getCurrentUser();
     ArrayList<Bundle> bundle = new ArrayList<>();
+    ArrayList<JPanel> daftarBundle = new ArrayList<>();
     private ImageIcon logoFooter;
     int index = 0;
     JPanel selected = null;
     Bundle diPilih = null;
+    private PanelBulat bungkusId;
+    private JTextField kolomId;
+    private PanelBulat bungkusNama;
+    private JTextField kolomNama;
+    private JPanel bgBundle;
+    private JLabel title;
+    private JPanel borderTitle;
+    private boolean akunDitemukan;
+    
+    Color warnaOranye = new Color(0xFF8C1A);
+    Color warnaAbuAbu = new Color(0xBDBDBD);
+    Color warnaMerah = new Color(0xFF3B30);
 
     MouseAdapter bundleClick = new MouseAdapter() {
         @Override
         public void mouseClicked(MouseEvent e) {
             JPanel clicked = (JPanel) e.getSource();
 
-            // Reset panel sebelumnya
             if (selected != null) {
                 JPanel prev = selected;
                 prev.putClientProperty("selected", false);
@@ -64,18 +79,18 @@ public class PenukaranKoin extends JFrame {
             }
 
             selected = clicked;
+            diPilih = bundle.get(daftarBundle.indexOf(clicked));
             clicked.putClientProperty("selected", true);
             clicked.repaint();
+            bgBundle.repaint();
+            SwingUtilities.invokeLater(() -> {
+                getContentPane().setComponentZOrder(borderTitle, 0);
+                borderTitle.repaint();
+            });
         }
     };
     
     public PenukaranKoin(){
-//        Main.dataAkun.get(0);
-
-//        ambil gambar
-//        URL url = getClass().getResource("/Kinopedia/model/IMAGESS/Diamond.png");
-//        Image img = new ImageIcon(url).getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH);
-//        currencyIcon = new ImageIcon(url);
         bundle.add(new Bundle("Diamonds", "ML",index,100,"10"));
         index++;
         bundle.add(new Bundle("Diamonds", "FF", index, 180,"70"));
@@ -119,7 +134,7 @@ public class PenukaranKoin extends JFrame {
         logoFooter = new ImageIcon(url);
 
         
-        JPanel borderTitle = new JPanel() {
+        borderTitle = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2d = (Graphics2D) g.create();
@@ -135,15 +150,15 @@ public class PenukaranKoin extends JFrame {
         borderTitle.setBorder(new RoundedBorder(40, ORANGE));
         borderTitle.setBounds(50, 50, 180, 40);
         
-        JLabel title = new JLabel("Penukaran Koin");
+        title = new JLabel("Penukaran Koin");
         title.setFont(new Font("Arial", Font.BOLD, 18));
         title.setBounds(13, 0, 155, 40);
         title.setHorizontalAlignment(title.CENTER);
         
         borderTitle.add(title);
-        add(borderTitle);
         
-        JPanel bgBundle = new JPanel() {
+        
+        bgBundle = new JPanel(){
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2d = (Graphics2D) g.create();
@@ -151,18 +166,30 @@ public class PenukaranKoin extends JFrame {
                 g2d.setColor(ORANGE);
                 g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
                 g2d.dispose();
-                super.paintComponent(g);
+            }
+            
+            @Override
+            protected void paintBorder(Graphics g) {
+                Graphics2D g2d = (Graphics2D) g.create();
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                if(selected ==null){
+                    g2d.setColor(warnaMerah);
+                }else{
+                    g2d.setColor(warnaOranye);
+                }
+                g2d.setStroke(new BasicStroke(2));
+                g2d.drawRoundRect(2, 2, getWidth()-4, getHeight()-4, 20, 20);
+                g2d.dispose();
             }
         };
+        bgBundle.setOpaque(true);
         bgBundle.setLayout(null);
         bgBundle.setBounds(33,70,400,500);
-        bgBundle.setOpaque(false);
         
         int x= 14;
         int y = 35;
         for (int i = 0 ; i<8;i++){
             final int index = i;
-            Bundle cetakBundle = bundle.get(i);
             JPanel bgBundle1 = new JPanel(){
             @Override
             protected void paintComponent(Graphics g) {
@@ -232,17 +259,30 @@ public class PenukaranKoin extends JFrame {
             bgBundle1.addMouseListener(bundleClick);
             
             bgBundle.add(bgBundle1);
+            daftarBundle.add(bgBundle1);
         }
         
-        JButton btnTukar = new JButton ("Tukar");
+        JButton btnTukar = new JButton ("Tukar"){
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(ORANGE);
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+                g2.dispose();
+                super.paintComponent(g);
+            } 
+        };
         btnTukar.setBounds(35, 730, 400, 45);
         btnTukar.setFont(new Font("Arial", Font.BOLD, 20));
         btnTukar.setForeground(Color.WHITE);
+        btnTukar.setBorder(BorderFactory.createEmptyBorder());
         btnTukar.setFocusPainted(false);
         btnTukar.setBorderPainted(false);
-        btnTukar.setBackground(ORANGE);
+        btnTukar.setOpaque(false);
+        btnTukar.setContentAreaFilled(false);
         btnTukar.addActionListener(e -> {
-            if(diPilih!=null){
+            if(diPilih!=null && akunDitemukan == true){
                 dispose();
                 if(user.getKoin()>= diPilih.getHarga()){
                     user.setKoin(user.getKoin()-diPilih.getHarga());
@@ -253,8 +293,93 @@ public class PenukaranKoin extends JFrame {
             }
         });
         
-        add(btnTukar);
+        
+        
+        JLabel teksId = new JLabel("NUMBER ID");
+        teksId.setFont(new Font("SansSerif", Font.BOLD, 11));
+        teksId.setForeground(Color.DARK_GRAY);
+        teksId.setBounds(40, 575, 100,30 );
+        add(teksId);
+        
+        bungkusId = new PanelBulat(20, Color.WHITE, warnaOranye, 1);
+        bungkusId.setLayout(null);
+        bungkusId.setBorder(new EmptyBorder(8, 15, 8, 15));
+        bungkusId.setMaximumSize(new Dimension(9999, 45));
+        bungkusId.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        kolomId = new JTextField("");
+        kolomId.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        kolomId.setOpaque(false);
+        kolomId.setBorder(null);
+        kolomId.setBounds(15, 6, 370, 34);
+        kolomId.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            @Override
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                cekBerdasarkanGame();
+            }
+            @Override
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                cekBerdasarkanGame();
+            }
+            @Override
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                cekBerdasarkanGame();
+            }
+
+            private void cekBerdasarkanGame() {
+                SwingUtilities.invokeLater(() -> {
+                    bgBundle.repaint();
+                    if(diPilih != null){
+                        if(diPilih.getNamaGame().equals("PUBGM")){
+                            cekIdAkunPUBGM(warnaOranye, warnaMerah);
+                        }else if(diPilih.getNamaGame().equals("Valorant")){
+                            cekIdAkunValorant(warnaOranye, warnaMerah);
+                        }else if(diPilih.getNamaGame().equals("CODM")){
+                            cekIdAkunCODM(warnaOranye, warnaMerah);
+                        }else if(diPilih.getNamaGame().equals("Efootball")){
+                            cekIdAkunEfootball(warnaOranye, warnaMerah);
+                        }else if(diPilih.getNamaGame().equals("Steam")){
+                            cekIdAkunSteam(warnaOranye, warnaMerah);
+                        }else if(diPilih.getNamaGame().equals("ML")){
+                            cekIdAkunML(warnaOranye, warnaMerah);
+                        }else if(diPilih.getNamaGame().equals("FF")){
+                            cekIdAkunFreeFire(warnaOranye, warnaMerah);
+                        }
+                    }
+                    SwingUtilities.invokeLater(() -> {
+                        getContentPane().setComponentZOrder(borderTitle, 0);
+                        borderTitle.repaint();
+                    });
+                });
+            }   
+        });
+        
+        bungkusId.add(kolomId);
+        bungkusId.setBounds(33, 600, 400, 50);
+        add(bungkusId);
+        
+        bungkusNama = new PanelBulat(20, Color.GRAY, warnaOranye, 1);
+        bungkusNama.setLayout(null);
+        bungkusNama.setBorder(new EmptyBorder(8, 15, 8, 15));
+        bungkusNama.setMaximumSize(new Dimension(9999, 45));
+        bungkusNama.setAlignmentX(Component.LEFT_ALIGNMENT);
+        
+        kolomNama = new JTextField("");
+        kolomNama.setEditable(false);
+        kolomNama.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        kolomNama.setOpaque(false);
+        kolomNama.setBorder(null);
+        kolomNama.setBounds(15, 5, 370, 34);
+        
+        bungkusNama.add(kolomNama);
+        bungkusNama.setBounds(33,660,400,50);
+        add(bungkusNama);
+    
         add(bgBundle);
+        add(btnTukar);
+        add(borderTitle);
+        getContentPane().setComponentZOrder(borderTitle, 0);
+        
         
         
         
@@ -264,4 +389,454 @@ public class PenukaranKoin extends JFrame {
             PenukaranKoin frame = new PenukaranKoin();
             frame.setVisible(true);
     }
+    
+    class PanelBulat extends JPanel {
+
+        private int radiusLengkungan;
+        private Color warnaLatar;
+        private Color warnaGaris;
+        private int tebalGaris;
+
+        public PanelBulat(int radius, Color warnaLatar, Color warnaGaris, int tebalGaris) {
+            super();
+            this.radiusLengkungan = radius;
+            this.warnaLatar = warnaLatar;
+            this.warnaGaris = warnaGaris;
+            this.tebalGaris = tebalGaris;
+            setOpaque(false);
+        }
+
+        public void ubahTampilan(Color warnaLatarBaru, Color warnaGarisBaru, int tebalGarisBaru) {
+            this.warnaLatar = warnaLatarBaru;
+            this.warnaGaris = warnaGarisBaru;
+            this.tebalGaris = tebalGarisBaru;
+            repaint();
+        }
+
+        @Override
+        public void paintComponent(Graphics g) {
+            super.paintComponent(g);
+
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            int posisiX = this.tebalGaris / 2;
+            int posisiY = this.tebalGaris / 2;
+            int lebarPanel = getWidth() - this.tebalGaris - 1;
+            int tinggiPanel = getHeight() - this.tebalGaris - 1;
+
+            if (this.warnaLatar != null) {
+                g2.setColor(this.warnaLatar);
+                g2.fillRoundRect(posisiX, posisiY, lebarPanel, tinggiPanel, this.radiusLengkungan, this.radiusLengkungan);
+            }
+
+            if (this.warnaGaris != null && this.tebalGaris > 0) {
+                g2.setColor(this.warnaGaris);
+                g2.setStroke(new BasicStroke(this.tebalGaris));
+                g2.drawRoundRect(posisiX, posisiY, lebarPanel, tinggiPanel, this.radiusLengkungan, this.radiusLengkungan);
+            }
+
+            g2.dispose();
+        }
+    }
+    
+    private void cekIdAkunCODM(Color warnaOranye, Color warnaMerah) {
+            String inputId = kolomId.getText().trim();
+            boolean panjangBenar = inputId.length() == 10;
+            boolean semuaAngka = true;
+            for (int i = 0; i < inputId.length(); i++) {
+                if (!Character.isDigit(inputId.charAt(i))) {
+                    semuaAngka = false;
+                }
+            }
+
+            boolean formatBenar = panjangBenar && semuaAngka;
+
+            if (!formatBenar) {
+                bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+                kolomNama.setText("");
+                kolomNama.setForeground(Color.BLACK);
+                return;
+            }
+
+            akunDitemukan = false;
+
+            for (int i = 0; i < Main.dataAkun.size(); i++) {
+                String idDiDatabase   = Main.dataAkun.get(i).getIdAkun();
+                String namaDiDatabase = Main.dataAkun.get(i).getNamaAkun();
+                String gameDiDatabase = Main.dataAkun.get(i).getJenisGame();
+
+                boolean idSama    = idDiDatabase.equals(inputId);
+                boolean gameSama  = gameDiDatabase.equals("codm");
+
+                if (idSama && gameSama) {
+                    kolomNama.setText(namaDiDatabase);
+                    kolomNama.setForeground(Color.BLACK);
+                    bungkusId.ubahTampilan(Color.WHITE, warnaOranye, 1);
+                    akunDitemukan = true;
+                    break;
+                }
+            }
+
+            if (!akunDitemukan) {
+                kolomNama.setText("Akun Tidak Ditemukan");
+                kolomNama.setForeground(warnaMerah);
+                bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+            }
+        }
+        
+        private void cekIdAkunEfootball(Color warnaOranye, Color warnaMerah) {
+            String inputId = kolomId.getText().trim();
+
+            boolean panjangYangBenar = inputId.length() == 11;
+
+            boolean adaTandaStrip = false;
+            if (panjangYangBenar) {
+                adaTandaStrip = inputId.charAt(4) == '-';
+            }
+
+            boolean empatHurufDepan = true;
+            if (panjangYangBenar) {
+                for (int i = 0; i < 4; i++) {
+                    if (!Character.isLetter(inputId.charAt(i))) {
+                        empatHurufDepan = false;
+                    }
+                }
+            }
+
+            boolean enamAngkaBelakang = true;
+            if (panjangYangBenar) {
+                for (int i = 5; i < 11; i++) {
+                    if (!Character.isDigit(inputId.charAt(i))) {
+                        enamAngkaBelakang = false;
+                    }
+                }
+            }
+
+            boolean formatBenar = panjangYangBenar && adaTandaStrip && empatHurufDepan && enamAngkaBelakang;
+
+            if (!formatBenar) {
+                bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+                kolomNama.setText("");
+                kolomNama.setForeground(Color.BLACK);
+                return;
+            }
+
+            akunDitemukan = false;
+
+            for (int i = 0; i < Main.dataAkun.size(); i++) {
+                String idDiDatabase   = Main.dataAkun.get(i).getIdAkun();
+                String namaDiDatabase = Main.dataAkun.get(i).getNamaAkun();
+                String gameDiDatabase = Main.dataAkun.get(i).getJenisGame();
+
+                boolean idSama   = idDiDatabase.equals(inputId);
+                boolean gameSama = gameDiDatabase.equals("efootball");
+
+                if (idSama && gameSama) {
+                    kolomNama.setText(namaDiDatabase);
+                    kolomNama.setForeground(Color.BLACK);
+                    bungkusId.ubahTampilan(Color.WHITE, warnaOranye, 1);
+                    akunDitemukan = true;
+                    break;
+                }
+            }
+
+            if (!akunDitemukan) {
+                kolomNama.setText("Akun Tidak Ditemukan");
+                kolomNama.setForeground(warnaMerah);
+                bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+            }
+        }
+        
+        private void cekIdAkunFreeFire(Color warnaOranye, Color warnaMerah) {
+            String inputId = kolomId.getText().trim();
+
+            boolean panjangBenar = inputId.length() == 9;
+
+            boolean semuaAngka = true;
+            if (panjangBenar) {
+                for (int i = 0; i < inputId.length(); i++) {
+                    if (!Character.isDigit(inputId.charAt(i))) {
+                        semuaAngka = false;
+                    }
+                }
+            }
+
+            boolean formatBenar = panjangBenar && semuaAngka;
+
+            if (!formatBenar) {
+                bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+                kolomNama.setText("");
+                kolomNama.setForeground(Color.BLACK);
+                return;
+            }
+
+            akunDitemukan = false;
+
+            for (int i = 0; i < Main.dataAkun.size(); i++) {
+                String idDiDatabase   = Main.dataAkun.get(i).getIdAkun();
+                String namaDiDatabase = Main.dataAkun.get(i).getNamaAkun();
+                String gameDiDatabase = Main.dataAkun.get(i).getJenisGame();
+
+                boolean idSama   = idDiDatabase.equals(inputId);
+                boolean gameSama = gameDiDatabase.equals("ff");
+
+                if (idSama && gameSama) {
+                    kolomNama.setText(namaDiDatabase);
+                    kolomNama.setForeground(Color.BLACK);
+                    bungkusId.ubahTampilan(Color.WHITE, warnaOranye, 1);
+                    akunDitemukan = true;
+                    break;
+                }
+            }
+
+            if (!akunDitemukan) {
+                kolomNama.setText("Akun Tidak Ditemukan");
+                kolomNama.setForeground(warnaMerah);
+                bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+            }
+        }
+        
+        private void cekIdAkunML(Color warnaOranye, Color warnaMerah) {
+            String inputId = kolomId.getText().trim();
+
+            boolean panjangBenar = inputId.length() == 14;
+
+            boolean delapanAngkaDepan = true;
+            if (panjangBenar) {
+                for (int i = 0; i < 8; i++) {
+                    if (!Character.isDigit(inputId.charAt(i))) {
+                        delapanAngkaDepan = false;
+                    }
+                }
+            }
+
+            boolean adaKurung = false;
+            if (panjangBenar) {
+                boolean adaKurungBuka  = inputId.charAt(8) == '(';
+                boolean adaKurungTutup = inputId.charAt(13) == ')';
+                adaKurung = adaKurungBuka && adaKurungTutup;
+            }
+
+            boolean empatAngkaZoneId = true;
+            if (panjangBenar) {
+                for (int i = 9; i < 13; i++) {
+                    if (!Character.isDigit(inputId.charAt(i))) {
+                        empatAngkaZoneId = false;
+                    }
+                }
+            }
+
+            boolean formatBenar = panjangBenar && delapanAngkaDepan && adaKurung && empatAngkaZoneId;
+
+            if (!formatBenar) {
+                bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+                kolomNama.setText("");
+                kolomNama.setForeground(Color.BLACK);
+                return;
+            }
+
+            akunDitemukan = false;
+
+            for (int i = 0; i < Main.dataAkun.size(); i++) {
+                String idDiDatabase   = Main.dataAkun.get(i).getIdAkun();
+                String namaDiDatabase = Main.dataAkun.get(i).getNamaAkun();
+                String gameDiDatabase = Main.dataAkun.get(i).getJenisGame();
+
+                boolean idSama   = idDiDatabase.equals(inputId);
+                boolean gameSama = gameDiDatabase.equals("ml");
+
+                if (idSama && gameSama) {
+                    kolomNama.setText(namaDiDatabase);
+                    kolomNama.setForeground(Color.BLACK);
+                    bungkusId.ubahTampilan(Color.WHITE, warnaOranye, 1);
+                    akunDitemukan = true;
+                    break;
+                }
+            }
+
+            if (!akunDitemukan) {
+                kolomNama.setText("Akun Tidak Ditemukan");
+                kolomNama.setForeground(warnaMerah);
+                bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+            }
+        }
+        
+        private void cekIdAkunPUBGM(Color warnaOranye, Color warnaMerah) {
+            String inputId = kolomId.getText().trim();
+
+            boolean panjangBenar = inputId.length() == 12;
+
+            boolean semuaAngka = true;
+            if (panjangBenar) {
+                for (int i = 0; i < inputId.length(); i++) {
+                    if (!Character.isDigit(inputId.charAt(i))) {
+                        semuaAngka = false;
+                    }
+                }
+            }
+
+            boolean formatBenar = panjangBenar && semuaAngka;
+
+            if (!formatBenar) {
+                bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+                kolomNama.setText("");
+                kolomNama.setForeground(Color.BLACK);
+                return;
+            }
+
+            akunDitemukan = false;
+
+            for (int i = 0; i < Main.dataAkun.size(); i++) {
+                String idDiDatabase   = Main.dataAkun.get(i).getIdAkun();
+                String namaDiDatabase = Main.dataAkun.get(i).getNamaAkun();
+                String gameDiDatabase = Main.dataAkun.get(i).getJenisGame();
+
+                boolean idSama   = idDiDatabase.equals(inputId);
+                boolean gameSama = gameDiDatabase.equals("pubgm");
+
+                if (idSama && gameSama) {
+                    kolomNama.setText(namaDiDatabase);
+                    kolomNama.setForeground(Color.BLACK);
+                    bungkusId.ubahTampilan(Color.WHITE, warnaOranye, 1);
+                    akunDitemukan = true;
+                    break;
+                }
+            }
+
+            if (!akunDitemukan) {
+                kolomNama.setText("Akun Tidak Ditemukan");
+                kolomNama.setForeground(warnaMerah);
+                bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+            }
+        }
+        
+        private void cekIdAkunSteam(Color warnaOranye, Color warnaMerah) {
+            String inputEmail = kolomId.getText().trim();
+
+            boolean adaAt = false;
+            int posisiAt = -1;
+            for (int i = 0; i < inputEmail.length(); i++) {
+                if (inputEmail.charAt(i) == '@') {
+                    adaAt = true;
+                    posisiAt = i;
+                    break;
+                }
+            }
+
+            boolean emailGmail = false;
+            if (adaAt) {
+                String bagianBelakang = inputEmail.substring(posisiAt);
+                emailGmail = bagianBelakang.equals("@gmail.com");
+            }
+
+            boolean adaNamaDepan = false;
+            if (adaAt) {
+                adaNamaDepan = posisiAt > 0;
+            }
+
+            boolean formatBenar = adaAt && emailGmail && adaNamaDepan;
+
+            if (!formatBenar) {
+                bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+                kolomNama.setText("");
+                kolomNama.setForeground(Color.BLACK);
+                return;
+            }
+
+            akunDitemukan = false;
+
+            for (int i = 0; i < Main.dataAkun.size(); i++) {
+                String idDiDatabase   = Main.dataAkun.get(i).getIdAkun();
+                String namaDiDatabase = Main.dataAkun.get(i).getNamaAkun();
+                String gameDiDatabase = Main.dataAkun.get(i).getJenisGame();
+
+                boolean idSama   = idDiDatabase.equals(inputEmail);
+                boolean gameSama = gameDiDatabase.equals("steam");
+
+                if (idSama && gameSama) {
+                    kolomNama.setText(namaDiDatabase);
+                    kolomNama.setForeground(Color.BLACK);
+                    bungkusId.ubahTampilan(Color.WHITE, warnaOranye, 1);
+                    akunDitemukan = true;
+                    break;
+                }
+            }
+
+            if (!akunDitemukan) {
+                kolomNama.setText("Akun Tidak Ditemukan");
+                kolomNama.setForeground(warnaMerah);
+                bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+            }
+        }
+        
+        private void cekIdAkunValorant(Color warnaOranye, Color warnaMerah) {
+            String inputId = kolomId.getText().trim();
+
+            boolean panjangBenar = inputId.length() == 11;
+
+            boolean adaTandaPagar = false;
+            if (panjangBenar) {
+                adaTandaPagar = inputId.charAt(6) == '#';
+            }
+
+            boolean enamKarakterDepan = true;
+            if (panjangBenar) {
+                for (int i = 0; i < 6; i++) {
+                    boolean huruf = Character.isLetter(inputId.charAt(i));
+                    boolean angka = Character.isDigit(inputId.charAt(i));
+
+                    if (!huruf && !angka) {
+                        enamKarakterDepan = false;
+                    }
+                }
+            }
+
+            boolean empatKarakterTag = true;
+            if (panjangBenar) {
+                for (int i = 7; i < 11; i++) {
+                    boolean huruf = Character.isLetter(inputId.charAt(i));
+                    boolean angka = Character.isDigit(inputId.charAt(i));
+
+                    if (!huruf && !angka) {
+                        empatKarakterTag = false;
+                    }
+                }
+            }
+
+            boolean formatBenar = panjangBenar && adaTandaPagar && enamKarakterDepan && empatKarakterTag;
+
+            if (!formatBenar) {
+                bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+                kolomNama.setText("");
+                kolomNama.setForeground(Color.BLACK);
+                return;
+            }
+
+            akunDitemukan = false;
+
+            for (int i = 0; i < Main.dataAkun.size(); i++) {
+                String idDiDatabase   = Main.dataAkun.get(i).getIdAkun();
+                String namaDiDatabase = Main.dataAkun.get(i).getNamaAkun();
+                String gameDiDatabase = Main.dataAkun.get(i).getJenisGame();
+
+                boolean idSama   = idDiDatabase.equals(inputId);
+                boolean gameSama = gameDiDatabase.equals("valorant");
+
+                if (idSama && gameSama) {
+                    kolomNama.setText(namaDiDatabase);
+                    kolomNama.setForeground(Color.BLACK);
+                    bungkusId.ubahTampilan(Color.WHITE, warnaOranye, 1);
+                    akunDitemukan = true;
+                    break;
+                }
+            }
+
+            if (!akunDitemukan) {
+                kolomNama.setText("Akun Tidak Ditemukan");
+                kolomNama.setForeground(warnaMerah);
+                bungkusId.ubahTampilan(Color.WHITE, warnaMerah, 2);
+            }
+        }
+    
 }

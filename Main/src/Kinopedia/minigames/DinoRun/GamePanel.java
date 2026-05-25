@@ -24,18 +24,28 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+
 public class GamePanel extends JPanel implements KeyListener {
     Kinopedia.DataUser user = Session.getInstance().getCurrentUser();
-    private Image dinoImg;
+   
     private Image cactusImg;
-    private Image birdImg;
+    
+    public Image[] bird = new Image[2];
+    public Image[] DinoRun = new Image[2];
+
+    public int dinocounter = 1;
+    public int birdcounter = 1;
 
     // ===== Tipe obstacle =====
     enum ObstacleType { CACTUS_SMALL, CACTUS_BIG, BIRD }
@@ -44,6 +54,7 @@ public class GamePanel extends JPanel implements KeyListener {
     static class Obstacle {
 
         int x, y, width, height;
+        
 
         ObstacleType type;
 
@@ -99,20 +110,42 @@ public class GamePanel extends JPanel implements KeyListener {
         setBackground(Color.WHITE);
         setFocusable(true);
         addKeyListener(this);
-
+//        try (InputStream stream = getClass().getResourceAsStream("/Kinopedia/minigames/DinoRun/Asset/sprite.png");) {
+//            if (stream != null) {
+//                this.Sprite = ImageIO.read(stream);
+//            }
+//        } catch (IOException e){
+//            System.err.println("Gagal load gambar dino "+ e.getMessage());
+//        }
+        
+        
         random    = new Random();
         obstacles = new ArrayList<Obstacle>();
-
+        
         try {
-            dinoImg = new ImageIcon(
-                getClass().getResource("/Kinopedia/minigames/DinoRun/Asset/Dino.png")
+            DinoRun[0] = new ImageIcon(
+                getClass().getResource("/Kinopedia/minigames/DinoRun/Asset/Dino1.png")
             ).getImage();
+            DinoRun[1] = new ImageIcon(
+                getClass().getResource("/Kinopedia/minigames/DinoRun/Asset/Dino2.png")
+            ).getImage();
+            
+            System.out.println(DinoRun[0]);
+            System.out.println(DinoRun[1]);
+            
+            bird[0] = new ImageIcon(
+                getClass().getResource("/Kinopedia/minigames/DinoRun/Asset/Burung2.png")
+            ).getImage();
+            bird[1] = new ImageIcon(
+                getClass().getResource("/Kinopedia/minigames/DinoRun/Asset/Burung3.png")
+            ).getImage();
+            
+            
             cactusImg = new ImageIcon(
                 getClass().getResource("/Kinopedia/minigames/DinoRun/Asset/KaktusBesar.png")
             ).getImage();
-            birdImg = new ImageIcon(
-                getClass().getResource("/Kinopedia/minigames/DinoRun/Asset/Burung.png")
-            ).getImage();
+            
+            
         } catch (Exception e) {
             System.out.println("Gagal memuat aset: " + e);
         }
@@ -388,7 +421,18 @@ public class GamePanel extends JPanel implements KeyListener {
     }
 
     private void drawDino(Graphics2D g, int x, int y) {
-        g.drawImage(dinoImg, x, y, 80, 80, null);
+
+        if (dinocounter < 10) {
+            g.drawImage(DinoRun[0], x, y - 1, 80, 80, null);
+        } else {
+            g.drawImage(DinoRun[1], x, y - 1, 80, 80, null);
+        }
+
+        dinocounter++;
+
+        if (dinocounter >= 20) {
+            dinocounter = 0;
+        }
     }
 
     private void drawCactus(Graphics2D g, int x, int y, int h, boolean big) {
@@ -396,7 +440,18 @@ public class GamePanel extends JPanel implements KeyListener {
     }
 
     private void drawBird(Graphics2D g, int x, int y) {
-        g.drawImage(birdImg, x, y, 60, 40, null);
+
+        if (birdcounter < 5) {
+            g.drawImage(bird[0], x, y, 60, 40, null);
+        } else {
+            g.drawImage(bird[1], x, y, 60, 40, null);
+        }
+
+        birdcounter++;
+
+        if (birdcounter >= 10) {
+            birdcounter = 0;
+        }
     }
 
     // ===== KeyListener =====

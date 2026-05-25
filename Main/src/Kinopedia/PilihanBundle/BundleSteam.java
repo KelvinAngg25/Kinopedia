@@ -58,24 +58,38 @@ public class BundleSteam extends JFrame {
         setContentPane(panelAkar);
  
         // --- Bagian Atas (Tombol Kembali) ---
-        JButton tombolKembali = new JButton("< Kembali");
-        tombolKembali.setFocusPainted(false);
-        tombolKembali.setBorderPainted(false);
-        tombolKembali.setContentAreaFilled(false);
-        tombolKembali.setFont(new Font("SansSerif", Font.PLAIN, 15));
-        tombolKembali.setHorizontalAlignment(SwingConstants.LEFT);
+//        JButton tombolKembali = new JButton("< Kembali");
+//        tombolKembali.setFocusPainted(false);
+//        tombolKembali.setBorderPainted(false);
+//        tombolKembali.setContentAreaFilled(false);
+//        tombolKembali.setFont(new Font("SansSerif", Font.PLAIN, 15));
+//        tombolKembali.setHorizontalAlignment(SwingConstants.LEFT);
+// 
+//        tombolKembali.addActionListener(e -> {
+//            dispose();
+//            if (this.menuSebelumnya != null) {
+//                this.menuSebelumnya.setVisible(true);
+//            }
+//        });
  
-        tombolKembali.addActionListener(e -> {
-            dispose();
-            if (this.menuSebelumnya != null) {
-                this.menuSebelumnya.setVisible(true);
+        ImageIcon iconBack = new ImageIcon(getClass().getResource("/Kinopedia/model/ImageMetodeBayar/back.png"));
+        JLabel btnBack = new JLabel(iconBack);
+        btnBack.setBounds(35, 1, 100, 100);
+
+        btnBack.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                dispose();
+                if (menuSebelumnya != null) {
+                    menuSebelumnya.setVisible(true);
+                }
             }
         });
- 
+
         JPanel barAtas = new JPanel();
         barAtas.setLayout(new BorderLayout());
         barAtas.setBackground(Color.WHITE);
-        barAtas.add(tombolKembali, BorderLayout.WEST);
+        barAtas.add(btnBack, BorderLayout.WEST);
         panelAkar.add(barAtas, BorderLayout.NORTH);
  
         // --- Bagian Tengah ---
@@ -150,7 +164,7 @@ public class BundleSteam extends JFrame {
  
         PanelBulat pilBundling = new PanelBulat(25, Color.WHITE, warnaOranye, 1);
         pilBundling.setLayout(new BorderLayout());
-        pilBundling.setBorder(new EmptyBorder(8, 20, 8, 20));
+        pilBundling.setBorder(new EmptyBorder(8, 20, 10, 20));
         pilBundling.add(teksLabel, BorderLayout.CENTER);
  
         JPanel tempatLabel = new JPanel();
@@ -191,7 +205,7 @@ public class BundleSteam extends JFrame {
         JPanel panelBawah = new JPanel();
         panelBawah.setBackground(Color.WHITE);
         panelBawah.setLayout(new BoxLayout(panelBawah, BoxLayout.Y_AXIS));
-        panelBawah.setBorder(new EmptyBorder(10, 30, 0, 30));
+        panelBawah.setBorder(new EmptyBorder(10, 36, 0, 36));
         panelAkar.add(panelBawah, BorderLayout.SOUTH);
  
         PanelBulat bungkusTombolBayar = new PanelBulat(15, warnaOranye, null, 0);
@@ -220,7 +234,7 @@ public class BundleSteam extends JFrame {
                 }
                 if (akunSudahTerisi && bundleSudahDipilih) {
                     dispose();
-                    new Kinopedia.model.MetodeBayar(kolomNama.getText(),kolomId.getText(), Integer.parseInt(bundleTerpilih), "steam", Kinopedia.Session.getInstance().getCurrentUser().getNama()).setVisible(true);
+                    new Kinopedia.model.MetodeBayar(kolomNama.getText(),kolomId.getText(), Integer.parseInt(bundleTerpilih), "Steam", Kinopedia.Session.getInstance().getCurrentUser().getNama()).setVisible(true);
                 }
             }
         });

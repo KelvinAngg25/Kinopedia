@@ -18,6 +18,8 @@ import Kinopedia.model.Buyer;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.RoundRectangle2D;
 
 public class MainMiniGames extends JFrame {
@@ -48,17 +50,29 @@ public class MainMiniGames extends JFrame {
         setContentPane(root);
 
         // ===== TOP BAR =====
-        JButton backBtn = new JButton("< Kembali");
-        backBtn.setFocusPainted(false);
-        backBtn.setBorderPainted(false);
-        backBtn.setContentAreaFilled(false);
-        backBtn.setHorizontalAlignment(SwingConstants.LEFT);
-        backBtn.setFont(new Font("SansSerif", Font.PLAIN, 16));
-        backBtn.addActionListener(e -> goBack());
+//        JButton backBtn = new JButton("< Kembali");
+//        backBtn.setFocusPainted(false);
+//        backBtn.setBorderPainted(false);
+//        backBtn.setContentAreaFilled(false);
+//        backBtn.setHorizontalAlignment(SwingConstants.LEFT);
+//        backBtn.setFont(new Font("SansSerif", Font.PLAIN, 16));
+//        backBtn.addActionListener(e -> goBack());
+
+        ImageIcon iconBack = new ImageIcon(getClass().getResource("/Kinopedia/model/ImageMetodeBayar/back.png"));
+        JLabel btnBack = new JLabel(iconBack);
+        btnBack.setBounds(35, 1, 100, 100);
+
+        btnBack.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                dispose();
+                goBack();
+            }
+        });
 
         JPanel top = new JPanel(new BorderLayout());
         top.setBackground(Color.WHITE);
-        top.add(backBtn, BorderLayout.WEST);
+        top.add(btnBack, BorderLayout.WEST);
         root.add(top, BorderLayout.NORTH);
 
 //        JLabel koinLabel = new JLabel("Koin: " + userLogin.getKoin());

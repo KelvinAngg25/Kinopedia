@@ -87,8 +87,8 @@ public class HalamanConfirmation extends JFrame{
                     new MainMiniGames().setVisible(true);
                 } else if (halamanTerakhir.equals("Seller")) {
                     dispose();
-//                    Diisi sama halaman utama seller
-//                    new MainMiniGames().setVisible(true);
+//                    Diisi sama halaman belum ditop-up seller
+//                    new Kinopedia.model.Seller.Seller().setVisible(true);
                 } else if (halamanTerakhir.equals("Buyer")) {
                     dispose();
                     new Game(new Buyer()).setVisible(true);
