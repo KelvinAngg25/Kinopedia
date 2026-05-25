@@ -38,10 +38,8 @@ import javax.swing.Timer;
 
 public class GamePanel extends JPanel implements KeyListener {
     Kinopedia.DataUser user = Session.getInstance().getCurrentUser();
-    public BufferedImage Sprite;
-    private Image dinoImg;
+   
     private Image cactusImg;
-    private Image birdImg;
     
     public Image[] bird = new Image[2];
     public Image[] DinoRun = new Image[2];
@@ -112,21 +110,29 @@ public class GamePanel extends JPanel implements KeyListener {
         setBackground(Color.WHITE);
         setFocusable(true);
         addKeyListener(this);
-        try (InputStream stream = getClass().getResourceAsStream("/Kinopedia/minigames/DinoRun/Asset/sprite.png");) {
-            if (stream != null) {
-                this.Sprite = ImageIO.read(stream);
-            }
-        } catch (IOException e){
-            System.err.println("Gagal load gambar dino "+ e.getMessage());
-        }
+//        try (InputStream stream = getClass().getResourceAsStream("/Kinopedia/minigames/DinoRun/Asset/sprite.png");) {
+//            if (stream != null) {
+//                this.Sprite = ImageIO.read(stream);
+//            }
+//        } catch (IOException e){
+//            System.err.println("Gagal load gambar dino "+ e.getMessage());
+//        }
         
         
         random    = new Random();
         obstacles = new ArrayList<Obstacle>();
         
         try {
-            DinoRun[0] = Sprite.getSubimage(23*64+39, 0, 95, 95);
-            DinoRun[1] = Sprite.getSubimage(23*64+127, 0, 90, 94);
+            DinoRun[0] = new ImageIcon(
+                getClass().getResource("/Kinopedia/minigames/DinoRun/Asset/Dino1.png")
+            ).getImage();
+            DinoRun[1] = new ImageIcon(
+                getClass().getResource("/Kinopedia/minigames/DinoRun/Asset/Dino2.png")
+            ).getImage();
+            
+            System.out.println(DinoRun[0]);
+            System.out.println(DinoRun[1]);
+            
             bird[0] = new ImageIcon(
                 getClass().getResource("/Kinopedia/minigames/DinoRun/Asset/Burung2.png")
             ).getImage();
@@ -415,20 +421,18 @@ public class GamePanel extends JPanel implements KeyListener {
     }
 
     private void drawDino(Graphics2D g, int x, int y) {
-        if (this.dinocounter < 10) {
-            dinoImg = DinoRun[0];
-            dinocounter++;
-            g.drawImage(dinoImg, x, y, 80, 80, null);
-        } else if (dinocounter < 20){
-            dinoImg = DinoRun[1];
-            dinocounter++;
-            g.drawImage(dinoImg, x, y, 80, 80, null);
+
+        if (dinocounter < 10) {
+            g.drawImage(DinoRun[0], x, y - 1, 80, 80, null);
         } else {
-            dinocounter = 0;
-            g.drawImage(dinoImg, x, y, 80, 80, null);
+            g.drawImage(DinoRun[1], x, y - 1, 80, 80, null);
         }
-            
-            
+
+        dinocounter++;
+
+        if (dinocounter >= 20) {
+            dinocounter = 0;
+        }
     }
 
     private void drawCactus(Graphics2D g, int x, int y, int h, boolean big) {
@@ -436,19 +440,18 @@ public class GamePanel extends JPanel implements KeyListener {
     }
 
     private void drawBird(Graphics2D g, int x, int y) {
-        if (this.birdcounter < 5) {
-            birdImg = bird[0];
-            birdcounter++;
-            g.drawImage(birdImg, x, y, 60, 40, null);
-        } else if (birdcounter < 10){
-            birdImg = bird[1];
-            birdcounter++;
-            g.drawImage(birdImg, x, y, 60, 40, null);
+
+        if (birdcounter < 5) {
+            g.drawImage(bird[0], x, y, 60, 40, null);
         } else {
-            birdcounter = 0;
-            g.drawImage(birdImg, x, y, 60, 40, null);
+            g.drawImage(bird[1], x, y, 60, 40, null);
         }
-        
+
+        birdcounter++;
+
+        if (birdcounter >= 10) {
+            birdcounter = 0;
+        }
     }
 
     // ===== KeyListener =====

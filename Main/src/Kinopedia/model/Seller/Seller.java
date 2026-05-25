@@ -6,6 +6,8 @@ import Kinopedia.view.LoginRegister.Register;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
+import java.awt.event.*;
+import Kinopedia.model.Seller.HalamanSudahTopUp;
 
 public class Seller extends JFrame {
 
@@ -114,6 +116,19 @@ public class Seller extends JFrame {
         );
 
         greenCard.setBounds(18, 168, 284, 62);
+        // ================= EVENT SUDAH TOPUP =================
+        greenCard.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        greenCard.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+                dispose();
+
+                new HalamanSudahTopUp().setVisible(true);
+            }
+        });
 
         tagihanCard.add(iconBox);
         tagihanCard.add(tagihan);
