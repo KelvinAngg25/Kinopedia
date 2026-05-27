@@ -131,5 +131,21 @@ public class DataTransaksi {
         this.namaAkun = namaAkun;
     }
     
+    public void setKonfirmasi(boolean konfirmasi) {
+        this.konfirmasi = konfirmasi;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setTanggalKonfirmasi(String tanggalKonfirmasi) {
+        this.tanggalKonfirmasi = tanggalKonfirmasi;
+    }
+
+    public void setWaktuKonfirmasi(String waktuKonfirmasi) {
+        this.waktuKonfirmasi = waktuKonfirmasi;
+    }
+    
     
 }

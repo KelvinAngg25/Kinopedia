@@ -13,17 +13,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class HalamanSudahTopUp extends JFrame {
+public class DaftarTagihanBelumTop extends JFrame {
 
     DataUser user = Kinopedia.Session.getInstance().getCurrentUser();
 
-    public HalamanSudahTopUp() {
+    public DaftarTagihanBelumTop() {
 
         try {
-            setTitle("Tagihan Sudah di Top-Up");
+            setTitle("Tagihan Belum di Top-Up");
             setSize(470, 844);
             setLocationRelativeTo(null);
-            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             setResizable(false);
 
             JPanel main = new JPanel();
@@ -79,8 +79,6 @@ public class HalamanSudahTopUp extends JFrame {
                     }
                 });
                 
-                main.add(btnBack);
-                
                 // ================= CONTENT =================
                 JPanel content = new JPanel();
 
@@ -96,7 +94,7 @@ public class HalamanSudahTopUp extends JFrame {
                 ));
 
                 for (Kinopedia.DataTransaksi tr : Main.dataTransaksi) {
-                    if (tr.isKonfirmasi()) {
+                    if (!tr.isKonfirmasi()) {
                         JPanel wrap = new JPanel();
 
                         wrap.setOpaque(false);
@@ -176,8 +174,8 @@ public class HalamanSudahTopUp extends JFrame {
         Color start;
         Color end;
 
-        start = new Color(45, 170, 35);
-        end = new Color(5, 60, 15);
+        start = new Color(160, 30, 30);
+        end = new Color(139, 0, 0);;
 
         GradientPanel card = new GradientPanel(start, end);
 
@@ -241,7 +239,7 @@ public class HalamanSudahTopUp extends JFrame {
                 dispose();
 
                 DetailTransaksiSeller detail = new DetailTransaksiSeller(
-                        true,
+                        false,
                         tr.getIdTransaksi(),
                         tr.getTanggal() + " " + tr.getWaktu(),
                         tr.getNamaAkun(),
@@ -249,9 +247,9 @@ public class HalamanSudahTopUp extends JFrame {
                         tr.getJenisGame(),
                         tr.getPembayaran(),
                         tr.getNominal(),
-                        true,
+                        false,
                         tr.getUsername(),
-                        tr.getTanggalKonfirmasi() + " " + tr.getWaktuKonfirmasi()
+                        ""
                 );
 
                 detail.setVisible(true);
@@ -266,22 +264,6 @@ public class HalamanSudahTopUp extends JFrame {
         card.add(date);
 
         card.add(arrow);
-        
-        // ================= STATUS =================
-        JLabel detailText = new JLabel(
-                "Top up telah diproses pada "
-                + tr.getTanggalKonfirmasi()
-                + " • "
-                + tr.getWaktuKonfirmasi()
-        );
-
-        detailText.setFont(new Font("SansSerif", Font.PLAIN, 10));
-
-        detailText.setForeground(new Color(220, 220, 220));
-
-        detailText.setBounds(16, 78, 350, 15);
-
-        card.add(detailText);
 
         return card;
     }
@@ -350,15 +332,14 @@ public class HalamanSudahTopUp extends JFrame {
     }
 
     // ================= MAIN =================
-    public static void main(String[] args) {
-
-        SwingUtilities.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-
-                new HalamanSudahTopUp();
-            }
-        });
-    }
+//    public static void main(String[] args) {
+//
+//        SwingUtilities.invokeLater(new Runnable() {
+//
+//            @Override
+//            public void run() {
+//                new DaftarTagihanBelumTop();
+//            }
+//        });
+//    }
 }

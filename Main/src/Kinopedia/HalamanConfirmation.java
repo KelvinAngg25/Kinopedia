@@ -29,7 +29,7 @@ public class HalamanConfirmation extends JFrame{
         setTitle("Kinopedia");
         setSize(470, 844);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(null);
 
         if (statusKonfirmasi) {
@@ -85,10 +85,12 @@ public class HalamanConfirmation extends JFrame{
                 if (halamanTerakhir.equals("Coin")) {
                     dispose();
                     new MainMiniGames().setVisible(true);
-                } else if (halamanTerakhir.equals("Seller")) {
+                } else if (halamanTerakhir.equals("SellerBelum")) {
                     dispose();
-//                    Diisi sama halaman belum ditop-up seller
-//                    new Kinopedia.model.Seller.Seller().setVisible(true);
+                    new Kinopedia.model.Seller.DaftarTagihanBelumTop().setVisible(true);
+                }  else if (halamanTerakhir.equals("SellerSudah")){
+                    dispose();
+                    new Kinopedia.model.Seller.HalamanSudahTopUp().setVisible(true);
                 } else if (halamanTerakhir.equals("Buyer")) {
                     dispose();
                     new Game(new Buyer()).setVisible(true);
