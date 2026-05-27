@@ -3,6 +3,7 @@ package Kinopedia.model.Seller;
 import Kinopedia.Main;
 import Kinopedia.view.LoginRegister.Login;
 import Kinopedia.view.LoginRegister.Register;
+import Kinopedia.DataTransaksi;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -103,6 +104,13 @@ public class Seller extends JFrame {
                 "Tagihan yang belum di proses",
                 true
         );
+        
+        redCard.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                new DaftarTagihanBelumTop();
+                dispose();
+            }
+        });
 
         redCard.setBounds(18, 92, 284, 62);
 
