@@ -1,5 +1,6 @@
 package Kinopedia.model;
 
+import Kinopedia.PilihanBundle.*;
 import Kinopedia.minigames.MainMiniGames;
 import javax.swing.*;
 import java.awt.*;
@@ -28,6 +29,21 @@ public class MetodeBayar extends JFrame{
             @Override
             public void mouseClicked(MouseEvent e) {
                 dispose();
+                if (pilihanGame.equals("Valorant")) {
+                    new BundleValorant(new Game(new Buyer())).setVisible(true);
+                } else if (pilihanGame.equals("CODM")) {
+                    new BundleCODM(new Game(new Buyer())).setVisible(true);
+                } else if (pilihanGame.equals("EFootball")) {
+                    new BundleEfootball(new Game(new Buyer())).setVisible(true);
+                } else if (pilihanGame.equals("FF")) {
+                    new BundleFF(new Game(new Buyer())).setVisible(true);
+                } else if (pilihanGame.equals("ML")) {
+                    new BundleML(new Game(new Buyer())).setVisible(true);
+                } else if (pilihanGame.equals("PUBG")) {
+                    new BundlePUBG(new Game(new Buyer())).setVisible(true);
+                } else {
+                    new BundleSteam(new Game(new Buyer())).setVisible(true);
+                }
             }
         });
         
@@ -44,7 +60,7 @@ public class MetodeBayar extends JFrame{
         };
         btnMasuk.setBounds(40, 660, 370, 45);
         btnMasuk.setBackground(new Color(255, 140, 0));
-        btnMasuk.setForeground(Color.BLACK);
+        btnMasuk.setForeground(Color.WHITE);
         btnMasuk.setBorder(new RoundedBorder(20, new Color(255, 140, 0)));
         btnMasuk.setFont(new Font("Arial", Font.BOLD, 14));
         btnMasuk.setMargin(new Insets(0, 0, 0, 0));
@@ -279,7 +295,7 @@ public class MetodeBayar extends JFrame{
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 g2.setColor(getBackground());
-                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 40, 40);
                 g2.dispose();
                 super.paintComponent(g);
             }
@@ -290,7 +306,7 @@ public class MetodeBayar extends JFrame{
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 g2.setColor(new Color(255, 140, 0));
                 g2.setStroke(new BasicStroke(1)); 
-                g2.drawRoundRect(0, 0, getWidth()-1, getHeight(), 20, 20);
+                g2.drawRoundRect(0, 0, getWidth()-1, getHeight(), 40, 40);
                 g2.dispose();
             }
         };
@@ -374,10 +390,10 @@ public class MetodeBayar extends JFrame{
         this.pilihanMetodePembayaran = pilihanMetodePembayaran;
     }
     
-    public static void main(String[] args) {
-        MetodeBayar frame = new MetodeBayar("KelvinAngjaya123", "2254012", 432000, "Valorant", "Kelvin");
-        frame.setVisible(true);
-    }
+//    public static void main(String[] args) {
+//        MetodeBayar frame = new MetodeBayar("KelvinAngjaya123", "2254012", 432000, "Valorant", "Kelvin");
+//        frame.setVisible(true);
+//    }
     
     private static class RoundedImageLabel extends JLabel {
 

@@ -41,6 +41,7 @@ public class DetailTransaksi extends JFrame{
         btnBack.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                new History().setVisible(true);
                 dispose();
             }
         });

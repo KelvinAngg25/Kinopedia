@@ -11,11 +11,11 @@ package Kinopedia.minigames.FllapyWild;
  */
 
 import javax.swing.SwingUtilities;
- 
+
 public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            GameWindow window = new GameWindow();
+            GameWindow window = new GameWindow(null);
             window.setVisible(true);
         });
     }

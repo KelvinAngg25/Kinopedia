@@ -1,0 +1,1 @@
+INV-15392609,17-05-2026,15:30,JokoStar,83746251(3621),ML,Gopay,1400,false,"","",DewataML

@@ -33,7 +33,10 @@ public class FlappyWild extends JPanel implements KeyListener, MouseListener {
 
     // ===== Skor =====
     private int score    = 0;
-    private int maxScore = 100;
+//    private int maxScore;
+    private int maxScore = 100; // tidak ada max score
+    
+    private boolean rewardSudahDiberikan = false;
 
     // ===== Timer game loop (±60fps) =====
     private Timer gameTimer;
@@ -73,7 +76,9 @@ public class FlappyWild extends JPanel implements KeyListener, MouseListener {
 
         // Game loop: dipanggil setiap 16ms (~60fps)
         gameTimer = new Timer(16, e -> {
-            if (gameState == GameState.PLAYING) updateGame();
+            if (gameState == GameState.PLAYING){
+                updateGame();
+            }
             repaint();
         });
     }
@@ -130,7 +135,9 @@ public class FlappyWild extends JPanel implements KeyListener, MouseListener {
     public void startGame(String character) {
         this.selectedCharacter = character;
         resetGame();
-        if (!gameTimer.isRunning()) gameTimer.start();
+        if (!gameTimer.isRunning()){
+            gameTimer.start();
+        }
         requestFocusInWindow();
     }
 
@@ -141,6 +148,7 @@ public class FlappyWild extends JPanel implements KeyListener, MouseListener {
         score            = 0;
         pipeSpawnCounter = 0;
         bgScrollX        = 0;
+        rewardSudahDiberikan = false;
         overlayButtons.setVisible(false);
         btnPause.setVisible(false);
         startCountdown();
@@ -180,7 +188,9 @@ public class FlappyWild extends JPanel implements KeyListener, MouseListener {
 
     // Pause game
     private void pauseGame() {
-        if (gameState != GameState.PLAYING) return;
+        if (gameState != GameState.PLAYING) {
+            return;
+        }
         gameState = GameState.PAUSED;
         // Tampilkan Continue dan Exit, sembunyikan Pause
         btnContinue.setVisible(true);
@@ -202,9 +212,25 @@ public class FlappyWild extends JPanel implements KeyListener, MouseListener {
         gameTimer.stop();
         overlayButtons.setVisible(false);
         btnPause.setVisible(false);
+        gameWindow.refreshMainMiniGames();
         gameWindow.showMenu();
     }
-
+    
+    // =========================================================
+    //  Proses reward koinn
+    // =========================================================
+    private void berikanReward(boolean menang) {
+        if (rewardSudahDiberikan) {
+            return;
+        }
+        rewardSudahDiberikan = true;
+        
+        GameReward reward = new FlappyWildReward(score, menang);
+        KoinManager.prosesReward(reward);
+        
+        System.out.println("[FlappyWild] Score: " + score + " | Menang: " + menang + " | Koin didapat: " + reward.hitungKoin());
+    }
+    
     // =========================================================
     //  Logika update game
     // =========================================================
@@ -235,7 +261,9 @@ public class FlappyWild extends JPanel implements KeyListener, MouseListener {
             // Cek apakah karakter melewati pipa → tambah skor
             if (pipe.isPassed(bird.getX() + bird.getWidth())) {
                 score++;
-                if (score >= maxScore) { triggerVictory(); return; }
+                if (score >= maxScore) {
+                    triggerVictory(); return;
+                }
             }
 
             if (pipe.isOffScreen()) toRemove.add(pipe);
@@ -258,6 +286,7 @@ public class FlappyWild extends JPanel implements KeyListener, MouseListener {
 
     private void triggerGameOver() {
         gameState = GameState.GAME_OVER;
+        berikanReward(false);
         btnContinue.setVisible(false);
         btnExit.setVisible(false);
         btnBack.setVisible(true);
@@ -268,6 +297,7 @@ public class FlappyWild extends JPanel implements KeyListener, MouseListener {
 
     private void triggerVictory() {
         gameState = GameState.VICTORY;
+        berikanReward(true);
         btnContinue.setVisible(false);
         btnExit.setVisible(false);
         btnBack.setVisible(true);

@@ -29,7 +29,7 @@ public class HalamanConfirmation extends JFrame{
         setTitle("Kinopedia");
         setSize(470, 844);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(null);
 
         if (statusKonfirmasi) {
@@ -72,7 +72,7 @@ public class HalamanConfirmation extends JFrame{
         btnExit.setContentAreaFilled(false);
         btnExit.setBounds(40, 660, 370, 45);
         btnExit.setBackground(color);
-        btnExit.setForeground(Color.BLACK);
+        btnExit.setForeground(Color.WHITE);
         btnExit.setBorder(new RoundedBorder(15));
         btnExit.setFont(new Font("Arial", Font.BOLD, 14));
         btnExit.setBorder(BorderFactory.createEmptyBorder());
@@ -85,13 +85,14 @@ public class HalamanConfirmation extends JFrame{
                 if (halamanTerakhir.equals("Coin")) {
                     dispose();
                     new MainMiniGames().setVisible(true);
-                } else if (halamanTerakhir.equals("Seller")) {
+                } else if (halamanTerakhir.equals("SellerBelum")) {
                     dispose();
-//                    Diisi sama halaman utama seller
-//                    new MainMiniGames().setVisible(true);
+                    new Kinopedia.model.Seller.DaftarTagihanBelumTop().setVisible(true);
+                }  else if (halamanTerakhir.equals("SellerSudah")){
+                    dispose();
+                    new Kinopedia.model.Seller.HalamanSudahTopUp().setVisible(true);
                 } else if (halamanTerakhir.equals("Buyer")) {
                     dispose();
-//                    Diisi sama halaman utama buyer
                     new Game(new Buyer()).setVisible(true);
                 }
             }

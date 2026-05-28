@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 public class Buyer extends JFrame {
     public Buyer() {
-        DataUser userLogin = Main.dataUser.get(0);
+        DataUser userLogin = Kinopedia.Session.getInstance().getCurrentUser();
         System.out.println(userLogin.getNama());
         
         setTitle("Kinopedia | Halaman Utama ");
@@ -80,7 +80,7 @@ public class Buyer extends JFrame {
         btn.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         btn.setBackground(new Color(0xFF8C1A));
-        btn.setForeground(Color.BLACK);
+        btn.setForeground(Color.WHITE);
         btn.setFont(new Font("SansSerif", Font.BOLD, 16));
 
         btn.setFocusPainted(false);

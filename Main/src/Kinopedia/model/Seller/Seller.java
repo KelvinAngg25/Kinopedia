@@ -3,9 +3,12 @@ package Kinopedia.model.Seller;
 import Kinopedia.Main;
 import Kinopedia.view.LoginRegister.Login;
 import Kinopedia.view.LoginRegister.Register;
+import Kinopedia.DataTransaksi;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
+import java.awt.event.*;
+import Kinopedia.model.Seller.HalamanSudahTopUp;
 
 public class Seller extends JFrame {
 
@@ -101,6 +104,13 @@ public class Seller extends JFrame {
                 "Tagihan yang belum di proses",
                 true
         );
+        
+        redCard.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                new DaftarTagihanBelumTop();
+                dispose();
+            }
+        });
 
         redCard.setBounds(18, 92, 324, 62);
 
@@ -113,7 +123,20 @@ public class Seller extends JFrame {
                 false
         );
 
-        greenCard.setBounds(18, 168, 324, 62);
+        greenCard.setBounds(18, 168, 284, 62);
+        // ================= EVENT SUDAH TOPUP =================
+        greenCard.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        greenCard.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+                dispose();
+
+                new HalamanSudahTopUp().setVisible(true);
+            }
+        });
 
         tagihanCard.add(iconBox);
         tagihanCard.add(tagihan);
@@ -379,15 +402,15 @@ public class Seller extends JFrame {
         }
     }
 
-    public static void main(String[] args) {
-
-        SwingUtilities.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-
-                new Seller();
-            }
-        });
-    }
+//    public static void main(String[] args) {
+//
+//        SwingUtilities.invokeLater(new Runnable() {
+//
+//            @Override
+//            public void run() {
+//
+//                new Seller();
+//            }
+//        });
+//    }
 }

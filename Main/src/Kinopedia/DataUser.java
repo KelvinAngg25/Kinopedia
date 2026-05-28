@@ -5,16 +5,18 @@
  */
 package Kinopedia;
 
+
+/**
+ *
+ * @author Victus
+ */
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-/**
- *
- * @author Victus
- */
 public class DataUser {
     private String username;
     private String password;
@@ -58,5 +60,9 @@ public class DataUser {
 
     public void setKredit(int kredit) {
         this.kredit = kredit;
+    }
+
+    public void updateKoin(int totalKoinBaru) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
