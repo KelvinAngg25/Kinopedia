@@ -313,6 +313,7 @@ public class DetailTransaksiSeller extends JFrame{
                     
                     btnKonfirmasi.setVisible(false);
                     backgroundSuccess.setVisible(true);
+                    Main.admin.setKoin(Main.admin.getKoin() + totalHargaBundle);
                     int tambahKreditUser = totalHargaBundle / 50000;
                     for (int i = 0; i < Main.dataUser.size() ; i++) {
                         if (Main.dataUser.get(i).getNama().equals(namaAkun)) {
