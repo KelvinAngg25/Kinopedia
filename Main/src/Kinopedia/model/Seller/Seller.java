@@ -46,12 +46,12 @@ public class Seller extends JFrame {
 
         JLabel title = new JLabel("Menu Seller");
         title.setFont(new Font("SansSerif", Font.BOLD, 18));
-        title.setBounds(25, 70, 200, 25);
+        title.setBounds(55, 70, 250, 25);
 
         JLabel subtitle = new JLabel("Kelola tagihan dan saldo");
         subtitle.setFont(new Font("SansSerif", Font.PLAIN, 11));
         subtitle.setForeground(Color.GRAY);
-        subtitle.setBounds(25, 95, 200, 20);
+        subtitle.setBounds(55, 95, 250, 20);
 
         mainPanel.add(title);
         mainPanel.add(subtitle);
@@ -66,7 +66,7 @@ public class Seller extends JFrame {
         );
 
         tagihanCard.setLayout(null);
-        tagihanCard.setBounds(18, 140, 320, 245);
+        tagihanCard.setBounds(55, 140, 360, 245);
 
         RoundedPanel iconBox = new RoundedPanel(
                 new Color(255, 145, 0),
@@ -112,7 +112,7 @@ public class Seller extends JFrame {
             }
         });
 
-        redCard.setBounds(18, 92, 284, 62);
+        redCard.setBounds(18, 92, 324, 62);
 
         JPanel greenCard = createStatusCard(
                 new Color(131, 184, 123),
@@ -158,7 +158,7 @@ public class Seller extends JFrame {
         );
 
         saldoCard.setLayout(null);
-        saldoCard.setBounds(18, 402, 320, 225);
+        saldoCard.setBounds(55, 402, 360, 225);
 
         RoundedPanel dollarBox = new RoundedPanel(
                 new Color(255, 145, 0),
@@ -190,7 +190,7 @@ public class Seller extends JFrame {
                 16
         );
 
-        orangeBox.setBounds(18, 95, 284, 108);
+        orangeBox.setBounds(18, 95, 324, 108);
         orangeBox.setLayout(new GridBagLayout());
 
         JLabel amount = new JLabel("Rp " + Main.admin.getKoin());
@@ -211,7 +211,7 @@ public class Seller extends JFrame {
 
         RoundedButton logout = new RoundedButton("Log Out");
 
-        logout.setBounds(18, 655, 320, 42);
+        logout.setBounds(55, 655, 360, 42);
         logout.setBackground(new Color(255, 140, 20));
         logout.setForeground(Color.BLACK);
         logout.setFont(new Font("SansSerif", Font.BOLD, 16));
@@ -234,7 +234,7 @@ public class Seller extends JFrame {
         JLabel logo = new JLabel("K");
         logo.setFont(new Font("SansSerif", Font.BOLD, 34));
         logo.setHorizontalAlignment(SwingConstants.CENTER);
-        logo.setBounds(160, 715, 40, 40);
+        logo.setBounds(215, 715, 40, 40);
 
         mainPanel.add(logo);
     }
@@ -283,7 +283,7 @@ public class Seller extends JFrame {
                 20
         );
 
-        number.setBounds(218, 15, 24, 24);
+        number.setBounds(258, 15, 24, 24);
         number.setLayout(new GridBagLayout());
 
         JLabel num = new JLabel("6");
@@ -293,7 +293,7 @@ public class Seller extends JFrame {
 
         JLabel arrow = new JLabel("›");
         arrow.setFont(new Font("SansSerif", Font.BOLD, 28));
-        arrow.setBounds(255, 9, 20, 35);
+        arrow.setBounds(295, 9, 20, 35);
 
         panel.add(iconPanel);
         panel.add(titleLabel);
