@@ -74,8 +74,11 @@ public class MetodeBayar extends JFrame{
         btnMasuk.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                dispose();
-                new DetailPembayaran(usernameGame, idGame, getPilihanMetodePembayaran(), totalHargaBundle, pilihanGame, username).setVisible(true);
+                if (!getPilihanMetodePembayaran().isEmpty()) {
+                    dispose();
+                    new DetailPembayaran(usernameGame, idGame, getPilihanMetodePembayaran(), totalHargaBundle, pilihanGame, username).setVisible(true);
+                }
+                
             }
         });
         
