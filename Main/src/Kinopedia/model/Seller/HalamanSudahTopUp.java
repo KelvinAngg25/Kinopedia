@@ -348,17 +348,4 @@ public class HalamanSudahTopUp extends JFrame {
             g2.dispose();
         }
     }
-
-    // ================= MAIN =================
-    public static void main(String[] args) {
-
-        SwingUtilities.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-
-                new HalamanSudahTopUp();
-            }
-        });
-    }
 }

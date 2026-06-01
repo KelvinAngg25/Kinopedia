@@ -124,11 +124,6 @@ public class Buyer extends JFrame {
         }
     }
 
-    public static void main(String[] args) {
-        Buyer frame = new Buyer();
-        frame.setVisible(true);
-    }
-
     static class RoundedButton extends JButton {
 
         private final int radius;
