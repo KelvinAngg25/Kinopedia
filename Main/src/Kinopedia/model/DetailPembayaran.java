@@ -35,7 +35,7 @@ public class DetailPembayaran extends JFrame{
             @Override
             public void mouseClicked(MouseEvent e) {
                 dispose();
-                new MetodeBayar("KelvinAngjaya123", "2254012", 432000, "Valorant", "Kelvin").setVisible(true);
+                new MetodeBayar(usernameGame, idGame, totalHargaBundle, pilihanGame, username).setVisible(true);
             }
         });
         
