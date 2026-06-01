@@ -31,7 +31,6 @@ public class Logic extends JFrame implements Runnable{
     String p3;
     private int menit,detik;
     boolean pause;
-    private View view;
     private JLabel timerLabel;
     private JLabel livesLabel;
     private boolean gameRunning = true;
@@ -86,15 +85,15 @@ public class Logic extends JFrame implements Runnable{
     
     private int[][] Puzzle1() {
         int[][] puzzle = new int[9][9];
-        puzzle[0] = new int[]{9, 0, 6, 0, 1, 0, 0, 7, 0};
-        puzzle[1] = new int[]{0, 5, 0, 7, 0, 3, 4, 0, 9};
-        puzzle[2] = new int[]{3, 0, 0, 9, 0, 8, 0, 6, 0};
-        puzzle[3] = new int[]{0, 1, 0, 0, 7, 2, 0, 8, 0};
-        puzzle[4] = new int[]{6, 0, 4, 0, 3, 0, 2, 0, 7};
-        puzzle[5] = new int[]{0, 7, 0, 5, 0, 9, 0, 1, 0};
-        puzzle[6] = new int[]{0, 6, 0, 1, 0, 0, 8, 0, 2};
-        puzzle[7] = new int[]{2, 0, 1, 0, 9, 6, 0, 4, 0};
-        puzzle[8] = new int[]{0, 3, 0, 0, 8, 0, 1, 0, 6};
+        puzzle[0] = new int[]{9,0,0,4,0,0,0,0,8};
+        puzzle[1] = new int[]{0,5,0,0,6,0,0,0,0};
+        puzzle[2] = new int[]{0,0,0,0,0,0,5,0,0};
+        puzzle[3] = new int[]{0,1,0,0,0,2,0,0,0};
+        puzzle[4] = new int[]{6,0,0,8,0,0,0,0,7};
+        puzzle[5] = new int[]{0,0,0,5,0,0,0,1,0};
+        puzzle[6] = new int[]{0,6,9,1,5,0,0,3,0};
+        puzzle[7] = new int[]{0,0,0,3,0,0,7,0,0};
+        puzzle[8] = new int[]{0,3,0,0,0,0,0,0,0};
         return puzzle;
     }
     
@@ -114,15 +113,15 @@ public class Logic extends JFrame implements Runnable{
     
     private int[][] Puzzle2() {
         int[][] puzzle = new int[9][9];
-        puzzle[0] = new int[]{7, 0, 0, 5, 0, 4, 0, 6, 0};
-        puzzle[1] = new int[]{0, 4, 9, 0, 6, 0, 1, 0, 5};
-        puzzle[2] = new int[]{6, 0, 0, 8, 0, 9, 0, 7, 0};
-        puzzle[3] = new int[]{3, 0, 2, 0, 5, 0, 4, 0, 6};
-        puzzle[4] = new int[]{0, 1, 0, 4, 0, 2, 0, 5, 0};
-        puzzle[5] = new int[]{4, 0, 5, 0, 9, 0, 2, 0, 8};
-        puzzle[6] = new int[]{0, 9, 0, 2, 0, 6, 0, 0, 1};
-        puzzle[7] = new int[]{5, 0, 7, 0, 3, 0, 6, 4, 0};
-        puzzle[8] = new int[]{0, 6, 0, 9, 0, 5, 0, 2, 0};
+        puzzle[0] = new int[]{0,0,8,0,0,0,0,6,2};
+        puzzle[1] = new int[]{0,4,0,3,0,7,1,0,0};
+        puzzle[2] = new int[]{0,0,0,0,2,0,0,0,0};
+        puzzle[3] = new int[]{3,0,0,0,5,0,0,0,0};
+        puzzle[4] = new int[]{9,0,6,0,0,0,0,0,0};
+        puzzle[5] = new int[]{0,0,0,0,0,3,2,0,0};
+        puzzle[6] = new int[]{8,0,0,0,0,0,5,0,0};
+        puzzle[7] = new int[]{5,0,0,0,3,0,0,0,0};
+        puzzle[8] = new int[]{1,6,0,0,4,0,0,0,0};
         return puzzle;
     }
     
@@ -142,15 +141,15 @@ public class Logic extends JFrame implements Runnable{
     
     private int[][] Puzzle3() {
         int[][] puzzle = new int[9][9];
-        puzzle[0] = new int[]{6, 0, 5, 0, 3, 0, 4, 0, 9};
-        puzzle[1] = new int[]{0, 3, 0, 5, 0, 8, 0, 6, 0};
-        puzzle[2] = new int[]{2, 0, 9, 0, 6, 0, 5, 0, 8};
-        puzzle[3] = new int[]{8, 0, 0, 3, 0, 9, 0, 2, 0};
-        puzzle[4] = new int[]{0, 2, 6, 0, 7, 0, 3, 4, 0};
-        puzzle[5] = new int[]{0, 7, 0, 2, 0, 6, 0, 0, 1};
-        puzzle[6] = new int[]{1, 0, 7, 0, 8, 0, 0, 5, 0};
-        puzzle[7] = new int[]{0, 4, 0, 9, 0, 5, 6, 0, 7};
-        puzzle[8] = new int[]{5, 0, 8, 0, 2, 0, 9, 0, 0};
+        puzzle[0] = new int[]{6,0,0,0,0,2,0,0,0};
+        puzzle[1] = new int[]{7,0,0,5,0,0,0,0,2};
+        puzzle[2] = new int[]{2,0,0,0,0,0,0,0,0};
+        puzzle[3] = new int[]{0,0,0,0,0,0,7,2,0};
+        puzzle[4] = new int[]{0,0,0,8,7,0,0,4,0};
+        puzzle[5] = new int[]{4,7,3,0,0,0,0,0,0};
+        puzzle[6] = new int[]{0,9,7,0,0,3,0,0,0};
+        puzzle[7] = new int[]{0,4,2,0,0,5,6,0,0};
+        puzzle[8] = new int[]{0,0,0,0,0,0,0,0,0};
         return puzzle;
     }
     
@@ -170,15 +169,15 @@ public class Logic extends JFrame implements Runnable{
     
     private int[][] Puzzle4() {
         int[][] puzzle = new int[9][9];
-        puzzle[0] = new int[]{3, 0, 1, 0, 7, 0, 9, 0, 4};
-        puzzle[1] = new int[]{0, 8, 0, 5, 0, 9, 0, 1, 0};
-        puzzle[2] = new int[]{4, 0, 9, 0, 3, 0, 2, 0, 7};
-        puzzle[3] = new int[]{9, 0, 6, 0, 5, 0, 8, 0, 2};
-        puzzle[4] = new int[]{0, 2, 0, 3, 0, 6, 0, 4, 0};
-        puzzle[5] = new int[]{5, 0, 3, 0, 8, 0, 1, 0, 6};
-        puzzle[6] = new int[]{0, 3, 0, 9, 0, 8, 0, 6, 0};
-        puzzle[7] = new int[]{8, 0, 5, 0, 6, 0, 4, 2, 0};
-        puzzle[8] = new int[]{0, 9, 0, 4, 0, 5, 0, 0, 8};
+        puzzle[0] = new int[]{0,0,0,0,7,0,0,0,0};
+        puzzle[1] = new int[]{0,0,7,0,0,0,0,0,3};
+        puzzle[2] = new int[]{0,0,0,0,0,0,0,0,0};
+        puzzle[3] = new int[]{0,0,0,0,0,7,8,3,0};
+        puzzle[4] = new int[]{0,0,0,3,9,0,0,4,5};
+        puzzle[5] = new int[]{0,0,0,0,8,4,0,0,6};
+        puzzle[6] = new int[]{7,0,0,0,2,0,0,0,1};
+        puzzle[7] = new int[]{0,0,5,7,0,0,0,0,0};
+        puzzle[8] = new int[]{0,9,0,0,0,0,3,0,8};
         return puzzle;
     }
     
@@ -198,15 +197,15 @@ public class Logic extends JFrame implements Runnable{
     
     private int[][] Puzzle5() {
         int[][] puzzle = new int[9][9];
-        puzzle[0] = new int[]{4, 0, 7, 0, 1, 0, 6, 0, 5};
-        puzzle[1] = new int[]{0, 2, 0, 9, 0, 8, 0, 3, 0};
-        puzzle[2] = new int[]{5, 0, 3, 0, 7, 0, 2, 0, 9};
-        puzzle[3] = new int[]{0, 6, 0, 4, 0, 9, 0, 5, 0};
-        puzzle[4] = new int[]{3, 0, 4, 0, 8, 0, 9, 0, 6};
-        puzzle[5] = new int[]{0, 1, 0, 5, 0, 6, 0, 7, 0};
-        puzzle[6] = new int[]{9, 0, 1, 0, 4, 0, 5, 0, 8};
-        puzzle[7] = new int[]{0, 7, 0, 1, 0, 5, 0, 4, 0};
-        puzzle[8] = new int[]{2, 0, 5, 0, 6, 0, 1, 0, 7};
+        puzzle[0] = new int[]{0,0,0,3,0,2,0,0,0};
+        puzzle[1] = new int[]{0,0,0,0,0,8,0,0,0};
+        puzzle[2] = new int[]{5,0,0,0,7,0,0,0,0};
+        puzzle[3] = new int[]{0,0,0,0,3,0,0,0,0};
+        puzzle[4] = new int[]{3,5,0,7,8,0,0,0,6};
+        puzzle[5] = new int[]{0,1,9,0,0,0,0,7,3};
+        puzzle[6] = new int[]{9,0,0,0,0,0,5,0,0};
+        puzzle[7] = new int[]{6,0,0,0,0,0,0,4,0};
+        puzzle[8] = new int[]{0,4,0,0,0,3,0,0,0};
         return puzzle;
     }
     
@@ -226,15 +225,15 @@ public class Logic extends JFrame implements Runnable{
     
     private int[][] Puzzle6() {
         int[][] puzzle = new int[9][9];
-        puzzle[0] = new int[]{6, 0, 2, 0, 1, 0, 8, 0, 9};
-        puzzle[1] = new int[]{0, 3, 0, 6, 0, 4, 0, 7, 0};
-        puzzle[2] = new int[]{5, 0, 9, 0, 7, 0, 1, 0, 6};
-        puzzle[3] = new int[]{0, 9, 0, 2, 0, 1, 0, 5, 0};
-        puzzle[4] = new int[]{1, 0, 7, 0, 6, 0, 3, 0, 8};
-        puzzle[5] = new int[]{0, 8, 0, 7, 0, 5, 0, 6, 0};
-        puzzle[6] = new int[]{4, 0, 5, 0, 2, 0, 7, 0, 3};
-        puzzle[7] = new int[]{0, 6, 0, 1, 0, 8, 0, 9, 0};
-        puzzle[8] = new int[]{9, 0, 8, 0, 4, 0, 6, 0, 5};
+        puzzle[0] = new int[]{6,7,0,0,0,0,8,0,0};
+        puzzle[1] = new int[]{0,0,0,0,0,4,0,7,0};
+        puzzle[2] = new int[]{0,0,9,0,7,0,0,0,0};
+        puzzle[3] = new int[]{0,9,0,2,8,0,0,0,7};
+        puzzle[4] = new int[]{0,0,0,0,0,0,3,2,0};
+        puzzle[5] = new int[]{0,8,4,7,0,0,0,0,0};
+        puzzle[6] = new int[]{0,0,0,9,0,0,0,8,0};
+        puzzle[7] = new int[]{7,0,0,0,0,0,2,0,0};
+        puzzle[8] = new int[]{0,0,0,0,0,0,6,0,0};
         return puzzle;
     }
     
@@ -254,15 +253,16 @@ public class Logic extends JFrame implements Runnable{
     
     private int[][] Puzzle7() {
         int[][] puzzle = new int[9][9];
-        puzzle[0] = new int[]{3, 0, 5, 0, 1, 0, 6, 0, 9};
-        puzzle[1] = new int[]{0, 2, 0, 3, 0, 4, 0, 5, 0};
-        puzzle[2] = new int[]{8, 0, 1, 0, 6, 0, 3, 0, 4};
-        puzzle[3] = new int[]{0, 7, 0, 1, 0, 3, 0, 8, 0};
-        puzzle[4] = new int[]{1, 0, 2, 0, 8, 0, 4, 0, 7};
-        puzzle[5] = new int[]{0, 3, 0, 7, 0, 6, 0, 1, 0};
-        puzzle[6] = new int[]{9, 0, 3, 0, 7, 0, 8, 0, 5};
-        puzzle[7] = new int[]{0, 8, 0, 9, 0, 1, 0, 4, 0};
-        puzzle[8] = new int[]{2, 0, 4, 0, 3, 0, 7, 0, 1};
+        puzzle[0] = new int[]{3,0,0,0,0,7,0,2,0};
+        puzzle[1] = new int[]{0,0,6,0,0,0,0,0,8};
+        puzzle[2] = new int[]{0,0,1,0,0,0,0,0,0};
+        puzzle[3] = new int[]{0,0,0,0,2,3,0,0,6};
+        puzzle[4] = new int[]{0,0,2,0,0,0,0,0,0};
+        puzzle[5] = new int[]{0,3,0,0,0,6,9,0,2};
+        puzzle[6] = new int[]{0,0,0,0,7,0,0,0,5};
+        puzzle[7] = new int[]{0,0,0,0,0,1,0,4,0};
+        puzzle[8] = new int[]{2,0,0,0,3,0,0,9,0};
+
         return puzzle;
     }
     
@@ -283,15 +283,15 @@ public class Logic extends JFrame implements Runnable{
     
     private int[][] Puzzle8() {
         int[][] puzzle = new int[9][9];
-        puzzle[0] = new int[]{9, 0, 4, 0, 1, 0, 7, 0, 6};
-        puzzle[1] = new int[]{0, 1, 0, 2, 0, 8, 0, 9, 0};
-        puzzle[2] = new int[]{2, 0, 7, 0, 9, 0, 3, 0, 8};
-        puzzle[3] = new int[]{0, 3, 0, 9, 0, 4, 0, 7, 0};
-        puzzle[4] = new int[]{7, 0, 5, 0, 8, 0, 9, 0, 3};
-        puzzle[5] = new int[]{0, 9, 0, 5, 0, 7, 0, 4, 0};
-        puzzle[6] = new int[]{3, 0, 8, 0, 2, 0, 1, 0, 4};
-        puzzle[7] = new int[]{0, 2, 0, 8, 0, 1, 0, 3, 0};
-        puzzle[8] = new int[]{5, 0, 1, 0, 4, 0, 2, 0, 9};
+        puzzle[0] = new int[]{0,8,4,0,0,5,0,2,0};
+        puzzle[1] = new int[]{0,0,0,0,0,0,0,0,0};
+        puzzle[2] = new int[]{2,0,0,4,0,0,0,0,0};
+        puzzle[3] = new int[]{8,0,0,0,0,0,5,0,0};
+        puzzle[4] = new int[]{7,0,0,0,0,2,0,0,0};
+        puzzle[5] = new int[]{0,0,0,0,3,0,0,0,0};
+        puzzle[6] = new int[]{0,0,0,6,2,0,0,0,4};
+        puzzle[7] = new int[]{4,0,0,0,5,0,6,0,7};
+        puzzle[8] = new int[]{5,6,0,0,0,0,0,8,0};
         return puzzle;
     }
  
@@ -311,15 +311,15 @@ public class Logic extends JFrame implements Runnable{
     
     private int[][] Puzzle9() {
         int[][] puzzle = new int[9][9];
-        puzzle[0] = new int[]{2, 0, 9, 0, 1, 0, 7, 0, 8};
-        puzzle[1] = new int[]{0, 8, 0, 7, 0, 3, 0, 4, 0};
-        puzzle[2] = new int[]{4, 0, 3, 0, 2, 0, 6, 0, 1};
-        puzzle[3] = new int[]{0, 2, 0, 5, 0, 9, 0, 6, 0};
-        puzzle[4] = new int[]{9, 0, 6, 0, 3, 0, 5, 0, 7};
-        puzzle[5] = new int[]{0, 3, 0, 6, 0, 2, 0, 9, 0};
-        puzzle[6] = new int[]{6, 0, 4, 0, 5, 0, 3, 0, 2};
-        puzzle[7] = new int[]{0, 1, 0, 3, 0, 6, 0, 7, 0};
-        puzzle[8] = new int[]{3, 0, 7, 0, 8, 0, 9, 0, 6};
+        puzzle[0] = new int[]{0,6,0,0,0,5,0,0,0};
+        puzzle[1] = new int[]{0,0,1,0,0,0,0,0,0};
+        puzzle[2] = new int[]{0,0,0,0,0,0,0,5,0};
+        puzzle[3] = new int[]{0,0,8,0,0,0,0,0,3};
+        puzzle[4] = new int[]{0,0,0,0,3,0,5,2,0};
+        puzzle[5] = new int[]{0,0,0,0,0,0,0,0,4};
+        puzzle[6] = new int[]{6,0,4,1,0,0,3,0,0};
+        puzzle[7] = new int[]{0,1,2,0,9,0,0,0,5};
+        puzzle[8] = new int[]{0,5,0,0,8,4,0,0,0};
         return puzzle;
     }
     
@@ -339,15 +339,15 @@ public class Logic extends JFrame implements Runnable{
     
     private int[][] Puzzle10() {
         int[][] puzzle = new int[9][9];
-        puzzle[0] = new int[]{9, 0, 8, 0, 6, 0, 3, 0, 7};
-        puzzle[1] = new int[]{0, 6, 0, 4, 0, 9, 0, 5, 0};
-        puzzle[2] = new int[]{4, 0, 5, 0, 7, 0, 9, 0, 6};
-        puzzle[3] = new int[]{0, 5, 0, 8, 0, 2, 0, 6, 0};
-        puzzle[4] = new int[]{3, 0, 6, 0, 4, 0, 2, 0, 1};
-        puzzle[5] = new int[]{0, 8, 0, 1, 0, 6, 0, 3, 0};
-        puzzle[6] = new int[]{6, 0, 2, 0, 8, 0, 5, 0, 3};
-        puzzle[7] = new int[]{0, 3, 0, 2, 0, 7, 0, 9, 0};
-        puzzle[8] = new int[]{5, 0, 9, 0, 1, 0, 8, 0, 2};
+        puzzle[0] = new int[]{0,0,0,0,0,0,0,0,7};
+        puzzle[1] = new int[]{0,0,0,0,0,0,0,0,8};
+        puzzle[2] = new int[]{0,1,0,3,0,0,9,0,0};
+        puzzle[3] = new int[]{1,0,0,8,3,0,4,0,0};
+        puzzle[4] = new int[]{3,0,0,7,0,0,0,0,1};
+        puzzle[5] = new int[]{0,0,0,0,0,0,0,0,0};
+        puzzle[6] = new int[]{6,0,0,0,8,0,0,0,0};
+        puzzle[7] = new int[]{0,3,0,0,0,7,6,0,0};
+        puzzle[8] = new int[]{5,0,0,6,0,3,8,0,0};
         return puzzle;
     }
     
