@@ -272,7 +272,17 @@ public class DetailTransaksiSeller extends JFrame{
             btnKonfirmasi.setFocusPainted(false);
             add(btnKonfirmasi);
             
-            JPanel backgroundSuccess = new JPanel();
+            JPanel backgroundSuccess = new JPanel(){
+                @Override
+                protected void paintComponent(Graphics g) {
+                    Graphics2D g2 = (Graphics2D) g.create();
+                    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                    g2.setColor(new Color(198, 239, 206));
+                    g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+                    g2.dispose();
+                }
+            };
+            backgroundSuccess.setOpaque(false);
             backgroundSuccess.setBounds(45, 670, 370, 48);
             backgroundSuccess.setBackground(new Color(198, 239, 206));
             backgroundSuccess.setLayout(null);
@@ -338,7 +348,17 @@ public class DetailTransaksiSeller extends JFrame{
         } else {
             //  Ini untuk nanti saat seller membuka halaman yang udah sukses
             
-            JPanel backgroundSuccess = new JPanel();
+            JPanel backgroundSuccess = new JPanel(){
+                @Override
+                protected void paintComponent(Graphics g) {
+                    Graphics2D g2 = (Graphics2D) g.create();
+                    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                    g2.setColor(new Color(198, 239, 206));
+                    g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+                    g2.dispose();
+                }
+            };
+            backgroundSuccess.setOpaque(false);
             backgroundSuccess.setBounds(45, 670, 370, 48);
             backgroundSuccess.setBackground(new Color(198, 239, 206));
             backgroundSuccess.setLayout(null);

@@ -2,13 +2,9 @@ package Kinopedia.model.Seller;
 
 import Kinopedia.Main;
 import Kinopedia.view.LoginRegister.Login;
-import Kinopedia.view.LoginRegister.Register;
-import Kinopedia.DataTransaksi;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
-import java.awt.event.*;
-import Kinopedia.model.Seller.HalamanSudahTopUp;
 
 public class Seller extends JFrame {
 
@@ -104,13 +100,6 @@ public class Seller extends JFrame {
                 "Tagihan yang belum di proses",
                 true
         );
-        
-        redCard.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                new DaftarTagihanBelumTop();
-                dispose();
-            }
-        });
 
         redCard.setBounds(18, 92, 324, 62);
 
@@ -123,20 +112,7 @@ public class Seller extends JFrame {
                 false
         );
 
-        greenCard.setBounds(18, 168, 284, 62);
-        // ================= EVENT SUDAH TOPUP =================
-        greenCard.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-        greenCard.addMouseListener(new MouseAdapter() {
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-
-                dispose();
-
-                new HalamanSudahTopUp().setVisible(true);
-            }
-        });
+        greenCard.setBounds(18, 168, 324, 62);
 
         tagihanCard.add(iconBox);
         tagihanCard.add(tagihan);
@@ -217,26 +193,37 @@ public class Seller extends JFrame {
         logout.setFont(new Font("SansSerif", Font.BOLD, 16));
         logout.setFocusPainted(false);
         logout.setBorderPainted(false);
-        
+
         mainPanel.add(logout);
-        
-        logout.addMouseListener(new java.awt.event.MouseAdapter(){
-            public void mouseClicked (java.awt.event.MouseEvent e) {
+
+        logout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent e) {
                 Main.saveSemuaData(Main.dataTransaksi, Main.dataUser, Main.admin);
                 new Login(Main.dataTransaksi, Main.dataUser);
                 dispose();
-            };
+            }
         });
     }
 
     private void buatLogo() {
 
-        JLabel logo = new JLabel("K");
-        logo.setFont(new Font("SansSerif", Font.BOLD, 34));
-        logo.setHorizontalAlignment(SwingConstants.CENTER);
-        logo.setBounds(215, 715, 40, 40);
+        ImageIcon icon = new ImageIcon(
+                getClass().getResource("/Kinopedia/model/IMAGESS/LogoKinopedia.png")
+        );
 
-        mainPanel.add(logo);
+        Image scaledImage = icon.getImage().getScaledInstance(
+                50,
+                50,
+                Image.SCALE_SMOOTH
+        );
+
+        JLabel logoKinopedia = new JLabel(
+                new ImageIcon(scaledImage)
+        );
+
+        logoKinopedia.setBounds(210, 715, 50, 50);
+
+        mainPanel.add(logoKinopedia);
     }
 
     private JPanel createStatusCard(
@@ -286,14 +273,48 @@ public class Seller extends JFrame {
         number.setBounds(258, 15, 24, 24);
         number.setLayout(new GridBagLayout());
 
-        JLabel num = new JLabel("6");
-        num.setFont(new Font("SansSerif", Font.BOLD, 10));
+        int jumlah = 0;
 
-        number.add(num);
+    for (int i = 0; i < Main.dataTransaksi.size(); i++) {
+
+    if (redCircle) {
+        if (!Main.dataTransaksi.get(i).isKonfirmasi()) {
+            jumlah++;
+        }
+    } else {
+        if (Main.dataTransaksi.get(i).isKonfirmasi()) {
+            jumlah++;
+        }
+    }
+}
+
+    JLabel num = new JLabel(String.valueOf(jumlah));
+    num.setFont(new Font("SansSerif", Font.BOLD, 10));
+
+    number.add(num);
 
         JLabel arrow = new JLabel("›");
         arrow.setFont(new Font("SansSerif", Font.BOLD, 28));
-        arrow.setBounds(295, 9, 20, 35);
+        arrow.setHorizontalAlignment(SwingConstants.CENTER);
+        arrow.setBounds(285, -8, 40, 62);
+
+        arrow.setOpaque(true);
+        arrow.setBackground(new Color(0, 0, 0, 0));
+
+        arrow.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        arrow.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                dispose();
+                if (redCircle) {
+                    new DaftarTagihanBelumTop().setVisible(true);
+                } else {
+                    new HalamanSudahTopUp().setVisible(true);
+                }
+            }
+        });
 
         panel.add(iconPanel);
         panel.add(titleLabel);
@@ -402,15 +423,15 @@ public class Seller extends JFrame {
         }
     }
 
-//    public static void main(String[] args) {
-//
-//        SwingUtilities.invokeLater(new Runnable() {
-//
-//            @Override
-//            public void run() {
-//
-//                new Seller();
-//            }
-//        });
-//    }
+    public static void main(String[] args) {
+
+        SwingUtilities.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+
+                new Seller();
+            }
+        });
+    }
 }
