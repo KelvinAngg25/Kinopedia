@@ -23,12 +23,6 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.RoundRectangle2D;
 
 public class MainMiniGames extends JFrame {
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new MainMiniGames().setVisible(true);
-        });
-    }
     
     private JLabel koinLabel;
     private JLabel kreditLabel;

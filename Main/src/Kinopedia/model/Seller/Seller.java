@@ -417,21 +417,5 @@ public class Seller extends JFrame {
 
             g2.dispose();
         }
-
-        @Override
-        protected void paintBorder(Graphics g) {
-        }
-    }
-
-    public static void main(String[] args) {
-
-        SwingUtilities.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-
-                new Seller();
-            }
-        });
     }
 }

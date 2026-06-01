@@ -26,18 +26,6 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.RoundRectangle2D;
 
 public class Game extends JFrame {
-    
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JFrame dummyBack = new JFrame();
-            dummyBack.setSize(470, 844);
-            dummyBack.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            dummyBack.setVisible(true);
-
-            new Game(dummyBack).setVisible(true);
-            dummyBack.setVisible(false);
-        });
-    }
 
     private final JFrame backTo;
 
@@ -54,20 +42,10 @@ public class Game extends JFrame {
         root.setBackground(Color.WHITE);
         root.setBorder(new EmptyBorder(20, 20, 20, 20));
         setContentPane(root);
-
-        // ===== TOP BAR =====
-//        JButton backBtn = new JButton("< Kembali");
-//        backBtn.setFocusPainted(false);
-//        backBtn.setBorderPainted(false);
-//        backBtn.setContentAreaFilled(false);
-//        backBtn.setHorizontalAlignment(SwingConstants.LEFT);
-//        backBtn.setFont(new Font("SansSerif", Font.PLAIN, 16));
-//        backBtn.addActionListener(e -> goBack());
         
         ImageIcon iconBack = new ImageIcon(getClass().getResource("/Kinopedia/model/ImageMetodeBayar/back.png"));
         JLabel btnBack = new JLabel(iconBack);
         btnBack.setBounds(35, 1, 100, 100);
-//        add(btnBack);
 
         btnBack.addMouseListener(new MouseAdapter() {
             @Override

@@ -380,14 +380,6 @@ public class PenukaranKoin extends JFrame {
         add(borderTitle);
         getContentPane().setComponentZOrder(borderTitle, 0);
         
-        
-        
-        
-        
-    }
-    public static void main(String[] args) {
-            PenukaranKoin frame = new PenukaranKoin();
-            frame.setVisible(true);
     }
     
     class PanelBulat extends JPanel {

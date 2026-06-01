@@ -232,8 +232,4 @@ public class DetailTransaksi extends JFrame{
         borderPilihanBayar.add(totalHarga);
     }
         
-    public static void main(String[] args) {
-        new DetailTransaksi(Main.dataTransaksi.get(1).isKonfirmasi(), Main.dataTransaksi.get(1).getIdTransaksi(), Main.dataTransaksi.get(1).getTanggal(), Main.dataTransaksi.get(1).getUsername(), Main.dataTransaksi.get(1).getUsername(), Main.dataTransaksi.get(1).getJenisGame(), Main.dataTransaksi.get(1).getPembayaran(), 100000).setVisible(true);
-    }
-        
 }

@@ -234,9 +234,4 @@ public class DetailPembayaran extends JFrame{
         totalHarga.setHorizontalAlignment(JLabel.RIGHT);
         borderPilihanBayar.add(totalHarga);
     }
-    
-    public static void main(String[] args) {
-        DetailPembayaran frame = new DetailPembayaran("", "", "", 0, "", "");
-        frame.setVisible(true);
-    }
 }
