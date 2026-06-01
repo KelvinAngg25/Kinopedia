@@ -87,9 +87,9 @@ public class DaftarTagihanBelumTop extends JFrame {
                 content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
 
                 content.setBorder(BorderFactory.createEmptyBorder(
-                        10,
+                        8,
                         0,
-                        20,
+                        0,
                         0
                 ));
 
@@ -105,17 +105,18 @@ public class DaftarTagihanBelumTop extends JFrame {
                                 0
                         ));
 
-                        wrap.setPreferredSize(new Dimension(450, 120));
+                        wrap.setPreferredSize(new Dimension(450, 110));
 
                         wrap.add(createCard(tr));
 
                         content.add(wrap);
+                        content.add(Box.createVerticalStrut(0));
                     }
                 }
                 // ================= SCROLL =================
                 JScrollPane scroll = new JScrollPane(content);
 
-                scroll.setBounds(0, 70, 470, 620);
+                scroll.setBounds(0, 65, 470, 620);
 
                 scroll.setBorder(null);
 
@@ -179,7 +180,7 @@ public class DaftarTagihanBelumTop extends JFrame {
 
         GradientPanel card = new GradientPanel(start, end);
 
-        card.setPreferredSize(new Dimension(430, 110));
+        card.setPreferredSize(new Dimension(418, 96));
 
         card.setLayout(null);
 
