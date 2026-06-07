@@ -61,6 +61,11 @@ public class Register extends JFrame {
         setLayout(null);
         setBackground(Color.YELLOW);
         
+        JLabel tulisanJudul = new JLabel("REGISTER");
+        tulisanJudul.setFont(new Font("Poppins", Font.BOLD, 30));
+        tulisanJudul.setBounds(150, 100, 200, 150);
+        add(tulisanJudul);
+        
         JLabel userLabel = new JLabel("USERNAME");
         userLabel.setFont(new Font("Poppins", Font.PLAIN, 10));
         userLabel.setBounds(60, 230, 200, 20);
