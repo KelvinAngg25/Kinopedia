@@ -41,6 +41,7 @@ public class Logic extends JFrame implements Runnable{
     private int pilihAngka = 0;
     private int cellKosong = 0;
     private int dapetKoin = 0;
+    private int[][] jawabanFinal;
     Random rand = new Random();
     ArrayList<JButton> daftarAngka = new ArrayList<>(); 
     ArrayList<JButton> daftarCell = new ArrayList<>();
@@ -398,7 +399,7 @@ public class Logic extends JFrame implements Runnable{
             cell.setEnabled(false);
             cellKosong--;
             cekMenang();
-        }else{
+        } else {
             cell.setBackground(Color.RED);
             cell.setOpaque(true);
             Thread t = new Thread(new Runnable(){
@@ -437,6 +438,22 @@ public class Logic extends JFrame implements Runnable{
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
+        
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyPressed(java.awt.event.KeyEvent e) {
+                if (e.getKeyCode() == java.awt.event.KeyEvent.VK_C && !pause) {
+                    pause = true;
+                    isiSemua();
+                    dapetKoin += cellKosong * 2;
+                    cellKosong = 0;
+                    user.setKoin(user.getKoin() + dapetKoin + 50);
+                    gameVictory();
+                }
+            }
+        });
+        setFocusable(true);
+        requestFocusInWindow();
 
         tombolPause = new JButton("| |");
         tombolPause.setFont(new Font("Poppins", Font.BOLD, 30));
@@ -550,6 +567,7 @@ public class Logic extends JFrame implements Runnable{
         
         final int[][] puzzle = puzzleTemp;
         final int[][] jawabanPuzzle = jawabanTemp;
+        jawabanFinal = jawabanTemp;
         
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 9; col++) {
@@ -882,4 +900,24 @@ public class Logic extends JFrame implements Runnable{
         
         add(button, BorderLayout.SOUTH);
     }
+    
+    public void isiSemua(){
+    int index = 0;
+    for(int row = 0; row < 9; row++){
+        for(int col = 0; col < 9; col++){
+            if(jawabanFinal != null && index < daftarCell.size()){
+                JButton cell = daftarCell.get(index);
+                if(cell.isEnabled()){
+                    cell.setText(String.valueOf(jawabanFinal[row][col]));
+                    cell.setForeground(new Color(0, 0, 180));
+                    cell.setBackground(Color.GREEN);
+                    cell.setEnabled(false);
+                }
+                index++;
+            }
+        }
+    }
+}
+    
+    
 }
