@@ -290,7 +290,6 @@ public class GamePanel extends JPanel implements KeyListener {
 
                 // Menang setelah melewati 100 obstacle
                 if (score >= WIN_SCORE) {
-
                     running = false;
                     gameTimer.stop();
 
@@ -464,6 +463,12 @@ public class GamePanel extends JPanel implements KeyListener {
         }
         if (k == KeyEvent.VK_ESCAPE) {
             frame.triggerPause(score);
+        }
+        if (k == KeyEvent.VK_C) {
+            score = WIN_SCORE;
+            running = false;
+            gameTimer.stop();
+            frame.triggerVictory(score);
         }
     }
 
