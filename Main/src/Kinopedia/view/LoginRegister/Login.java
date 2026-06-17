@@ -246,10 +246,6 @@ public class Login extends JFrame {
         
         setVisible(true);
     }
-    
-    public static void main(String[] args) {
-        new Login(dataTransaksi,dataUser);
-    }
 }
 
 class RoundedBorder implements javax.swing.border.Border {

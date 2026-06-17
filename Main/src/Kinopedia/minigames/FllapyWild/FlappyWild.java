@@ -11,6 +11,7 @@ package Kinopedia.minigames.FllapyWild;
  */
 
 import Kinopedia.Session;
+import static Kinopedia.minigames.DinoRun.GamePanel.WIN_SCORE;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -561,8 +562,13 @@ public class FlappyWild extends JPanel implements KeyListener, MouseListener {
     //  Input keyboard & mouse
     // =========================================================
     @Override public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_SPACE && gameState == GameState.PLAYING)
+        if (e.getKeyCode() == KeyEvent.VK_SPACE && gameState == GameState.PLAYING) {
             bird.jump();
+        }
+        if (e.getKeyCode() == KeyEvent.VK_C && gameState == GameState.PLAYING) {
+            score = maxScore;
+            triggerVictory();
+        }
     }
     @Override public void mouseClicked(MouseEvent e) {
         if (gameState == GameState.PLAYING) bird.jump();
