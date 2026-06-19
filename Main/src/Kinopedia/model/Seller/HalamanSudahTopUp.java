@@ -30,139 +30,101 @@ public class HalamanSudahTopUp extends JFrame {
             main.setLayout(null);
             main.setBackground(new Color(242, 242, 242));
 
-                // ================= BACK =================
-//                JLabel backArrow = new JLabel("‹");
-//
-//                backArrow.setFont(new Font("SansSerif", Font.BOLD, 28));
-//
-//                backArrow.setBounds(12, 22, 20, 30);
-//
-//                backArrow.setCursor(new Cursor(Cursor.HAND_CURSOR));
-//
-//                JLabel backText = new JLabel("Kembali");
-//
-//                backText.setFont(new Font("SansSerif", Font.PLAIN, 14));
-//
-//                backText.setBounds(28, 29, 80, 18);
-//
-//                backText.setCursor(new Cursor(Cursor.HAND_CURSOR));
-//
-//                MouseAdapter backEvent = new MouseAdapter() {
-//
-//                    @Override
-//                    public void mouseClicked(MouseEvent e) {
-//
-//                        dispose();
-//
-//                        new Seller().setVisible(true);
-//                    }
-//                };
-//
-//                backArrow.addMouseListener(backEvent);
-//
-//                backText.addMouseListener(backEvent);
-//
-//                main.add(backArrow);
-//
-//                main.add(backText);
+            ImageIcon iconBack = new ImageIcon(getClass().getResource("/Kinopedia/model/ImageMetodeBayar/back.png"));
+            JLabel btnBack = new JLabel(iconBack);
+            btnBack.setBounds(35, 1, 100, 100);
+            add(btnBack);
 
-                ImageIcon iconBack = new ImageIcon(getClass().getResource("/Kinopedia/model/ImageMetodeBayar/back.png"));
-                JLabel btnBack = new JLabel(iconBack);
-                btnBack.setBounds(35, 1, 100, 100);
-                add(btnBack);
-
-                btnBack.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        dispose();
-                        new Seller().setVisible(true);
-                    }
-                });
-                
-                main.add(btnBack);
-                
-                // ================= CONTENT =================
-                JPanel content = new JPanel();
-
-                content.setBackground(new Color(242, 242, 242));
-
-                content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
-
-                content.setBorder(BorderFactory.createEmptyBorder(
-                        8,
-                        0,
-                        0,
-                        0
-                ));
-
-                for (Kinopedia.DataTransaksi tr : Main.dataTransaksi) {
-                    if (tr.isKonfirmasi()) {
-                        JPanel wrap = new JPanel();
-
-                        wrap.setOpaque(false);
-
-                        wrap.setLayout(new FlowLayout(
-                                FlowLayout.CENTER,
-                                0,
-                                0
-                        ));
-
-                        wrap.setPreferredSize(new Dimension(450, 110));
-
-                        wrap.add(createCard(tr));
-
-                        content.add(wrap);
-                    }
+            btnBack.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    dispose();
+                    new Seller().setVisible(true);
                 }
-                // ================= SCROLL =================
-                JScrollPane scroll = new JScrollPane(content);
+            });
 
-                scroll.setBounds(0, 65, 470, 620);
+            main.add(btnBack);
 
-                scroll.setBorder(null);
+            // ================= CONTENT =================
+            JPanel content = new JPanel();
 
-                scroll.setHorizontalScrollBarPolicy(
-                        JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
-                );
+            content.setBackground(new Color(242, 242, 242));
 
-                scroll.getVerticalScrollBar().setBorder(null);
+            content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
 
-                scroll.getViewport().setBackground(
-                        new Color(242, 242, 242)
-                );
+            content.setBorder(BorderFactory.createEmptyBorder(
+                    8,
+                    0,
+                    0,
+                    0
+            ));
 
-                scroll.setOpaque(false);
+            for (Kinopedia.DataTransaksi tr : Main.dataTransaksi) {
+                if (tr.isKonfirmasi()) {
+                    JPanel wrap = new JPanel();
 
-                scroll.getViewport().setOpaque(false);
+                    wrap.setOpaque(false);
 
-                scroll.getVerticalScrollBar().setUnitIncrement(16);
+                    wrap.setLayout(new FlowLayout(
+                            FlowLayout.CENTER,
+                            0,
+                            0
+                    ));
 
-                main.add(scroll);
-                
-                // ================= LOGO =================
-                ImageIcon icon = new ImageIcon(
-                        getClass().getResource("/Kinopedia/model/IMAGESS/LogoKinopedia.png")
-                );
+                    wrap.setPreferredSize(new Dimension(450, 110));
 
-                Image scaledImage = icon.getImage().getScaledInstance(
-                        50,
-                        50,
-                        Image.SCALE_SMOOTH
-                );
+                    wrap.add(createCard(tr));
 
-                JLabel logoKinopedia = new JLabel(
-                        new ImageIcon(scaledImage)
-                );
+                    content.add(wrap);
+                }
+            }
+            // ================= SCROLL =================
+            JScrollPane scroll = new JScrollPane(content);
 
-                logoKinopedia.setBounds(210, 740, 50, 50);
+            scroll.setBounds(0, 65, 470, 620);
 
-                main.add(logoKinopedia);
+            scroll.setBorder(null);
 
-                add(main);
+            scroll.setHorizontalScrollBarPolicy(
+                    JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
+            );
 
-                setVisible(true);
+            scroll.getVerticalScrollBar().setBorder(null);
 
-            // semua isi constructor
+            scroll.getViewport().setBackground(
+                    new Color(242, 242, 242)
+            );
+
+            scroll.setOpaque(false);
+
+            scroll.getViewport().setOpaque(false);
+
+            scroll.getVerticalScrollBar().setUnitIncrement(16);
+
+            main.add(scroll);
+
+            // ================= LOGO =================
+            ImageIcon icon = new ImageIcon(
+                    getClass().getResource("/Kinopedia/model/IMAGESS/LogoKinopedia.png")
+            );
+
+            Image scaledImage = icon.getImage().getScaledInstance(
+                    50,
+                    50,
+                    Image.SCALE_SMOOTH
+            );
+
+            JLabel logoKinopedia = new JLabel(
+                    new ImageIcon(scaledImage)
+            );
+
+            logoKinopedia.setBounds(210, 740, 50, 50);
+
+            main.add(logoKinopedia);
+
+            add(main);
+
+            setVisible(true);
 
         } catch (Exception e) {
 

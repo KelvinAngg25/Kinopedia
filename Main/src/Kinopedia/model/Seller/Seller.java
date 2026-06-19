@@ -169,7 +169,7 @@ public class Seller extends JFrame {
         orangeBox.setBounds(18, 95, 324, 108);
         orangeBox.setLayout(new GridBagLayout());
 
-        JLabel amount = new JLabel("Rp " + Main.admin.getKoin());
+        JLabel amount = new JLabel(String.format("Rp %,d", Main.admin.getKoin()).replace(",", "."));
         amount.setFont(new Font("SansSerif", Font.BOLD, 28));
         amount.setForeground(new Color(90, 50, 0));
 
