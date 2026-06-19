@@ -6,11 +6,6 @@
 
 package Kinopedia;
 
-/**
- *
- * @author William
- */
-
 import Kinopedia.model.DetailTransaksi;
 import Kinopedia.model.DetailTransaksiSeller;
 import Kinopedia.model.MetodeBayar;
@@ -27,17 +22,10 @@ public class Main {
     public static ArrayList<DataUser> dataUser = new ArrayList<DataUser>();
     public static ArrayList<DataAkun> dataAkun = new ArrayList<DataAkun>();
     public static DataUser admin; // yg dipake hanya idx 0-2, 0 utk user admin, 1 utk pass admin, 2 utk saldo admin.
-    /**
-     * @param args the command line arguments
-     */
+
     public static void main(String[] args) {
-        
-        // TODO code application logic here
         loadSemuaData(dataTransaksi,dataUser);
-//        Session.getInstance().login(dataUser.get(1));
-//        new MetodeBayar("KelvinAngjaya123", "2254012", 432000, "Valorant", "Kelvin").setVisible(true);
-//        new DetailTransaksi(Main.dataTransaksi.get(1).isKonfirmasi(), Main.dataTransaksi.get(1).getIdTransaksi(), Main.dataTransaksi.get(1).getTanggal(), Main.dataTransaksi.get(1).getIdGame(), Main.dataTransaksi.get(1).getNamaAkun(), Main.dataTransaksi.get(1).getJenisGame(), Main.dataTransaksi.get(1).getPembayaran(), Main.dataTransaksi.get(1).getNominal()).setVisible(true);
-//        new DetailTransaksiSeller(Main.dataTransaksi.get(0).isKonfirmasi(), Main.dataTransaksi.get(0).getIdTransaksi(), Main.dataTransaksi.get(0).getTanggal(), Main.dataTransaksi.get(0).getIdGame(), Main.dataTransaksi.get(0).getNamaAkun(), Main.dataTransaksi.get(0).getJenisGame(), Main.dataTransaksi.get(0).getPembayaran(), Main.dataTransaksi.get(0).getNominal(), false).setVisible(true);
+        Main.urutkanAscending();
         new Login(dataTransaksi,dataUser);
     }
     
@@ -156,5 +144,17 @@ public class Main {
             System.out.println("  Gagal menyimpan Admin.txt!");
         }
         System.out.println("Saldo Admin : " + admin.getKoin());
+    }
+    
+    public static void urutkanAscending() {
+        for (int i = 0; i < dataTransaksi.size() - 1; i++) {
+            for (int j = i + 1; j < dataTransaksi.size(); j++) {
+                if (dataTransaksi.get(i).getTanggal().compareTo(dataTransaksi.get(j).getTanggal()) > 0) {
+                    DataTransaksi temp = dataTransaksi.get(i);
+                    dataTransaksi.set(i, dataTransaksi.get(j));
+                    dataTransaksi.set(j, temp);
+                }
+            }
+        }
     }
 }
