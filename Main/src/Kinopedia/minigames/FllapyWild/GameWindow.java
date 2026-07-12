@@ -90,10 +90,4 @@ public class GameWindow extends JFrame {
         cardLayout.show(mainContainer, "GAME");
         flappyWild.requestFocusInWindow(); // Agar bisa menerima input keyboard
     }
-    
-    public void refreshMainMiniGames() {
-        if (mainMiniGames != null) {
-            mainMiniGames.refreshInfo();
-        }
-    }
 }

@@ -213,7 +213,6 @@ public class FlappyWild extends JPanel implements KeyListener, MouseListener {
         gameTimer.stop();
         overlayButtons.setVisible(false);
         btnPause.setVisible(false);
-        gameWindow.refreshMainMiniGames();
         gameWindow.showMenu();
     }
     
