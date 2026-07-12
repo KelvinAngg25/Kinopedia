@@ -23,11 +23,6 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.RoundRectangle2D;
 
 public class MainMiniGames extends JFrame {
-    
-    private JLabel koinLabel;
-    private JLabel kreditLabel;
-
-//    private final JFrame backTo;
 
     public MainMiniGames() {
         DataUser userLogin = Session.getInstance().getCurrentUser();
@@ -43,15 +38,6 @@ public class MainMiniGames extends JFrame {
         root.setBorder(new EmptyBorder(20, 20, 20, 20));
         setContentPane(root);
 
-        // ===== TOP BAR =====
-//        JButton backBtn = new JButton("< Kembali");
-//        backBtn.setFocusPainted(false);
-//        backBtn.setBorderPainted(false);
-//        backBtn.setContentAreaFilled(false);
-//        backBtn.setHorizontalAlignment(SwingConstants.LEFT);
-//        backBtn.setFont(new Font("SansSerif", Font.PLAIN, 16));
-//        backBtn.addActionListener(e -> goBack());
-
         ImageIcon iconBack = new ImageIcon(getClass().getResource("/Kinopedia/model/ImageMetodeBayar/back.png"));
         JLabel btnBack = new JLabel(iconBack);
         btnBack.setBounds(35, 1, 100, 100);
@@ -59,8 +45,8 @@ public class MainMiniGames extends JFrame {
         btnBack.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                new Buyer().setVisible(true);
                 dispose();
-                goBack();
             }
         });
 
@@ -69,14 +55,12 @@ public class MainMiniGames extends JFrame {
         top.add(btnBack, BorderLayout.WEST);
         root.add(top, BorderLayout.NORTH);
 
-//        JLabel koinLabel = new JLabel("Koin: " + userLogin.getKoin());
-        this.koinLabel = new JLabel("Koin: "  + userLogin.getKoin());
+        JLabel koinLabel = new JLabel("Koin: " + userLogin.getKoin());
         koinLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
         koinLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         koinLabel.setBorder(BorderFactory.createEmptyBorder(20, 15, 0, 0)); 
         
-//        JLabel kreditLabel = new JLabel("Kredit: " + userLogin.getKredit());
-        this.kreditLabel = new JLabel("Kredit: " + userLogin.getKredit());
+        JLabel kreditLabel = new JLabel("Kredit: " + userLogin.getKredit());
         kreditLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
         kreditLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         kreditLabel.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 0)); 
@@ -91,8 +75,7 @@ public class MainMiniGames extends JFrame {
         content.add(koinLabel);
         content.add(Box.createVerticalStrut(5));
         content.add(kreditLabel);
-        content.add(Box.createVerticalStrut(10));
-        content.add(Box.createVerticalStrut(20));
+        content.add(Box.createVerticalStrut(30));
         content.add(iconRow(new String[]{"Flappy Wild", "DinoRun", "Sudoku"}));
         
         
@@ -149,15 +132,6 @@ public class MainMiniGames extends JFrame {
 
         footer.add(logoLabel, BorderLayout.CENTER);
         root.add(footer, BorderLayout.SOUTH);
-    }
-    
-    // Refresh label koin & kredit dari Session
-    public void refreshInfo() {
-        DataUser userLogin = Session.getInstance().getCurrentUser();
-        if (userLogin != null) {
-            koinLabel.setText("Koin: " + userLogin.getKoin());
-            kreditLabel.setText("Kredit: " + userLogin.getKredit());
-        }
     }
 
     private JLabel sectionTitle(String text) {
@@ -245,43 +219,11 @@ public class MainMiniGames extends JFrame {
 
     private void openBundlePage(String name) {
         if (name.equals("Flappy Wild")) {
-//            if (!KoinManager.bisaBermain()) {
-//                JOptionPane.showMessageDialog(
-//                        this,
-//                        "Kredit kamu tidak cukup untuk bermain!\n"
-//                        + "Kredit saat ini: " + KoinManager.getKreditSekarang() + "\n"
-//                        + "Dibutuhkan minimal 1 kredit untuk bermain.",
-//                        "Kredit Tidak Cukup",
-//                        JOptionPane.WARNING_MESSAGE
-//                );
-//            return;
-//            }
-//            
-//            // MENGURANGI 1 KREDIT SAAT MULAI GAME
-//            boolean berhasil = KoinManager.kurangiKredit();
-//            if (!berhasil) {
-//                JOptionPane.showMessageDialog(
-//                        this,
-//                        "Gagal memproses kredit. Silahkan coba lagi.",
-//                        "Error",
-//                        JOptionPane.ERROR_MESSAGE
-//                );
-//                return;
-//            }
-//            
-//            // Update label kredit langsung setelah dikurangi
-//            refreshInfo();
-//            
-//            // Buka game dan pass referensi MainMiniGames untuk refresh setelah selesai
             new Kinopedia.minigames.FllapyWild.GameWindow(this).setVisible(true);
             dispose();
-        }
-
-        if (name.equals("DinoRun")) {
+        } else if (name.equals("DinoRun")) {
             new Kinopedia.minigames.DinoRun.GameFrame().setVisible(true);
-        }
-
-        if (name.equals("Sudoku")) {
+        } else {
             Kinopedia.minigames.sudoku.Logic frame = new Kinopedia.minigames.sudoku.Logic();
             frame.menuGame();
             frame.setVisible(true);
@@ -299,11 +241,6 @@ public class MainMiniGames extends JFrame {
 
         Image scaled = new ImageIcon(url).getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
         return new ImageIcon(scaled);
-    }
-    
-    private void goBack() {
-        new Buyer().setVisible(true);
-        dispose();
     }
 
     private static class RoundedImageLabel extends JLabel {
